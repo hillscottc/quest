@@ -1,26 +1,49 @@
 import requests
 import re
-from pprint import pprint
 from string import split
 from bs4 import BeautifulSoup
 import pymongo
 
-
-def get_soup():
-    # r = requests.get('http://www.j-archive.com/showgame.php?game_id=4529')
-    # return BeautifulSoup(r.text)
-    return BeautifulSoup(open("soup_jeap_sample.html"))
+URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
 
 
-def parse_seasons():
-    # ids = range(30)
-    ids = range(1)
+def db_get(game_id):
+    print 'fake db get', game_id
+    # return None
 
+
+def db_save(game_id, page):
+    print 'fake db save', game_id, page[:20], '...'
+    # client = pymongo.MongoClient()
+    # db = client.quest
+    # return db.pages.insert(page)
+
+
+def get_page(game_id):
+    url = URL_BASE + game_id
+    # Try to get page from db first
+    page = db_get(game_id)
+    if not page:
+        page = requests.get(url).text
+        db_save(game_id, page)
+    return page
+
+
+def parse_seasons(count=1):
+    """Get game_ids from given number of seasons."""
+    ids = range(count)
+    game_ids = []
     for seas_id in ids:
         url = 'http://www.j-archive.com/showseason.php?season=' + str(seas_id + 1)
         print 'Getting', url
         soup = BeautifulSoup(requests.get(url).text)
-        print [l['href'] for l in soup.find_all('a') if 'game_id' in l['href']]
+
+        for tag in soup.find_all('a'):
+            if 'game_id' in tag['href']:
+                match = re.search('\d+', tag['href'])
+                if match:
+                    game_ids.append(match.group(0))
+    return game_ids
 
 
 def parse_qa_from_div(div_tag):
@@ -43,26 +66,39 @@ def parse_qa_from_div(div_tag):
     return question, answer
 
 
-def qa_dict():
+def parse_game(page):
+    bs = BeautifulSoup(page)
     qa_dict = {}
-    for div_tag in get_soup().find_all('div'):
-        question, answer = parse_qa_from_div(div_tag)       
+    # for div_tag in get_soup().find_all('div'):
+    for div_tag in bs.find_all('div'):
+        question, answer = parse_qa_from_div(div_tag)
         if question and answer:
             qa_dict[question] = answer
     return qa_dict
 
 
-if __name__ == '__main__':
-    # pprint(qa_dict())
-    # parse_seasons()
+# def mongo_test():
+#     test_data = dict(name='scott', animal='owl')
+#     client = pymongo.MongoClient()
+#     db = client.quest
+#     posts = db.posts
+#     post_id = posts.insert(test_data)
+#     print post_id
+#     val = posts.find_one()
+#     print val
+#
 
-    test_data = dict(name='scott', animal='owl')
 
-    client = pymongo.MongoClient()
-    db = client.quest
-    posts = db.posts
-    posts.insert(test_data)
-    posts.find_one()
+    # outfile = open('sids.out.txt', 'w')
+    # for sid in sids:
+    #     outfile.write(sid + '\n')
+    # outfile.close()
+
+
+
+
+
+
 
 
 
