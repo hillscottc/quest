@@ -10,24 +10,15 @@ def parse_game(page):
 
     rounds = bs.find_all('table', {'class': 'round'})
     rounds = rounds + bs.find_all('table', {'class': 'final_round'})
-
-    for i, round in enumerate(rounds):
-        print 'round', i
-
-    #
-    # # Find the categories
-    # cats = [t.text for t in round_tab.find_all('td', {'class': 'category_name'})]
-    #
-    # print cats
-    #
-    # for div_tag in bs.find_all('div'):
-    #     question, answer = parse_qa_from_div(div_tag)
-    #     if question and answer:
-    #         qa_dict[question] = answer
+    for game_round in rounds:
+        cats = [t.text for t in game_round.find_all('td', {'class': 'category_name'})]
+        print cats
+        for div_tag in game_round.find_all('div'):
+            question, answer = parse_qa_from_div(div_tag)
+            if question and answer:
+                qa_dict[question] = answer
 
     return qa_dict
-
-
 
 
 def parse_qa_from_div(div_tag):
@@ -67,13 +58,11 @@ def parse_seasons(count=1):
     return game_ids
 
 
-
 if __name__ == '__main__':
     sample = "samples/game_153.html"
-    with open(sample, "r") as myfile:
-        html = myfile.read().replace('\n', '')
-
-    qa_dict = parse_game(html)
-    # print qa_dict
+    # with open(sample, "r") as myfile:
+    #     html = myfile.read().replace('\n', '')
+    # qa_dict = parse_game(html)
+    # print "%s questions and answers found." % len(qa_dict)
 
 
