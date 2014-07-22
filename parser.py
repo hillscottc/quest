@@ -59,7 +59,7 @@ def parse_seasons(count=1):
 
 
 if __name__ == '__main__':
-    sample = "samples/game_153.html"
+    sample = "samples/game_4529.html"
     # with open(sample, "r") as myfile:
     #     html = myfile.read().replace('\n', '')
     # qa_dict = parse_game(html)

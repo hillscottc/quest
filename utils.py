@@ -3,9 +3,16 @@ import requests
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
 
 
-def get_page(game_id):
+def save_game(game_id):
     url = URL_BASE + game_id
-    return requests.get(url).text
+    html = requests.get(url).text
+    outfile = open('samples/game_{}.html'.format(game_id), 'w')
+    outfile.write(html)
+    outfile.close()
+
+# def get_page(game_id):
+#     url = URL_BASE + game_id
+#     return requests.get(url).text
 
 
 

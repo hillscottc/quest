@@ -4,7 +4,7 @@ import pymongo
 
 
 def get_sample_html():
-    sample = "samples/game_153.html"
+    sample = "samples/game_4529.html"
     with open(sample, "r") as myfile:
         html = myfile.read().replace('\n', '')
     return html
