@@ -53,23 +53,5 @@ class MyTestCase(unittest.TestCase):
     #     self.assertEqual(True, False)
 
 
-# class DbTestCase(unittest.TestCase):
-#
-#     def test_mongo(self):
-#         test_data = dict(name='scott', animal='owl')
-#         client = pymongo.MongoClient()
-#         db = client.quest
-#         posts = db.posts
-#         post_id = posts.insert(test_data)
-#         print post_id
-#         val = posts.find_one()
-#         print val
-
-
-
-
-
-
-
 if __name__ == '__main__':
     unittest.main()
