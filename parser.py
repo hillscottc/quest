@@ -4,21 +4,35 @@ from string import split
 from bs4 import BeautifulSoup
 
 
+def parse_round(game_round):
+    clue_dict = {}
+
+    jrt = game_round.table
+
+    cat_tags = jrt.find_all('tr')[0].find_all('td', {'class': "category_name"})
+    cats = [t.text for t in cat_tags]
+    print cats
+
+    for row in jrt.find_all('tr')[1:]:
+        clues = row.find_all('td', {'class': "clue"})
+        if not clues:
+            continue
+
+        for i, clue in enumerate(clues):
+            if clue.div:
+                category = cats[i]
+                question, answer = parse_qa_from_div(clue.div)
+                print "{}...Q:{} A:{}".format(category, question, answer)
+                clue_dict[question] = answer
+
+    return clue_dict
+
+
 def parse_game(page):
     bs = BeautifulSoup(page)
-    qa_dict = {}
-
-    rounds = bs.find_all('table', {'class': 'round'})
-    rounds = rounds + bs.find_all('table', {'class': 'final_round'})
-    for game_round in rounds:
-        cats = [t.text for t in game_round.find_all('td', {'class': 'category_name'})]
-        print cats
-        for div_tag in game_round.find_all('div'):
-            question, answer = parse_qa_from_div(div_tag)
-            if question and answer:
-                qa_dict[question] = answer
-
-    return qa_dict
+    for game_round in ['jeopardy_round', 'double_jeopardy_round']:
+        clue_dict = parse_round(bs.find('div', {'id': game_round}))
+        print "Found", game_round, len(clue_dict), 'clues.'
 
 
 def parse_qa_from_div(div_tag):
@@ -60,9 +74,8 @@ def parse_seasons(count=1):
 
 if __name__ == '__main__':
     sample = "samples/game_4529.html"
-    # with open(sample, "r") as myfile:
-    #     html = myfile.read().replace('\n', '')
-    # qa_dict = parse_game(html)
-    # print "%s questions and answers found." % len(qa_dict)
+    with open(sample, "r") as myfile:
+        html = myfile.read().replace('\n', '')
+    parse_game(html)
 
 
