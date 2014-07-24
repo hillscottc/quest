@@ -12,6 +12,14 @@ def get_sample_html():
 
 class MyTestCase(unittest.TestCase):
 
+    def test_write_clue(self):
+        with open(get_sample_html(), "r") as myfile:
+            html = myfile.read().replace('\n', '')
+        clue_list = parse_game(html)
+        coll = pymongo.MongoClient().quest.clues
+        for clue in clue_list:
+            coll.insert(clue)
+
     def test_qa_tab(self):
         """Test mongo qa table."""
         qa_tab = pymongo.MongoClient().quest.qas

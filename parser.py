@@ -1,11 +1,20 @@
-import requests
 import re
 from string import split
 from bs4 import BeautifulSoup
+import pymongo
+
+
+def get_sample_html():
+    sample = "samples/game_4529.html"
+    with open(sample, "r") as myfile:
+        html = myfile.read().replace('\n', '')
+    return html
 
 
 def parse_round(game_round):
-    clue_dict = {}
+    # clue_dict = {}
+
+    clue_list = []
 
     jrt = game_round.table
 
@@ -23,16 +32,26 @@ def parse_round(game_round):
                 category = cats[i]
                 question, answer = parse_qa_from_div(clue.div)
                 print "{}...Q:{} A:{}".format(category, question, answer)
-                clue_dict[question] = answer
+                # clue_dict[question] = answer
+                clue_list.append({'category': category,
+                                  'question,': question,
+                                  'answer': answer})
 
-    return clue_dict
+    return clue_list
+
+
+def write_clues(clue_list):
+    coll = pymongo.MongoClient().quest.clues
+    for clue in clue_list:
+        coll.insert(clue)
 
 
 def parse_game(page):
     bs = BeautifulSoup(page)
+    clue_list = []
     for game_round in ['jeopardy_round', 'double_jeopardy_round']:
-        clue_dict = parse_round(bs.find('div', {'id': game_round}))
-        print "Found", game_round, len(clue_dict), 'clues.'
+        clue_list.append(parse_round(bs.find('div', {'id': game_round})))
+    return clue_list
 
 
 def parse_qa_from_div(div_tag):
@@ -55,27 +74,9 @@ def parse_qa_from_div(div_tag):
     return question, answer
 
 
-def parse_seasons(count=1):
-    """Get game_ids from given number of seasons."""
-    ids = range(count)
-    game_ids = []
-    for seas_id in ids:
-        url = 'http://www.j-archive.com/showseason.php?season=' + str(seas_id + 1)
-        print 'Getting', url
-        soup = BeautifulSoup(requests.get(url).text)
-
-        for tag in soup.find_all('a'):
-            if 'game_id' in tag['href']:
-                match = re.search('\d+', tag['href'])
-                if match:
-                    game_ids.append(match.group(0))
-    return game_ids
-
-
 if __name__ == '__main__':
-    sample = "samples/game_4529.html"
-    with open(sample, "r") as myfile:
+    with open(get_sample_html(), "r") as myfile:
         html = myfile.read().replace('\n', '')
-    parse_game(html)
-
+    clue_list = parse_game(html)
+    write_clues(clue_list)
 
