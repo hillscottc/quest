@@ -1,8 +1,38 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import os
 
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
+
+
+def get_sample_html():
+    sample = "samples/game_4529.html"
+    with open(sample, "r") as myfile:
+        html = myfile.read().replace('\n', '')
+    return html
+
+
+def get_game_fname(game_id):
+    if isinstance(game_id, int):
+        game_id = str(game_id)
+    return 'samples/game_{}.html'.format(game_id)
+
+
+def get_remote_game(game_id):
+    game_id = str(game_id) if isinstance(game_id, int) else game_id
+    url = URL_BASE + game_id
+    yield requests.get(url).text
+
+
+def get_local_game(game_id):
+    game_id = str(game_id) if isinstance(game_id, int) else game_id
+    fname = get_game_fname(game_id)
+    if not os.path.isfile(fname):
+        return
+    with open(fname, "r") as myfile:
+        html = myfile.read().replace('\n', '')
+    return html
 
 
 def trim(txt):
@@ -25,22 +55,6 @@ def parse_seasons(count=1):
                 if match:
                     game_ids.append(match.group(0))
     return game_ids
-
-
-def save_games(*game_ids):
-    """Pull given games from remote source and save locally."""
-    for game_id in game_ids:
-        if isinstance(game_id, int):
-            game_id = str(game_id)
-        url = URL_BASE + game_id
-        html = requests.get(url).text
-        fname = 'samples/game_{}.html'.format(game_id)
-        with open(fname, "w") as outfile:
-            outfile.write(html)
-
-if __name__ == '__main__':
-    # save_games('xyz')
-    pass
 
 
 GAME_IDS = [4529, 368, 4249, 363, 362, 361, 360, 359, 356, 355, 354, 353, 352, 348, 347, 345,
