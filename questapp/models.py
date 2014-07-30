@@ -1,5 +1,6 @@
 from django.db import models
-from utils import trim
+
+from questapp.utils import trim
 
 
 class BaseModel(models.Model):

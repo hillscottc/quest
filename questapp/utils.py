@@ -4,18 +4,19 @@ import re
 import os
 
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
+SAMPLE_DIR = 'samples'
 
 
 def get_game_fname(game_id):
     if isinstance(game_id, int):
         game_id = str(game_id)
-    return 'samples/game_{}.html'.format(game_id)
+    return os.path.join(SAMPLE_DIR, "game_{}.html".format(game_id))
 
 
 def get_remote_game(game_id):
     game_id = str(game_id) if isinstance(game_id, int) else game_id
     url = URL_BASE + game_id
-    yield requests.get(url).text
+    return requests.get(url).text
 
 
 def get_local_game(game_id):
@@ -31,6 +32,27 @@ def get_local_game(game_id):
 def trim(txt):
     if txt and len(txt) > 10:
         return txt[:9] + '...'
+
+
+def write_game(game_id, html):
+    fname = get_game_fname(game_id)
+    if len(html) < 3000:
+        print game_id, 'skipped, too short', len(html)
+        return
+
+    try:
+        with open(get_game_fname(game_id), "w") as outfile:
+            outfile.write(html)
+        print "Wrote", fname
+    except UnicodeEncodeError as e:
+        print e
+
+
+def save_games(*game_ids):
+    for game_id in game_ids:
+        html = get_remote_game(game_id)
+        print "L of {} is {}".format(game_id, len(html))
+        write_game(game_id, html)
 
 
 def parse_seasons(count=1):
@@ -64,6 +86,10 @@ GAME_IDS = [4529, 368, 4249, 363, 362, 361, 360, 359, 356, 355, 354, 353, 352, 3
             93, 92, 84, 85, 83, 81, 4286, 4560, 4283, 1135, 4288, 1674, 1673, 1672, 1671, 1670,
             4410, 4296, 4295, 4292, 4291, 4290, 4302, 3573, 4297, 4298, 3711, 182, 181, 178, 170,
             171, 169, 167, 164, 160, 159, 3585, 4475, 4473, 4289, 4491]
+
+if __name__ == '__main__':
+    save_games(*GAME_IDS[50:])
+
 
 
 # outfile = open('season_ids.txt', 'w')
