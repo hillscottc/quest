@@ -3,9 +3,34 @@ from string import split
 from bs4 import BeautifulSoup
 from questapp.models import Clue
 
-def parse_round(game_round):
-    clue_list = []
-    jrt = game_round.table
+ROUNDS_PARSED = ['jeopardy_round', 'double_jeopardy_round']
+
+
+def parse_game(page):
+    """
+    Parse clues from html page.
+    """
+    bs = BeautifulSoup(page)
+
+    ## TODO: Parse the file for these
+    game_id, show_num = 0, 0
+
+    game_rounds = []
+    for round_name in ROUNDS_PARSED:
+        game_round = _parse_round(round_div=bs.find('div', {'id': round_name}),
+                                  game_id=game_id, show_num=show_num)
+        game_rounds.append(game_round)
+
+    for game_round in game_rounds:
+        for clue in game_round:
+            yield clue
+
+
+def _parse_round(round_div, game_id, show_num):
+    """
+    Parse clues from a round div.
+    """
+    jrt = round_div.table
 
     cat_tags = jrt.find_all('tr')[0].find_all('td', {'class': "category_name"})
     cats = [t.text for t in cat_tags]
@@ -16,42 +41,26 @@ def parse_round(game_round):
             continue
 
         for i, clue in enumerate(clues):
-            if clue.div:
-                category = cats[i]
-                question, answer = parse_qa_from_div(clue.div)
-                # print "{}...Q:{} A:{}".format(category, question, answer)
-                clue_list.append(Clue(category=category,
-                                      question=question,
-                                      answer=answer))
-
-    return clue_list
+            if not clue.div:
+                continue
+            else:
+                question, answer = _parse_clue(clue.div)
+                yield Clue(game_id=game_id, show_num=show_num,
+                           category=cats[i], question=question, answer=answer)
 
 
-def parse_game(page):
-    bs = BeautifulSoup(page)
-    # clue_list = []
-    for game_round in ['jeopardy_round', 'double_jeopardy_round']:
-        # clue_list.append(parse_round(bs.find('div', {'id': game_round})))
-        yield parse_round(bs.find('div', {'id': game_round}))
-    # return clue_list
-
-
-def parse_qa_from_div(div_tag):
-
+def _parse_clue(div_tag):
+    """Parse the q and a from div's mouseover js."""
     question, answer = '', ''
     regex_ans = '(.*)("correct_response">)([^<]+)'
 
-    # Answer
-    a_attr = div_tag.get('onmouseover')
-    if a_attr:
-        match = re.match(regex_ans, a_attr)
-        if match:
-            answer = match.group(3)
+    raw_answer = div_tag.get('onmouseover')
+    raw_question = div_tag.get('onmouseout')
 
-    # Question
-    q_attr = div_tag.get('onmouseout')
-    if q_attr:
-        question = split(q_attr, ", '",  2)[2][:-2]
+    if raw_answer and raw_question:
+        question = split(raw_question, ", '",  2)[2][:-2]
+        match = re.match(regex_ans, raw_answer)
+        answer = match.group(3) if match else ''
 
     return question, answer
 

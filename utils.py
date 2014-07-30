@@ -6,13 +6,6 @@ import os
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
 
 
-def get_sample_html():
-    sample = "samples/game_4529.html"
-    with open(sample, "r") as myfile:
-        html = myfile.read().replace('\n', '')
-    return html
-
-
 def get_game_fname(game_id):
     if isinstance(game_id, int):
         game_id = str(game_id)
