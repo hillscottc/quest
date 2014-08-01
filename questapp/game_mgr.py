@@ -34,17 +34,18 @@ def write_game(game_id, html):
     """
     Save html as a file in the SAMPLE_DIR, named by game_id.
     """
-    fname = get_fname(game_id)
+    failed = []
     if len(html) < 3000:
         print game_id, 'skipped, too short', len(html)
         return
 
     try:
         with open(get_fname(game_id), "w") as outfile:
-            outfile.write(html)
-        print "Wrote", fname
+            outfile.write(html.encode('utf-8'))
     except UnicodeEncodeError as uni_err:
-        print uni_err
+        print '\nFailed ', game_id,  uni_err
+        failed.append(game_id)
+    return failed
 
 
 def get_remote_html(game_id):
@@ -53,11 +54,10 @@ def get_remote_html(game_id):
     return requests.get(url).text
 
 
-def save_remote_games(self, *game_ids):
+def save_remote_games(*game_ids):
     for game_id in game_ids:
-        html = self.get_html(game_id)
-        print "L of {} is {}".format(game_id, len(html))
-        self.write_game(game_id, html)
+        html = get_remote_html(game_id)
+        write_game(game_id, html)
 
 
 def get_local_html(game_id):
