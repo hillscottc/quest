@@ -1,8 +1,24 @@
 import os
 import requests
+from parser import parse_game
+# from models import Clue
 
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
 SAMPLE_DIR = 'samples'
+
+
+def parse_game_ids(*game_ids):
+    """
+    Parse clues from given sample game ids.
+    """
+    clues = []
+    for game_id in game_ids:
+        html = get_local_html(game_id)
+        if not html:
+            continue
+        game_clues = list(parse_game(html))
+        clues.extend(game_clues)
+    return clues
 
 
 def get_fname(game_id):
