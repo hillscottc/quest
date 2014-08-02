@@ -1,12 +1,12 @@
 import re
 from string import split
 from bs4 import BeautifulSoup
-from questapp.models import Clue
+from .models import Clue
 
 ROUNDS_PARSED = ['jeopardy_round', 'double_jeopardy_round']
 
 
-def parse_game(page):
+def parse_game_html(page):
     """
     Parse clues from html page.
     """
@@ -30,12 +30,10 @@ def _parse_round(round_div, game_id, show_num):
     """
     Parse clues from a round div.
     """
-
     if not round_div:
         return
 
     jrt = round_div.table
-
     cat_tags = jrt.find_all('tr')[0].find_all('td', {'class': "category_name"})
     cats = [t.text for t in cat_tags]
 
