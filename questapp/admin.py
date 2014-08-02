@@ -1,3 +1,4 @@
 from django.contrib import admin
+from questapp.models import Clue
 
-# Register your models here.
+admin.site.register(Clue)

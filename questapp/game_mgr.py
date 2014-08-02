@@ -5,6 +5,15 @@ import glob
 import re
 
 
+def load_all_games():
+    """
+    Load all the sample games.
+    """
+    mgr = GameMgr()
+    for clue in mgr.parse_games(*mgr.get_sample_ids()):
+        clue.save()
+
+
 class GameMgr(object):
 
     def __init__(self, url_base=None, sample_dir=None):
