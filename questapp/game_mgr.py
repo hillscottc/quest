@@ -1,6 +1,8 @@
 import os
 import requests
 from .parser import parse_game_html
+import glob
+import re
 
 
 class GameMgr(object):
@@ -15,6 +17,15 @@ class GameMgr(object):
             self.sample_dir = sample_dir
         else:
             self.sample_dir = 'samples'
+
+    def get_sample_ids(self):
+        files = glob.glob(os.path.join(self.sample_dir, '*.html'))
+        for fname in files:
+            match = re.search(r'\d+', fname)
+            if not match:
+                continue
+            else:
+                yield match.group()
 
     def get_fname(self, game_id):
         """
@@ -69,11 +80,9 @@ class GameMgr(object):
             html = self.get_local_html(game_id)
             if not html:
                 continue
-            game_clues = list(parse_game_html(html))
+            game_clues = list(parse_game_html(html, game_id))
             clues.extend(game_clues)
         return clues
-
-
 
 
 TEST_GAME_ID = 4529

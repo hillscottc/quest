@@ -19,4 +19,6 @@ class Clue(BaseModel):
     category = models.CharField(max_length=100, null=True, blank=True)
 
     def __unicode__(self):
-        return "C:{} Q:{} A:{}".format(self.category, trim(self.question), trim(self.answer))
+        return "G: {} S:{} C:{} Q:{} A:{}".format(
+            self.game_id, self.show_num, self.category,
+            trim(self.question), trim(self.answer))

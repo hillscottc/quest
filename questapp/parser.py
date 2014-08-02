@@ -6,14 +6,15 @@ from .models import Clue
 ROUNDS_PARSED = ['jeopardy_round', 'double_jeopardy_round']
 
 
-def parse_game_html(page):
+def parse_game_html(page, game_id=None):
     """
     Parse clues from html page.
     """
     bs = BeautifulSoup(page)
-
-    ## TODO: Parse the file for these
-    game_id, show_num = 0, 0
+    if bs.title:
+        match = re.search(r'#(\d+)', bs.title.text)
+        if match:
+            show_num = match.group(1)
 
     game_rounds = []
     for round_name in ROUNDS_PARSED:
