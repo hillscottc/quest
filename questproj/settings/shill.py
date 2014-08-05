@@ -1,4 +1,5 @@
 # pylint: disable=W0614
+import sys
 from base import *
 
 #TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
@@ -9,9 +10,17 @@ NOSE_ARGS = [
     #'--stop',    # Stop at first failure.
     '--detailed-errors',
     '--verbosity=2',
-    #'--with-progressive',
     '--nocapture',
     # '--pdb',
     '--nologcapture'
     #'--exclude=regex of what you want to exclude',
 ]
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'quest_db', 'USER': 'quest_acct', 'PASSWORD': '12345',
+        'HOST': 'localhost', 'PORT': '5432'
+    }
+}

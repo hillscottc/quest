@@ -1,7 +1,9 @@
 import re
 from string import split
 from bs4 import BeautifulSoup
-from .models import Clue
+from .models import Clue, Game
+from django.db import DataError, transaction
+from django.db.transaction import TransactionManagementError
 
 ROUNDS_PARSED = ['jeopardy_round', 'double_jeopardy_round']
 
@@ -11,23 +13,32 @@ def parse_game_html(page, game_id=None):
     Parse clues from html page.
     """
     bs = BeautifulSoup(page)
+    show_num = None
     if bs.title:
         match = re.search(r'#(\d+)', bs.title.text)
-        if match:
-            show_num = match.group(1)
+        show_num = match.group(1) if match else None
+
+    game = Game(game_id=game_id, show_num=show_num)
 
     game_rounds = []
     for round_name in ROUNDS_PARSED:
-        game_round = _parse_round(round_div=bs.find('div', {'id': round_name}),
-                                  game_id=game_id, show_num=show_num)
+        game_round = _parse_round(round_div=bs.find('div', {'id': round_name}))
         game_rounds.append(game_round)
 
     for game_round in game_rounds:
         for clue in game_round:
-            yield clue
+            # yield clue
+            try:
+                with transaction.atomic():
+                    game.clue_set.add(clue)
+            except (DataError, TransactionManagementError):
+                # print "Failed", model_to_dict(clue)
+                print "Failed a clue"
+
+    return game
 
 
-def _parse_round(round_div, game_id, show_num):
+def _parse_round(round_div):
     """
     Parse clues from a round div.
     """
@@ -48,8 +59,7 @@ def _parse_round(round_div, game_id, show_num):
                 continue
             else:
                 question, answer = _parse_clue(clue.div)
-                yield Clue(game_id=game_id, show_num=show_num,
-                           category=cats[i], question=question, answer=answer)
+                yield Clue(category=cats[i], question=question, answer=answer)
 
 
 def _parse_clue(div_tag):

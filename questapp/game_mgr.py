@@ -3,15 +3,36 @@ import requests
 from .parser import parse_game_html
 import glob
 import re
+from django.db import DataError, transaction
+from django.db.transaction import TransactionManagementError
+from django.forms.models import model_to_dict
+import logging
+from .models import Game
 
 
 def load_all_games():
     """
     Load all the sample games.
     """
+    parsed, failed = [], []
     mgr = GameMgr()
-    for clue in mgr.parse_games(*mgr.get_sample_ids()):
-        clue.save()
+    for game in mgr.parse_games(*mgr.get_sample_ids()):
+        try:
+            with transaction.atomic():
+                game.save()
+                parsed.append(game)
+        except (DataError, TransactionManagementError):
+            # print "Failed", model_to_dict(clue)
+            failed.append(game)
+    # for clue in mgr.parse_games(*mgr.get_sample_ids()):
+    #     try:
+    #         with transaction.atomic():
+    #             parsed.append(clue)
+    #             clue.save()
+    #     except (DataError, TransactionManagementError):
+    #         # print "Failed", model_to_dict(clue)
+    #         failed.append(clue)
+    return parsed, failed
 
 
 class GameMgr(object):
@@ -84,14 +105,31 @@ class GameMgr(object):
         """
         Parse clues from given sample game ids.
         """
-        clues = []
+        # clues = []
+        # games = []
         for game_id in game_ids:
             html = self.get_local_html(game_id)
             if not html:
                 continue
-            game_clues = list(parse_game_html(html, game_id))
-            clues.extend(game_clues)
-        return clues
+            game = parse_game_html(html, game_id)
+            # game_clues = list(parse_game_html(html, game_id))
+            # clues.extend(game_clues)
+            yield game
+        # return clues
+
+
+    # def parse_games(self, *game_ids):
+    #     """
+    #     Parse clues from given sample game ids.
+    #     """
+    #     clues = []
+    #     for game_id in game_ids:
+    #         html = self.get_local_html(game_id)
+    #         if not html:
+    #             continue
+    #         game_clues = list(parse_game_html(html, game_id))
+    #         clues.extend(game_clues)
+    #     return clues
 
 
 TEST_GAME_ID = 4529

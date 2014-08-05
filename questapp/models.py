@@ -1,5 +1,4 @@
 from django.db import models
-
 from questapp.utils import trim
 
 
@@ -11,14 +10,19 @@ class BaseModel(models.Model):
         abstract = True
 
 
+class Game(BaseModel):
+    show_num = models.SmallIntegerField(default=0)
+    game_id = models.SmallIntegerField(default=0)
+
+    def __unicode__(self):
+        return "{}/{}".format(self.game_id, self.show_num)
+
+
 class Clue(BaseModel):
-    show_num = models.SmallIntegerField(null=True, blank=True)
-    game_id = models.SmallIntegerField(null=True, blank=True)
+    game = models.ForeignKey(Game, null=True, blank=True)
     question = models.CharField(max_length=255, null=True, blank=True)
     answer = models.CharField(max_length=255, null=True, blank=True)
     category = models.CharField(max_length=100, null=True, blank=True)
 
     def __unicode__(self):
-        return "G: {} S:{} C:{} Q:{} A:{}".format(
-            self.game_id, self.show_num, self.category,
-            trim(self.question), trim(self.answer))
+        return " C:{} Q:{} A:{}".format(self.category, trim(self.question), trim(self.answer))

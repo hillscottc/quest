@@ -1,26 +1,35 @@
 import os
 from django.test import TestCase
+from django.forms.models import model_to_dict
 
-from .models import Clue
-from .game_mgr import GameMgr, TEST_GAME_ID
+from .models import Clue, Game
+from .game_mgr import GameMgr, TEST_GAME_ID, load_all_games
 
 mgr = GameMgr()
 
 
 class SamplesTest(TestCase):
     def setUp(self):
-        """
-        Parse and save all sample games to db.
-        """
-        clues = mgr.parse_games(*mgr.get_sample_ids())
-        for clue in clues:
-            clue.save()
         print
 
-    def test_db(self):
+    def test_load_all_games(self):
         """
-        Test samples loaded into db.
+        Test loading all samples into db.
         """
+        parsed, failed = load_all_games()
+        print "Loading all games..."
+
+
+        # print "Clues parsed:", len(parsed), ", failed:", len(failed)
+
+        # for clue in failed:
+        #     print "\n" + clue.game_id, clue.category
+        #     print clue.question
+        #     print clue.answer
+
+        print "Loaded games to db:", Game.objects.count()
+        self.assertGreater(Game.objects.count(), 100)
+
         clues = Clue.objects.all()
         print "Loaded clues to db:", Clue.objects.count()
         self.assertGreater(len(clues), 7000)
@@ -28,14 +37,6 @@ class SamplesTest(TestCase):
         num_cats = len(set([clue.category for clue in clues]))
         print "Categories  :", num_cats
         self.assertGreater(num_cats, 900)
-
-        num_show_nums = len(set([clue.show_num for clue in clues]))
-        print "Show Nums  :", num_show_nums
-        self.assertGreater(num_show_nums, 100)
-
-        num_game_ids = len(set([clue.game_id for clue in clues]))
-        print "Game ids  :", num_game_ids
-        self.assertGreater(num_game_ids, 100)
 
 
 class UnitTest(TestCase):
@@ -67,10 +68,9 @@ class UnitTest(TestCase):
         """
         Test db read and write of clues.
         """
-        clues = mgr.parse_games(TEST_GAME_ID)
-        for clue in clues:
-            clue.save()
-
+        game = list(mgr.parse_games(TEST_GAME_ID))[0]
+        game.save()
+        print
         count = Clue.objects.count()
         self.assertEqual(count, 50)
         for clue in Clue.objects.all()[:5]:
