@@ -102,9 +102,6 @@ class GameMgr(object):
         return html
 
     def parse_games(self, *game_ids):
-        """
-        Parse clues from given sample game ids.
-        """
         # clues = []
         # games = []
         for game_id in game_ids:

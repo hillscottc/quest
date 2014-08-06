@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 from .models import Clue, Game
 from django.db import DataError, transaction
 from django.db.transaction import TransactionManagementError
+import logging
+
+log = logging.getLogger('quest')
 
 ROUNDS_PARSED = ['jeopardy_round', 'double_jeopardy_round']
 
@@ -32,9 +35,8 @@ def parse_game_html(page, game_id=None):
                 with transaction.atomic():
                     game.clue_set.add(clue)
             except (DataError, TransactionManagementError):
-                # print "Failed", model_to_dict(clue)
-                print "Failed a clue"
-
+                # print "Failed parse of clue from game", game_id
+                log.debug("Failed parse of clue from game " + game_id)
     return game
 
 

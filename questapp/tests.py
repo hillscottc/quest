@@ -17,21 +17,18 @@ class SamplesTest(TestCase):
         Test loading all samples into db.
         """
         parsed, failed = load_all_games()
-        print "Loading all games..."
+        "Games parsed:", len(parsed), ", failed:", len(failed)
 
 
-        # print "Clues parsed:", len(parsed), ", failed:", len(failed)
+        games = Game.objects.all()
 
-        # for clue in failed:
-        #     print "\n" + clue.game_id, clue.category
-        #     print clue.question
-        #     print clue.answer
 
-        print "Loaded games to db:", Game.objects.count()
-        self.assertGreater(Game.objects.count(), 100)
+
+        print "Loaded games to db:", len(games)
+        self.assertGreater(len(games), 100)
 
         clues = Clue.objects.all()
-        print "Loaded clues to db:", Clue.objects.count()
+        print "Loaded clues to db:", len(clues)
         self.assertGreater(len(clues), 7000)
 
         num_cats = len(set([clue.category for clue in clues]))
