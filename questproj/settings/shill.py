@@ -46,7 +46,6 @@ LOGGING = {
         },
        'console': {
             'class': 'logging.StreamHandler',
-            # 'stream': sys.stdout,
             'formatter': 'simple'
         }
     },
@@ -54,11 +53,11 @@ LOGGING = {
         'django': {
             'handlers':['console', 'file'],
             'propagate': True,
-            'level':'DEBUG',
+            'level':'INFO',
         },
         'questapp': {
             'handlers': ['console', 'file'],
-            'level': 'INFO',
+            'level': 'DEBUG',
         },
     }
 }

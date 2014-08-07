@@ -18,34 +18,19 @@ from django.conf import settings as django_settings;
 env.hosts = ['localhost', ]
 
 @task
-def rebuild(drop_db=False, user=None):
+def rebuild(drop_db=True, user=None):
     """
     Recreate and sync db, load fixtures.
     """
     with locally():
         recreate(drop_db, user)
-        # set_south('off')
         local('./manage.py syncdb --noinput')
         # local('./bin/load_fixtures.sh')
-        # set_south('on')
         # local('./manage.py syncdb')
         # local('./manage.py migrate --fake')
         # ## Double-check.
         # local('./manage.py syncdb')
         # local('./manage.py migrate')
-
-
-@task
-def set_south(status='on'):
-    """
-    Toggle commenting of South in settings/base.py.
-    """
-    if status == 'off':
-        local('sed -i \'s/ "south"/ #"south"/\' settings/base.py')
-    elif status == 'on':
-        local('sed -i \'s/ #"south"/ "south"/\' settings/base.py')
-    else:
-        ValueError('off or on')
 
 
 def recreate(drop_db=False, user=None):

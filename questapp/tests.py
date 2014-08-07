@@ -9,21 +9,17 @@ mgr = GameMgr()
 
 
 class SamplesTest(TestCase):
+
+    fixtures = ['samples.json']
+
     def setUp(self):
         print
 
-    def test_load_all_games(self):
+    def test_samples(self):
         """
-        Test loading all samples into db.
+        Test the data loaded by the samples fixture.
         """
-        parsed, failed = load_all_games()
-        "Games parsed:", len(parsed), ", failed:", len(failed)
-
-
         games = Game.objects.all()
-
-
-
         print "Loaded games to db:", len(games)
         self.assertGreater(len(games), 100)
 
@@ -34,6 +30,17 @@ class SamplesTest(TestCase):
         num_cats = len(set([clue.category for clue in clues]))
         print "Categories  :", num_cats
         self.assertGreater(num_cats, 900)
+
+    # def test_load_all(self):
+    #     """
+    #     The fixture does this already.
+    #     """
+    #     parsed, failed = load_all_games()
+    #     "Games parsed:", len(parsed), ", failed:", len(failed)
+    #
+    #     games = Game.objects.all()
+    #     print "Loaded games to db:", len(games)
+    #     self.assertGreater(len(games), 100)
 
 
 class UnitTest(TestCase):
