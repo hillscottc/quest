@@ -6,7 +6,7 @@ from django.db import DataError, transaction
 from django.db.transaction import TransactionManagementError
 import logging
 
-log = logging.getLogger('quest')
+log = logging.getLogger(__name__)
 
 ROUNDS_PARSED = ['jeopardy_round', 'double_jeopardy_round']
 
@@ -34,9 +34,11 @@ def parse_game_html(page, game_id=None):
             try:
                 with transaction.atomic():
                     game.clue_set.add(clue)
+                    log.debug("Parsed game {}".format(game_id))
             except (DataError, TransactionManagementError):
                 # print "Failed parse of clue from game", game_id
-                log.debug("Failed parse of clue from game " + game_id)
+                log.warn("Failed parse of clue from game " + game_id)
+                pass
     return game
 
 

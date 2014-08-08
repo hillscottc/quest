@@ -82,3 +82,101 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+
+    # 'handlers': {
+    #     'null': {
+    #         'level': 'DEBUG',
+    #         'class': 'django.utils.log.NullHandler',
+    #         'formatter': 'standard'
+    #     },
+    #     'django_log': {
+    #         'level': 'DEBUG',
+    #         'class': 'logging.FileHandler',
+    #         'filename': os.path.join(LOGS_DIR, 'django.log'),
+    #         'formatter': 'standard'
+    #     },
+    #     'quest_log': {
+    #         'level': 'DEBUG',
+    #         'class': 'logging.FileHandler',
+    #         'filename': os.path.join(LOGS_DIR, 'quest.log'),
+    #         'formatter': 'standard'
+    #     },
+    #
+    # },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console_log', 'django_log'],
+#             'propagate': True,
+#             'level': 'DEBUG',
+#         },
+#         'questapp': {
+#             'handlers': ['console_log', 'quest_log'],
+#             'propagate': True,
+#             'level': 'DEBUG',
+#         }
+#     }
+# }
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s [%(name)s:%(lineno)s] %(message)s'
+
+        },
+    },
+    'filters': {},
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console':{
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'quest_log': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGS_DIR, 'quest.log'),
+            'formatter': 'verbose'
+        },
+        'django_log': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGS_DIR, 'django.log'),
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'django_log'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'django.db.backends': {
+            'handlers': ['console', 'django_log'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'questapp': {
+            'handlers': ['console', 'quest_log'],
+            'propagate': True,
+            'level': 'DEBUG',
+        }
+    }
+}

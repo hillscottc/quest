@@ -1,24 +1,25 @@
 import os
 from django.test import TestCase
-from django.forms.models import model_to_dict
+from django.test.utils import override_settings
+from unittest import skip
 
 from .models import Clue, Game
 from .game_mgr import GameMgr, TEST_GAME_ID, load_all_games
+
 
 mgr = GameMgr()
 
 
 class SamplesTest(TestCase):
 
-    fixtures = ['samples.json']
-
-    def setUp(self):
-        print
-
+    ## Override debug is true to get the django log output
+    @override_settings(DEBUG=True)
     def test_samples(self):
-        """
-        Test the data loaded by the samples fixture.
-        """
+        print
+        parsed, failed = load_all_games()
+        print "Games parsed:", len(parsed), ", failed:", len(failed)
+        self.assertTrue(len(failed) == 0)
+
         games = Game.objects.all()
         print "Loaded games to db:", len(games)
         self.assertGreater(len(games), 100)
@@ -31,18 +32,8 @@ class SamplesTest(TestCase):
         print "Categories  :", num_cats
         self.assertGreater(num_cats, 900)
 
-    # def test_load_all(self):
-    #     """
-    #     The fixture does this already.
-    #     """
-    #     parsed, failed = load_all_games()
-    #     "Games parsed:", len(parsed), ", failed:", len(failed)
-    #
-    #     games = Game.objects.all()
-    #     print "Loaded games to db:", len(games)
-    #     self.assertGreater(len(games), 100)
 
-
+@skip
 class UnitTest(TestCase):
 
     def test_get_sample_ids(self):

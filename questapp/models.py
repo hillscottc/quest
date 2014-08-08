@@ -20,9 +20,9 @@ class Game(BaseModel):
 
 class Clue(BaseModel):
     game = models.ForeignKey(Game, null=True, blank=True)
-    question = models.CharField(max_length=255, null=True, blank=True)
-    answer = models.CharField(max_length=255, null=True, blank=True)
-    category = models.CharField(max_length=100, null=True, blank=True)
+    question = models.CharField(max_length=255)
+    answer = models.CharField(max_length=255)
+    category = models.CharField(max_length=100)
 
     def __unicode__(self):
         return " C:{} Q:{} A:{}".format(self.category, trim(self.question), trim(self.answer))
