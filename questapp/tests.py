@@ -4,21 +4,19 @@ from django.test.utils import override_settings
 from unittest import skip
 
 from .models import Clue, Game
-from .game_mgr import GameMgr, TEST_GAME_ID, load_all_games
+from .game_mgr import (TEST_GAME_ID, load_all_games, get_sample_ids, get_local_html,
+                       get_fname, parse_game_html)
 
-
-mgr = GameMgr()
-
+## Djangp TestCases force DEBUG=False, ignoring the settings file.
+## Can override with @override_settings(DEBUG=True). To see django.db logging, for example.
 
 class SamplesTest(TestCase):
 
-    ## Override debug is true to get the django log output
-    @override_settings(DEBUG=True)
     def test_samples(self):
         print
-        parsed, failed = load_all_games()
-        print "Games parsed:", len(parsed), ", failed:", len(failed)
-        self.assertTrue(len(failed) == 0)
+        parsed_ids, failed_ids = load_all_games()
+        print "Games parsed:", len(parsed_ids), ", failed:", len(failed_ids)
+        self.assertTrue(len(failed_ids) == 0)
 
         games = Game.objects.all()
         print "Loaded games to db:", len(games)
@@ -33,41 +31,44 @@ class SamplesTest(TestCase):
         self.assertGreater(num_cats, 900)
 
 
-@skip
 class UnitTest(TestCase):
 
+    def setUp(self):
+        print
+
     def test_get_sample_ids(self):
+        """Get list of game_ids from samples.
         """
-        Able to get list of game_ids from samples?
-        """
-        game_ids = list(mgr.get_sample_ids())
+        game_ids = list(get_sample_ids())
         self.assertGreater(len(game_ids), 10)
 
     def test_get_local(self):
+        """Open local test game file.
         """
-        Test opening local game files.
-        """
-        html = mgr.get_local_html(TEST_GAME_ID)
+        html = get_local_html(TEST_GAME_ID)
         length = len(html) if html else 0
         self.assertGreater(length, 3000)
 
     def test_get_fname(self):
+        """Create file name for given id.
         """
-        Create file name for given id.
-        """
-        fname = mgr.get_fname(TEST_GAME_ID)
+        fname = get_fname(TEST_GAME_ID)
         self.assertIsNotNone(fname)
         self.assertTrue(os.path.isfile(fname))
 
+    @override_settings(DEBUG=True)
     def test_save_clues(self):
+        """Parse the test game, save to db.
         """
-        Test db read and write of clues.
-        """
-        game = list(mgr.parse_games(TEST_GAME_ID))[0]
+        html = get_local_html(TEST_GAME_ID)
+        game = parse_game_html(html, TEST_GAME_ID)
         game.save()
-        print
-        count = Clue.objects.count()
-        self.assertEqual(count, 50)
-        for clue in Clue.objects.all()[:5]:
-            print clue
+
+        print game.desc()
+
+        # clues = game.clue_set.all()
+        # self.assertEqual(len(clues), 50)
+        # print "First five clues in game {}:".format(TEST_GAME_ID)
+        # for clue in game.clue_set.all():
+        #     print clue
 

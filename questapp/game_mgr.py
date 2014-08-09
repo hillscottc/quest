@@ -7,112 +7,105 @@ from django.db import DataError, transaction
 from django.db.transaction import TransactionManagementError
 from django.forms.models import model_to_dict
 import logging
-from .models import Game
+
+log = logging.getLogger(__name__)
+
+
+URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
+SAMPLE_DIR = 'samples'
 
 
 def load_all_games():
+    """Parse and save the sample games to db.
     """
-    Load all the sample games.
-    """
-    parsed, failed = [], []
-    mgr = GameMgr()
-    for game in mgr.parse_games(*mgr.get_sample_ids()):
+    parsed_ids, failed_ids = [], []
+
+    for game_id in get_sample_ids():
+        html = get_local_html(game_id)
+        if not html:
+            failed_ids.append(game_id)
+            continue
+
+        game = parse_game_html(html, game_id)
         try:
             with transaction.atomic():
                 game.save()
-                parsed.append(game)
-        except (DataError, TransactionManagementError):
-            # print "Failed", model_to_dict(clue)
-            failed.append(game)
-    # for clue in mgr.parse_games(*mgr.get_sample_ids()):
-    #     try:
-    #         with transaction.atomic():
-    #             parsed.append(clue)
-    #             clue.save()
-    #     except (DataError, TransactionManagementError):
-    #         # print "Failed", model_to_dict(clue)
-    #         failed.append(clue)
-    return parsed, failed
+                log.info("Parsed {}".format(game))
+                parsed_ids.append(game_id)
+        except (DataError, TransactionManagementError) as err:
+            log.warn("Failed {}, {}".format(game_id, err.msg))
+            failed_ids.append(game)
+    return parsed_ids, failed_ids
 
 
-class GameMgr(object):
-
-    def __init__(self, url_base=None, sample_dir=None):
-        if url_base:
-            self.url_base = url_base
+def get_sample_ids():
+    files = glob.glob(os.path.join(SAMPLE_DIR, '*.html'))
+    for fname in files:
+        match = re.search(r'\d+', fname)
+        if not match:
+            continue
         else:
-            self.url_base = 'http://www.j-archive.com/showgame.php?game_id='
+            yield match.group()
 
-        if sample_dir:
-            self.sample_dir = sample_dir
-        else:
-            self.sample_dir = 'samples'
 
-    def get_sample_ids(self):
-        files = glob.glob(os.path.join(self.sample_dir, '*.html'))
-        for fname in files:
-            match = re.search(r'\d+', fname)
-            if not match:
-                continue
-            else:
-                yield match.group()
+def get_fname(game_id):
+    """Returns valid sampledir filename for given_id.
+    """
+    if isinstance(game_id, int):
+        game_id = str(game_id)
+    return os.path.join(SAMPLE_DIR, "game_{}.html".format(game_id))
 
-    def get_fname(self, game_id):
-        """
-        Returns valid sampledir filename for given_id.
-        """
-        if isinstance(game_id, int):
-            game_id = str(game_id)
-        return os.path.join(self.sample_dir, "game_{}.html".format(game_id))
 
-    def write_game(self, game_id, html):
-        """
-        Save html as a file in the SAMPLE_DIR, named by game_id.
-        """
-        failed = []
-        if len(html) < 3000:
-            print game_id, 'skipped, too short', len(html)
-            return
+def write_game(game_id, html):
+    """Save html as a file in the SAMPLE_DIR, named by game_id.
+    """
+    failed = []
+    if len(html) < 3000:
+        print game_id, 'skipped, too short', len(html)
+        return
 
-        try:
-            with open(self.get_fname(game_id), "w") as outfile:
-                outfile.write(html.encode('utf-8'))
-        except UnicodeEncodeError as uni_err:
-            print '\nFailed ', game_id,  uni_err
-            failed.append(game_id)
-        return failed
+    try:
+        with open(get_fname(game_id), "w") as outfile:
+            outfile.write(html.encode('utf-8'))
+    except UnicodeEncodeError as uni_err:
+        print '\nFailed ', game_id,  uni_err
+        failed.append(game_id)
+    return failed
 
-    def get_remote_html(self, game_id):
-        game_id = str(game_id) if isinstance(game_id, int) else game_id
-        url = self.url_base + game_id
-        return requests.get(url).text
 
-    def save_remote_games(self, *game_ids):
-        for game_id in game_ids:
-            html = self.get_remote_html(game_id)
-            self.write_game(game_id, html)
+def get_remote_html(game_id):
+    game_id = str(game_id) if isinstance(game_id, int) else game_id
+    url = URL_BASE + game_id
+    return requests.get(url).text
 
-    def get_local_html(self, game_id):
-        game_id = str(game_id) if isinstance(game_id, int) else game_id
-        fname = self.get_fname(game_id)
-        if not os.path.isfile(fname):
-            return
-        with open(fname, "r") as myfile:
-            html = myfile.read().replace('\n', '')
-        return html
 
-    def parse_games(self, *game_ids):
-        # clues = []
-        # games = []
-        for game_id in game_ids:
-            html = self.get_local_html(game_id)
-            if not html:
-                continue
-            game = parse_game_html(html, game_id)
-            # game_clues = list(parse_game_html(html, game_id))
-            # clues.extend(game_clues)
-            yield game
-        # return clues
+def save_remote_games(*game_ids):
+    for game_id in game_ids:
+        html = get_remote_html(game_id)
+        write_game(game_id, html)
+
+
+def get_local_html(game_id):
+    game_id = str(game_id) if isinstance(game_id, int) else game_id
+    fname = get_fname(game_id)
+    if not os.path.isfile(fname):
+        return
+    with open(fname, "r") as myfile:
+        html = myfile.read().replace('\n', '')
+    return html
+
+    # def parse_games(self, *game_ids):
+    #     # clues = []
+    #     # games = []
+    #     for game_id in game_ids:
+    #         html = self.get_local_html(game_id)
+    #         if not html:
+    #             continue
+    #         game = parse_game_html(html, game_id)
+    #         # game_clues = list(parse_game_html(html, game_id))
+    #         # clues.extend(game_clues)
+    #         yield game
+    #     # return clues
 
 
     # def parse_games(self, *game_ids):

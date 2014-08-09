@@ -14,6 +14,10 @@ class Game(BaseModel):
     show_num = models.SmallIntegerField(default=0)
     game_id = models.SmallIntegerField(default=0)
 
+    def desc(self):
+        """A summary details string."""
+        return "{}, {} clues.".format(self, len(self.clue_set.all()))
+
     def __unicode__(self):
         return "{}/{}".format(self.game_id, self.show_num)
 

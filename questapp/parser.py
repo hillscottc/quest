@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 ROUNDS_PARSED = ['jeopardy_round', 'double_jeopardy_round']
 
 
-def parse_game_html(page, game_id=None):
+def parse_game_html(page, game_id):
     """
     Parse clues from html page.
     """
