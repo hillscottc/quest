@@ -3,67 +3,71 @@ from string import split
 from bs4 import BeautifulSoup
 from .models import Clue, Game
 from django.db import DataError, transaction
-from django.db.transaction import TransactionManagementError
+from django.db import DatabaseError, IntegrityError
 import logging
+# from django.db.transaction import TransactionManagementError
 
 log = logging.getLogger(__name__)
 
-ROUNDS_PARSED = ['jeopardy_round', 'double_jeopardy_round']
 
-
-def parse_game_html(page, game_id):
+def parse_game_html(page, game_id=None):
+    """Parse clues from html page.
     """
-    Parse clues from html page.
-    """
-    bs = BeautifulSoup(page)
-    show_num = None
-    if bs.title:
-        match = re.search(r'#(\d+)', bs.title.text)
-        show_num = match.group(1) if match else None
+    bs_game = BeautifulSoup(page)
 
-    game = Game(game_id=game_id, show_num=show_num)
+    if not bs_game.title:
+        log.warn("No title section.")
+        return
 
-    game_rounds = []
-    for round_name in ROUNDS_PARSED:
-        game_round = _parse_round(round_div=bs.find('div', {'id': round_name}))
-        game_rounds.append(game_round)
+    match_show_num = re.search(r'#(\d+)', bs_game.title.text)
+    if not match_show_num:
+        log.warn("No show number.")
+        return
 
-    for game_round in game_rounds:
-        for clue in game_round:
-            # yield clue
-            try:
-                with transaction.atomic():
+    game = None
+    try:
+        game, created = Game.objects.upsert(show_num=match_show_num.group(1),
+                                            **dict(game_id=game_id))
+        if created:
+            log.info("Created game {}.".format(game))
+        else:
+            log.info("Updated game {}.".format(game))
+    except DatabaseError as err:
+        log.warn(err)
+
+    if game:
+        for clue in list(parse_clues(bs_game)):
+            with transaction.atomic():
+                try:
                     game.clue_set.add(clue)
-                    log.debug("Parsed game {}".format(game_id))
-            except (DataError, TransactionManagementError):
-                # print "Failed parse of clue from game", game_id
-                log.warn("Failed parse of clue from game " + game_id)
-                pass
+                except DataError as err:
+                    log.warn(("Failed parse of clue"
+                              "{}, {}, {}".format(game_id, clue, err)))
     return game
 
 
-def _parse_round(round_div):
-    """
-    Parse clues from a round div.
-    """
-    if not round_div:
-        return
+def parse_clues(bs_game):
 
-    jrt = round_div.table
-    cat_tags = jrt.find_all('tr')[0].find_all('td', {'class': "category_name"})
-    cats = [t.text for t in cat_tags]
-
-    for row in jrt.find_all('tr')[1:]:
-        clues = row.find_all('td', {'class': "clue"})
-        if not clues:
+    for round_name in ['jeopardy_round', 'double_jeopardy_round']:
+        # game_round = _parse_round(round_div=bs.find('div', {'id': round_name}))
+        round_div = bs_game.find('div', {'id': round_name})
+        if not round_div:
             continue
+        jrt = round_div.table
 
-        for i, clue in enumerate(clues):
-            if not clue.div:
+        cat_tags = jrt.find_all('tr')[0].find_all('td', {'class': "category_name"})
+        cats = [t.text for t in cat_tags]
+
+        for row in jrt.find_all('tr')[1:]:
+            clues = row.find_all('td', {'class': "clue"})
+            if not clues:
                 continue
-            else:
-                question, answer = _parse_clue(clue.div)
-                yield Clue(category=cats[i], question=question, answer=answer)
+            for i, clue in enumerate(clues):
+                if not clue.div:
+                    continue
+                else:
+                    question, answer = _parse_clue(clue.div)
+                    yield Clue(category=cats[i], question=question, answer=answer)
 
 
 def _parse_clue(div_tag):
@@ -80,7 +84,6 @@ def _parse_clue(div_tag):
         answer = match.group(3) if match else ''
 
     return question, answer
-
 
 
 

@@ -1,22 +1,24 @@
 import os
+from unittest import skip
 from django.test import TestCase
 from django.test.utils import override_settings
-from unittest import skip
-
 from .models import Clue, Game
 from .game_mgr import (TEST_GAME_ID, load_all_games, get_sample_ids, get_local_html,
                        get_fname, parse_game_html)
-
-## Djangp TestCases force DEBUG=False, ignoring the settings file.
-## Can override with @override_settings(DEBUG=True). To see django.db logging, for example.
+# from django_nose import FastFixtureTestCase as TestCase
+# REUSE_DB = 1 or os.environ.setdefault("REUSE_DB", "1")
 
 class SamplesTest(TestCase):
 
     def test_samples(self):
+        """Test the samples loaded into the db.
+        """
         print
-        parsed_ids, failed_ids = load_all_games()
-        print "Games parsed:", len(parsed_ids), ", failed:", len(failed_ids)
-        self.assertTrue(len(failed_ids) == 0)
+        # parsed_ids, failed_ids = load_all_games()
+        # print "Games parsed:", len(parsed_ids), ", failed:", len(failed_ids)
+        # self.assertTrue(len(failed_ids) == 0)
+
+        load_all_games()
 
         games = Game.objects.all()
         print "Loaded games to db:", len(games)
@@ -56,19 +58,19 @@ class UnitTest(TestCase):
         self.assertIsNotNone(fname)
         self.assertTrue(os.path.isfile(fname))
 
-    @override_settings(DEBUG=True)
+    # @override_settings(DEBUG=True)
     def test_save_clues(self):
         """Parse the test game, save to db.
         """
         html = get_local_html(TEST_GAME_ID)
         game = parse_game_html(html, TEST_GAME_ID)
-        game.save()
 
+        print "Game descript"
         print game.desc()
 
-        # clues = game.clue_set.all()
-        # self.assertEqual(len(clues), 50)
-        # print "First five clues in game {}:".format(TEST_GAME_ID)
-        # for clue in game.clue_set.all():
-        #     print clue
+        clues = game.clue_set.all()
+        self.assertEqual(len(clues), 50)
+        print "First five clues in game {}:".format(TEST_GAME_ID)
+        for clue in game.clue_set.all()[:5]:
+            print clue
 

@@ -26,8 +26,3 @@ def parse_seasons(count=1):
                 if match:
                     game_ids.append(match.group(0))
     return game_ids
-
-
-if __name__ == '__main__':
-    pass
-

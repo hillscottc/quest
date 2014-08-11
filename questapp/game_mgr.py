@@ -3,9 +3,6 @@ import requests
 from .parser import parse_game_html
 import glob
 import re
-from django.db import DataError, transaction
-from django.db.transaction import TransactionManagementError
-from django.forms.models import model_to_dict
 import logging
 
 log = logging.getLogger(__name__)
@@ -13,29 +10,17 @@ log = logging.getLogger(__name__)
 
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
 SAMPLE_DIR = 'samples'
+TEST_GAME_ID = 4529
 
 
 def load_all_games():
     """Parse and save the sample games to db.
     """
-    parsed_ids, failed_ids = [], []
-
     for game_id in get_sample_ids():
         html = get_local_html(game_id)
         if not html:
-            failed_ids.append(game_id)
             continue
-
-        game = parse_game_html(html, game_id)
-        try:
-            with transaction.atomic():
-                game.save()
-                log.info("Parsed {}".format(game))
-                parsed_ids.append(game_id)
-        except (DataError, TransactionManagementError) as err:
-            log.warn("Failed {}, {}".format(game_id, err.msg))
-            failed_ids.append(game)
-    return parsed_ids, failed_ids
+        parse_game_html(html, game_id)
 
 
 def get_sample_ids():
@@ -94,35 +79,6 @@ def get_local_html(game_id):
         html = myfile.read().replace('\n', '')
     return html
 
-    # def parse_games(self, *game_ids):
-    #     # clues = []
-    #     # games = []
-    #     for game_id in game_ids:
-    #         html = self.get_local_html(game_id)
-    #         if not html:
-    #             continue
-    #         game = parse_game_html(html, game_id)
-    #         # game_clues = list(parse_game_html(html, game_id))
-    #         # clues.extend(game_clues)
-    #         yield game
-    #     # return clues
-
-
-    # def parse_games(self, *game_ids):
-    #     """
-    #     Parse clues from given sample game ids.
-    #     """
-    #     clues = []
-    #     for game_id in game_ids:
-    #         html = self.get_local_html(game_id)
-    #         if not html:
-    #             continue
-    #         game_clues = list(parse_game_html(html, game_id))
-    #         clues.extend(game_clues)
-    #     return clues
-
-
-TEST_GAME_ID = 4529
 
 GAME_IDS = [4529, 368, 4249, 363, 362, 361, 360, 359, 356, 355, 354, 353, 352, 348, 347, 345,
             344, 341, 340, 339, 338, 180, 179, 177, 174, 173, 3377, 4277, 1992, 1991, 4230,
