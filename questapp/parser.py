@@ -3,53 +3,58 @@ from string import split
 from bs4 import BeautifulSoup
 from .models import Clue, Game
 from django.db import DataError, transaction
-from django.db import DatabaseError, IntegrityError
+from django.db import DatabaseError
 import logging
-# from django.db.transaction import TransactionManagementError
 
 log = logging.getLogger(__name__)
 
 
-def parse_game_html(page, game_id=None):
-    """Parse clues from html page.
+def parse_game_html(page, game_id):
+    """Parse game and clues from html page, saves to db.
     """
     bs_game = BeautifulSoup(page)
 
+    # Get the title
     if not bs_game.title:
         log.warn("No title section.")
         return
 
+    # Get the show num
     match_show_num = re.search(r'#(\d+)', bs_game.title.text)
     if not match_show_num:
         log.warn("No show number.")
         return
+    show_num = int(float(match_show_num.group(1)))
 
-    game = None
+    # Create/update game.
     try:
-        game, created = Game.objects.upsert(show_num=match_show_num.group(1),
-                                            **dict(game_id=game_id))
-        if created:
-            log.info("Created game {}.".format(game))
-        else:
-            log.info("Updated game {}.".format(game))
+        game, created = Game.objects.upsert(show_num=show_num,
+                                            defaults=dict(game_id=game_id))
     except DatabaseError as err:
         log.warn(err)
+        return
 
-    if game:
-        for clue in list(parse_clues(bs_game)):
-            with transaction.atomic():
-                try:
-                    game.clue_set.add(clue)
-                except DataError as err:
-                    log.warn(("Failed parse of clue"
-                              "{}, {}, {}".format(game_id, clue, err)))
+    # Delete old clues.
+    if not created:
+        [clue.delete() for clue in game.clue_set.all()]
+
+    for clue in list(parse_clues(bs_game)):
+        with transaction.atomic():
+            try:
+                clue, created = Clue.objects.upsert(game=game,
+                                                    category=clue.category,
+                                                    question=clue.question,
+                                                    answer=clue.answer)
+            except DataError as err:
+                log.warn(("Failed parse of clue "
+                          "{}, {}, {}".format(game_id, clue, err)))
     return game
 
 
 def parse_clues(bs_game):
-
+    """Yields Clues parsed from given souped game.
+    """
     for round_name in ['jeopardy_round', 'double_jeopardy_round']:
-        # game_round = _parse_round(round_div=bs.find('div', {'id': round_name}))
         round_div = bs_game.find('div', {'id': round_name})
         if not round_div:
             continue
@@ -84,6 +89,3 @@ def _parse_clue(div_tag):
         answer = match.group(3) if match else ''
 
     return question, answer
-
-
-

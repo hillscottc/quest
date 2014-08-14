@@ -74,7 +74,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
-        'quest': {
+        'questapp': {
             'handlers': ['console', 'quest_log'],
             'propagate': True,
             'level': 'DEBUG',

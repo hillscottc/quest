@@ -1,12 +1,15 @@
+import logging
 from django.db import models
 from questapp.utils import trim
+
+log = logging.getLogger(__name__)
 
 
 class UpsertManager(models.Manager):
     """Provides the upsert method for regular managers.
-    Creates the object if it doesn't exist with matching specified *args.
-    If it exists, update it with the specified **kwargs.
-    Usage: x.upsert(id=1, **dict(name='joe', addr='abc'))
+    Creates the object if it doesn't exist.
+    If it exists, update it with the specified defaults.
+    Usage: x.upsert(id=1, defaults=dict(name='joe', addr='abc'))
     """
     def upsert(self, **kwargs):
         obj, created = self.get_or_create(**kwargs)
@@ -14,10 +17,16 @@ class UpsertManager(models.Manager):
             for k, v in kwargs.get("defaults", {}).items():
                 if k not in dir(obj):
                     raise AttributeError(
-                        "Invalid attr {} for update on {} ({})".format(
+                        "Bad attr {} for update on {} ({})".format(
                             k, type(obj), obj.pk))
                 setattr(obj, k, v)
             obj.save()
+
+        if created:
+            log.debug("Created {}.".format(obj))
+        else:
+            log.debug("Updated {}.".format(obj))
+
         return obj, created
 
 
@@ -44,7 +53,7 @@ class Game(BaseModel):
                                        help_text="id assigned by data host.")
 
     def __unicode__(self):
-        return self.show_num
+        return "Game {}".format(self.show_num)
 
 
 class Clue(BaseModel):
@@ -53,5 +62,11 @@ class Clue(BaseModel):
     answer = models.CharField(max_length=255)
     category = models.CharField(max_length=100)
 
-    def __unicode__(self):
+    class Meta:
+        unique_together = ['game', 'question', 'answer', 'category']
+
+    def desc(self):
         return " C:{} Q:{} A:{}".format(self.category, trim(self.question), trim(self.answer))
+
+    def __unicode__(self):
+        return "Clue {}".format(self.pk)
