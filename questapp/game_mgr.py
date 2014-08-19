@@ -14,16 +14,6 @@ TEST_GAME_ID = 4529
 TEST_SHOW_NUM = 153
 
 
-def load_all_games():
-    """Parse and save the sample games to db.
-    """
-    for game_id in get_sample_ids():
-        html = read_local_html(game_id)
-        if not html:
-            continue
-        parse_game_html(html, game_id)
-
-
 def get_sample_ids():
     """Gets the ids from the file names in the samples dir.
     """

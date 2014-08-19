@@ -1,6 +1,7 @@
 import logging
 from django.db import models
 from questapp.utils import trim
+from django.core.exceptions import ValidationError
 
 log = logging.getLogger(__name__)
 
@@ -70,3 +71,12 @@ class Clue(BaseModel):
 
     def __unicode__(self):
         return "Clue {}".format(self.pk)
+
+
+class ClueLink(BaseModel):
+    """An html link embededed in a question."""
+    clue = models.ForeignKey(Clue)
+    link = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return unicode(self.link)

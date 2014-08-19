@@ -14,6 +14,27 @@ def parse_game_html(page, game_id):
     """
     bs_game = BeautifulSoup(page)
 
+    # Parse and upsert game metadata.
+    game_meta = parse_game_meta(bs_game)
+    try:
+        game, created = Game.objects.upsert(show_num=game_meta['show_num'],
+                                            defaults=dict(game_id=game_id))
+    except DatabaseError as err:
+        log.warn(err)
+        return
+
+    # Delete any old clues for this game.
+    if not created:
+        [clue_data.delete() for clue_data in game.clue_set.all()]
+
+    # Parse and save the games's clues.
+    _parse_game_clues(bs_game, game)
+
+    return game
+
+
+def parse_game_meta(bs_game):
+    """Parse the show's metadata. """
     # Get the title
     if not bs_game.title:
         log.warn("No title section.")
@@ -26,56 +47,63 @@ def parse_game_html(page, game_id):
         return
     show_num = int(float(match_show_num.group(1)))
 
-    # Create/update game.
-    try:
-        game, created = Game.objects.upsert(show_num=show_num,
-                                            defaults=dict(game_id=game_id))
-    except DatabaseError as err:
-        log.warn(err)
-        return
+    return dict(show_num=show_num)
 
-    # Delete old clues.
-    if not created:
-        [clue.delete() for clue in game.clue_set.all()]
 
-    for clue in list(parse_clues(bs_game)):
+def _parse_game_clues(bs_game, game):
+    for clue_data in _parse_clue_data(bs_game):
+
+        if len(clue_data['question']) < 3:
+            continue
+
+        if '<a href' in clue_data['question']:
+            log.debug("Skipping a question containing an href.")
+            continue
+
         with transaction.atomic():
             try:
-                clue, created = Clue.objects.upsert(game=game,
-                                                    category=clue.category,
-                                                    question=clue.question,
-                                                    answer=clue.answer)
+                Clue.objects.create(game=game,
+                                    category=clue_data['category'],
+                                    question=clue_data['question'],
+                                    answer=clue_data['answer'])
+
             except DataError as err:
-                log.warn(("Failed parse of clue "
-                          "{}, {}, {}".format(game_id, clue, err)))
-    return game
+                log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
 
 
-def parse_clues(bs_game):
-    """Yields Clues parsed from given souped game.
-    """
+def _parse_clue_data(bs_game):
     for round_name in ['jeopardy_round', 'double_jeopardy_round']:
         round_div = bs_game.find('div', {'id': round_name})
         if not round_div:
             continue
-        jrt = round_div.table
 
-        cat_tags = jrt.find_all('tr')[0].find_all('td', {'class': "category_name"})
-        cats = [t.text for t in cat_tags]
+        # Get the categories
+        cats = _parse_round_cats(round_div)
 
-        for row in jrt.find_all('tr')[1:]:
+        for row in round_div.table.find_all('tr')[1:]:
             clues = row.find_all('td', {'class': "clue"})
             if not clues:
                 continue
             for i, clue in enumerate(clues):
                 if not clue.div:
                     continue
-                else:
-                    question, answer = _parse_clue(clue.div)
-                    yield Clue(category=cats[i], question=question, answer=answer)
+
+                # Get the q and a by parsing the messy div javascript
+                question, answer = _parse_qa(clue.div)
+
+                if not (question and answer):
+                    continue
+
+                question, answer = _parse_qa(clue.div)
+                yield dict(category=cats[i], question=question, answer=answer)
 
 
-def _parse_clue(div_tag):
+def _parse_round_cats(round_div):
+    cat_row = round_div.table.find_all('tr')[0]
+    return [cat.text for cat in cat_row.find_all('td', {'class': "category_name"})]
+
+
+def _parse_qa(div_tag):
     """Parse the q and a from div's mouseover js."""
     question, answer = '', ''
     regex_ans = '(.*)("correct_response">)([^<]+)'

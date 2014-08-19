@@ -1,23 +1,44 @@
 import os
-from unittest import skip
-from django.test import TestCase
+from unittest import skipUnless
 from django.test.utils import override_settings
+from questapp.management.commands import load_samples
 from .models import Clue, Game
-from .game_mgr import (TEST_GAME_ID, TEST_SHOW_NUM, load_all_games,
+from .game_mgr import (TEST_GAME_ID, TEST_SHOW_NUM,
                        get_sample_ids, read_local_html,
                        get_fname, parse_game_html)
-
-from questapp.management.commands import load_samples
-
+from django.test import TestCase
 # from django_nose import FastFixtureTestCase as TestCase
-# REUSE_DB = 1 or os.environ.setdefault("REUSE_DB", "1")
+# REUSE_DB = 1
+
+TEST_LOAD_SAMPLES = False
 
 
-class LoadSamplesTest(TestCase):
+@skipUnless(not TEST_LOAD_SAMPLES, "Parse and load all html sample files.")
+class IntegrationTest(TestCase):
+    """Test the initial data set.
+    """
+    fixtures = ['initial_data.json']
 
+    def setUp(self):
+        print "Checking fixture-loaded records"
+        self.assertGreater(Game.objects.count(), 100)
+        self.assertGreater(Clue.objects.count(), 7000)
+
+    def test_clues(self):
+        """Test the clues."""
+        num_cats = len(set([clue.category for clue in Clue.objects.all()]))
+        print "Categories  :", num_cats
+        self.assertGreater(num_cats, 900)
+
+
+class UnitTest(TestCase):
+
+    def setUp(self):
+        print
+
+    @skipUnless(TEST_LOAD_SAMPLES, "Parse and load all html sample files.")
     def test_load_samples(self):
-        """Execute the load_samples mgmt command, loading the db.
-        """
+        """Execute the load_samples mgmt command, loading the db."""
         print
         load_samples.Command().handle()
 
@@ -34,35 +55,27 @@ class LoadSamplesTest(TestCase):
         print "Categories  :", num_cats
         self.assertGreater(num_cats, 900)
 
-
-class UnitTest(TestCase):
-
-    def setUp(self):
-        print
-
     def test_get_sample_ids(self):
-        """Get list of game_ids from samples.
-        """
+        """Get list of game_ids from samples."""
         game_ids = list(get_sample_ids())
         self.assertGreater(len(game_ids), 10)
 
     def test_read_local(self):
-        """Open local test game file.
-        """
+        """Open local test game file."""
         html = read_local_html(TEST_GAME_ID)
         length = len(html) if html else 0
         self.assertGreater(length, 3000)
 
     def test_get_fname(self):
-        """Create file name for given id.
-        """
+        """Create file name for given id."""
         fname = get_fname(TEST_GAME_ID)
         self.assertIsNotNone(fname)
         self.assertTrue(os.path.isfile(fname))
 
-    # @override_settings(DEBUG=True)
+    @override_settings(DEBUG=True)
     def test_save(self):
         """Parse the test game, save to db.
+        Debug settings overrided.
         """
         html = read_local_html(TEST_GAME_ID)
         game = parse_game_html(html, TEST_GAME_ID)
@@ -73,14 +86,14 @@ class UnitTest(TestCase):
         self.assertEqual(game.show_num, TEST_SHOW_NUM)
 
         clues = game.clue_set.all()
-        self.assertEqual(len(clues), 50)
+        self.assertEqual(len(clues), 48)
         print "First five clues in game {}:".format(TEST_GAME_ID)
         for clue in game.clue_set.all()[:5]:
-            print clue
+            print clue,
+        print
 
     def test_upsert(self):
-        """Test upserts.
-        """
+        """Test game upserts."""
         html = read_local_html(TEST_GAME_ID)
         test_game = parse_game_html(html, TEST_GAME_ID)
         self.assertEqual(test_game.game_id, TEST_GAME_ID)
