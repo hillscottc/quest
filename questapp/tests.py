@@ -11,30 +11,26 @@ from django.test import TestCase
 # REUSE_DB = 1
 
 TEST_LOAD_SAMPLES = False
-
-
-@skipUnless(not TEST_LOAD_SAMPLES, "Parse and load all html sample files.")
-class IntegrationTest(TestCase):
-    """Test the initial data set.
-    """
-    fixtures = ['initial_data.json']
-
-    def setUp(self):
-        print "Checking fixture-loaded records"
-        self.assertGreater(Game.objects.count(), 100)
-        self.assertGreater(Clue.objects.count(), 7000)
-
-    def test_clues(self):
-        """Test the clues."""
-        num_cats = len(set([clue.category for clue in Clue.objects.all()]))
-        print "Categories  :", num_cats
-        self.assertGreater(num_cats, 900)
+TEST_WITH_FIXTURES = True
 
 
 class UnitTest(TestCase):
 
+    if TEST_WITH_FIXTURES:
+        fixtures = ['samples.json']
+
     def setUp(self):
         print
+        print "Game count:", Game.objects.count()
+
+    @skipUnless(TEST_WITH_FIXTURES, "Check the loaded test fixtures.")
+    def test_loaded_fixtures(self):
+        """Check the loaded test fixtures."""
+        self.assertGreater(Game.objects.count(), 100)
+        self.assertGreater(Clue.objects.count(), 7000)
+        num_cats = len(set([clue.category for clue in Clue.objects.all()]))
+        print "Categories  :", num_cats
+        self.assertGreater(num_cats, 900)
 
     @skipUnless(TEST_LOAD_SAMPLES, "Parse and load all html sample files.")
     def test_load_samples(self):
@@ -115,4 +111,3 @@ class UnitTest(TestCase):
         self.assertEqual(game.game_id, fake_game_id)
         self.assertEqual(game.show_num, fake_show_num)
         self.assertTrue(created)
-
