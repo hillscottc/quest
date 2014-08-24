@@ -1,9 +1,10 @@
 import os
 import requests
-from .parser import parse_game_html
 import glob
 import re
 import logging
+from random import randint
+from .models import Clue
 
 log = logging.getLogger(__name__)
 
@@ -12,6 +13,16 @@ URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
 SAMPLE_DIR = 'samples'
 TEST_GAME_ID = 4529
 TEST_SHOW_NUM = 153
+
+
+def random_obj(obj_type):
+    num = randint(0, obj_type.objects.count() - 1)
+    return obj_type.objects.all()[num]
+
+
+def random_clue():
+    num = randint(0, Clue.objects.count() - 1)
+    return Clue.objects.all()[num]
 
 
 def get_sample_ids():

@@ -1,7 +1,7 @@
 import re
 from string import split
 from bs4 import BeautifulSoup
-from .models import Clue, Game
+from .models import Clue, Game, Category
 from django.db import DataError, transaction
 from django.db import DatabaseError
 import logging
@@ -23,9 +23,10 @@ def parse_game_html(page, game_id):
         log.warn(err)
         return
 
-    # Delete any old clues for this game.
+    # Delete any old clues or cats for this game.
     if not created:
-        [clue_data.delete() for clue_data in game.clue_set.all()]
+        [clue.delete() for clue in game.clue_set.all()]
+        [cat.delete() for cat in game.category_set.all()]
 
     # Parse and save the games's clues.
     _parse_game_clues(bs_game, game)
@@ -51,8 +52,7 @@ def parse_game_meta(bs_game):
 
 
 def _parse_game_clues(bs_game, game):
-    for clue_data in _parse_clue_data(bs_game):
-
+    for clue_data in _parse_rounds(bs_game, game):
         if len(clue_data['question']) < 3:
             continue
 
@@ -62,23 +62,21 @@ def _parse_game_clues(bs_game, game):
 
         with transaction.atomic():
             try:
-                Clue.objects.create(game=game,
-                                    category=clue_data['category'],
+                Clue.objects.create(game=game, category=clue_data['category'],
                                     question=clue_data['question'],
                                     answer=clue_data['answer'])
-
             except DataError as err:
                 log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
 
 
-def _parse_clue_data(bs_game):
+def _parse_rounds(bs_game, game):
     for round_name in ['jeopardy_round', 'double_jeopardy_round']:
         round_div = bs_game.find('div', {'id': round_name})
         if not round_div:
             continue
 
         # Get the categories
-        cats = _parse_round_cats(round_div)
+        cats = _parse_round_cats(round_div, game)
 
         for row in round_div.table.find_all('tr')[1:]:
             clues = row.find_all('td', {'class': "clue"})
@@ -87,10 +85,8 @@ def _parse_clue_data(bs_game):
             for i, clue in enumerate(clues):
                 if not clue.div:
                     continue
-
                 # Get the q and a by parsing the messy div javascript
                 question, answer = _parse_qa(clue.div)
-
                 if not (question and answer):
                     continue
 
@@ -98,9 +94,13 @@ def _parse_clue_data(bs_game):
                 yield dict(category=cats[i], question=question, answer=answer)
 
 
-def _parse_round_cats(round_div):
+def _parse_round_cats(round_div, game):
     cat_row = round_div.table.find_all('tr')[0]
-    return [cat.text for cat in cat_row.find_all('td', {'class': "category_name"})]
+    cats = []
+    for cat_el in cat_row.find_all('td', {'class': "category_name"}):
+        # cat, _ = Category.objects.upsert(defaults=dict(name=cat_el.text, game=game))
+        cats.append(Category.objects.create(name=cat_el.text, game=game))
+    return cats
 
 
 def _parse_qa(div_tag):

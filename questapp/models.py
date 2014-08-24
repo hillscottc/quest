@@ -57,17 +57,29 @@ class Game(BaseModel):
         return "Game {}".format(self.show_num)
 
 
+class Category(BaseModel):
+    game = models.ForeignKey(Game)
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = ['game', 'name']
+
+    def __unicode__(self):
+        return self.name
+
+
 class Clue(BaseModel):
     game = models.ForeignKey(Game, null=True, blank=True)
+    category = models.ForeignKey(Category)
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
-    category = models.CharField(max_length=100)
 
     class Meta:
         unique_together = ['game', 'question', 'answer', 'category']
 
     def desc(self):
-        return " C:{} Q:{} A:{}".format(self.category, trim(self.question), trim(self.answer))
+        # return " C:{} Q:{} A:{}".format(self.category, trim(self.question), trim(self.answer))
+        return "CAT:{} Q:{} A:{}".format(self.category, self.question, self.answer)
 
     def __unicode__(self):
         return "Clue {}".format(self.pk)

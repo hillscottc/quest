@@ -2,30 +2,31 @@ import os
 from unittest import skipUnless
 from django.test.utils import override_settings
 from questapp.management.commands import load_samples
-from .models import Clue, Game
+from .models import Clue, Game, Category
+from .parser import parse_game_html
 from .game_mgr import (TEST_GAME_ID, TEST_SHOW_NUM,
                        get_sample_ids, read_local_html,
-                       get_fname, parse_game_html)
+                       get_fname, random_obj)
 from django.test import TestCase
 # from django_nose import FastFixtureTestCase as TestCase
 # REUSE_DB = 1
 
-TEST_LOAD_SAMPLES = False
-TEST_WITH_FIXTURES = True
+TEST_LOAD_SAMPLES = True
+TEST_WITH_FIXTURES = False
 
 
-class UnitTest(TestCase):
+class FuntionalTest(TestCase):
 
     if TEST_WITH_FIXTURES:
         fixtures = ['samples.json']
 
     def setUp(self):
         print
-        print "Game count:", Game.objects.count()
 
     @skipUnless(TEST_WITH_FIXTURES, "Check the loaded test fixtures.")
     def test_loaded_fixtures(self):
         """Check the loaded test fixtures."""
+        print "Game count:", Game.objects.count()
         self.assertGreater(Game.objects.count(), 100)
         self.assertGreater(Clue.objects.count(), 7000)
         num_cats = len(set([clue.category for clue in Clue.objects.all()]))
@@ -38,19 +39,36 @@ class UnitTest(TestCase):
         print
         load_samples.Command().handle()
 
-        games = Game.objects.all()
-        print "Loaded games to db:", len(games)
-        self.assertEqual(len(games),
+        game_count = Game.objects.count()
+        print "Count Games:", game_count
+        self.assertEqual(game_count,
                          len(list(get_sample_ids())) - 1)
 
-        clues = Clue.objects.all()
-        print "Loaded clues to db:", len(clues)
-        self.assertGreater(len(clues), 7000)
+        clue_count = Clue.objects.count()
+        print "Count Clues:", clue_count
+        self.assertGreater(clue_count, 7000)
 
-        num_cats = len(set([clue.category for clue in clues]))
-        print "Categories  :", num_cats
-        self.assertGreater(num_cats, 900)
+        cat_count = Category.objects.count()
+        print "Count Categories:", cat_count
+        self.assertGreater(cat_count, 900)
 
+        print [clue.desc() for clue in Clue.objects.all()[:10]]
+
+    def test_random_obj(self):
+        """Get a random Clue and Category."""
+        if not Clue.objects.count():
+            print "No Clues."
+            return
+        clue1 = random_obj(Clue)
+        print "Random clue: {}, CATEGORY: {}\n{}\n".format(clue1.pk, clue1.category, clue1.question)
+        self.assertIsNotNone(clue1)
+        clue2 = random_obj(Clue)
+        print "Random clue: {}, CATEGORY: {}\n{}\n".format(clue2.pk, clue2.category, clue2.question)
+        self.assertIsNotNone(clue2)
+        self.assertNotEqual(clue1.pk, clue2.pk)
+
+
+class UnitTest(TestCase):
     def test_get_sample_ids(self):
         """Get list of game_ids from samples."""
         game_ids = list(get_sample_ids())
@@ -111,3 +129,5 @@ class UnitTest(TestCase):
         self.assertEqual(game.game_id, fake_game_id)
         self.assertEqual(game.show_num, fake_show_num)
         self.assertTrue(created)
+
+

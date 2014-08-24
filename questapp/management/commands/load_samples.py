@@ -2,7 +2,8 @@
 Parses the samples html files and loads them to db.
 """
 import logging
-from questapp.game_mgr import get_sample_ids, read_local_html, parse_game_html
+from questapp.game_mgr import get_sample_ids, read_local_html
+from questapp.parser import parse_game_html
 from questapp.models import Clue, Game
 from django.core.management.base import BaseCommand
 
