@@ -6,12 +6,12 @@ from .models import Clue, Game, Category
 from .parser import parse_game_html
 from .game_mgr import (TEST_GAME_ID, TEST_SHOW_NUM,
                        get_sample_ids, read_local_html,
-                       get_fname, random_obj)
+                       get_fname, get_random_objs)
 from django.test import TestCase
 # from django_nose import FastFixtureTestCase as TestCase
 # REUSE_DB = 1
 
-TEST_LOAD_SAMPLES = True
+TEST_LOAD_SAMPLES = False
 TEST_WITH_FIXTURES = False
 
 
@@ -54,18 +54,24 @@ class FuntionalTest(TestCase):
 
         print [clue.desc() for clue in Clue.objects.all()[:10]]
 
-    def test_random_obj(self):
+    def test_get_random_objs(self):
         """Get a random Clue and Category."""
         if not Clue.objects.count():
             print "No Clues."
             return
-        clue1 = random_obj(Clue)
-        print "Random clue: {}, CATEGORY: {}\n{}\n".format(clue1.pk, clue1.category, clue1.question)
+
+        print "Some random clues."
+        clue1 = get_random_objs(Clue).next()
+        print clue1.desc()
         self.assertIsNotNone(clue1)
-        clue2 = random_obj(Clue)
-        print "Random clue: {}, CATEGORY: {}\n{}\n".format(clue2.pk, clue2.category, clue2.question)
+        clue2 = get_random_objs(Clue).next()
+        print clue2.desc()
         self.assertIsNotNone(clue2)
         self.assertNotEqual(clue1.pk, clue2.pk)
+
+        print "Some random categories."
+        for cat in get_random_objs(Category, 5):
+            print cat
 
 
 class UnitTest(TestCase):

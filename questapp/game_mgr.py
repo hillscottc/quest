@@ -15,14 +15,10 @@ TEST_GAME_ID = 4529
 TEST_SHOW_NUM = 153
 
 
-def random_obj(obj_type):
-    num = randint(0, obj_type.objects.count() - 1)
-    return obj_type.objects.all()[num]
-
-
-def random_clue():
-    num = randint(0, Clue.objects.count() - 1)
-    return Clue.objects.all()[num]
+def get_random_objs(obj_type, num_returned=1):
+    db_count = obj_type.objects.count()
+    for i in range(num_returned):
+        yield obj_type.objects.all()[randint(0, db_count - 1)]
 
 
 def get_sample_ids():
