@@ -52,26 +52,44 @@ class FuntionalTest(TestCase):
         print "Count Categories:", cat_count
         self.assertGreater(cat_count, 900)
 
+        ok = 0
 
         fails = 0
+        fix_wind = 0
 
         # print [clue.desc() for clue in Clue.objects.all()[:10]]
+        # for clue in Clue.objects.all():
+        #     try:
+        #         print clue.question
+        #         ok += 1
+        #     except Exception as err:
+        #         print err
+        #         try:
+        #             print clue.question.decode("windows-1252")
+        #             fix_wind += 1
+        #         except Exception as win_err:
+        #             fails += 1
+        #             print win_err
+        # print "Ok", ok
+        # print "Fails", fails
+        # print "fix_wind", fix_wind
+
         for clue in Clue.objects.all():
             try:
                 x = clue.desc()
-            except:
-                # print "failed", clue.pk, clue.question
-                # fails += 1
-                try:
-                    print "WORKED!!!!!!!!!!!!!!!!!!!!!!!!!!1to.win..", clue.question.decode("windows-1252")
-                except:
-                    print "no win"
-                    fails += 1
-                    pass
-
-
+                ok += 1
+            except Exception as err:
+                print err
+                fails += 1
+                # try:
+                #     print clue.answer.decode("windows-1252")
+                #     fix_wind += 1
+                # except Exception as win_err:
+                #     fails += 1
+                #     print win_err
+        print "Ok", ok
         print "Fails", fails
-
+        print "fix_wind", fix_wind
 
 #
 #     def test_get_random_objs(self):
