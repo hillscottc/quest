@@ -113,6 +113,11 @@ def _parse_qa(div_tag):
 
     if raw_answer and raw_question:
         question = split(raw_question, ", '",  2)[2][:-2]
+
+
+
+
+
         match = re.match(regex_ans, raw_answer)
         answer = match.group(3) if match else ''
 

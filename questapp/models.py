@@ -77,6 +77,23 @@ class Clue(BaseModel):
     class Meta:
         unique_together = ['game', 'question', 'answer', 'category']
 
+
+    def clean_fields(self, exclude=None):
+
+
+
+
+        super(Clue, self).clean_fields()
+
+
+    # def clean(self):
+    #     # Don't allow draft entries to have a pub_date.
+    #     if self.status == 'draft' and self.pub_date is not None:
+    #         raise ValidationError('Draft entries may not have a publication date.')
+    #     # Set the pub_date for published items if it hasn't been set already.
+    #     if self.status == 'published' and self.pub_date is None:
+    #         self.pub_date = datetime.date.today()
+
     def desc(self):
         # return " C:{} Q:{} A:{}".format(self.category, trim(self.question), trim(self.answer))
         return "CAT:{} Q:{} A:{}".format(self.category, self.question, self.answer)

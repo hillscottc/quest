@@ -1,12 +1,15 @@
 from django.conf.urls import patterns, include, url
+from questapp.views import AboutView, CategoryListView
 
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     # Examples:
-    # url(r'^$', 'questproj.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+    url(r'^$', AboutView.as_view()),
+
+    url(r'^questapp/', include('questapp.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )
