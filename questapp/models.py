@@ -65,7 +65,7 @@ class Category(BaseModel):
         unique_together = ['game', 'name']
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
 
 class Clue(BaseModel):
@@ -82,7 +82,7 @@ class Clue(BaseModel):
         return "CAT:{} Q:{} A:{}".format(self.category, self.question, self.answer)
 
     def __unicode__(self):
-        return "Clue {}".format(self.pk)
+        return u"Q:{} A:{}".format(self.question, self.answer)
 
 
 class ClueLink(BaseModel):

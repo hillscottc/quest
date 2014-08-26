@@ -116,4 +116,8 @@ def _parse_qa(div_tag):
         match = re.match(regex_ans, raw_answer)
         answer = match.group(3) if match else ''
 
+    # Remove backslashes -- shouldn't be any escaping in the source.
+    question = re.sub(r"\\", "", question)
+    answer = re.sub(r"\\", "", answer)
+
     return question, answer

@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 import re
 
 
-def trim(txt):
-    if txt and len(txt) > 10:
-        return txt[:9] + '...'
+def trim(txt, length=30):
+    if txt and len(txt) > length:
+        return txt[:length-1] + '...'
 
 
 def parse_seasons(count=1):
