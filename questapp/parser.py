@@ -122,6 +122,11 @@ def _parse_qa(div_tag):
         answer = match.group(3) if match else ''
 
     # Remove backslashes -- shouldn't be any escaping in the source.
+
+    # if re.findall(r"\\", question):
+    #     import pdb
+    #     pdb.set_trace()
+
     question = re.sub(r"\\", "", question)
     answer = re.sub(r"\\", "", answer)
 

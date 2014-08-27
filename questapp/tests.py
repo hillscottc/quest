@@ -4,7 +4,7 @@ from django.test.utils import override_settings
 from questapp.management.commands import load_samples
 from .models import Clue, Game, Category
 from .parser import parse_game_html
-from .game_mgr import (TEST_GAME_ID, TEST_SHOW_NUM,
+from .utils import (TEST_GAME_ID, TEST_SHOW_NUM,
                        get_sample_ids, read_local_html,
                        get_fname, get_random_objs)
 from django.test import TestCase
