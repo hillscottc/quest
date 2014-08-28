@@ -114,19 +114,10 @@ def _parse_qa(div_tag):
     if raw_answer and raw_question:
         question = split(raw_question, ", '",  2)[2][:-2]
 
-
-
-
-
         match = re.match(regex_ans, raw_answer)
         answer = match.group(3) if match else ''
 
-    # Remove backslashes -- shouldn't be any escaping in the source.
-
-    # if re.findall(r"\\", question):
-    #     import pdb
-    #     pdb.set_trace()
-
+    # Removing these corrects the backslash-escaped-quotes.
     question = re.sub(r"\\", "", question)
     answer = re.sub(r"\\", "", answer)
 
