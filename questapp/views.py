@@ -1,18 +1,44 @@
 from django.views.generic import TemplateView
-from django.views.generic import ListView
-from .models import Category
+from django.views.generic import ListView, DetailView
+# from django.views.generic.edit import CreateView, UpdateView, DeleteView
+# from django.core.urlresolvers import reverse_lazy
+from django.utils import timezone
+from .models import Clue
 
 
 class AboutView(TemplateView):
     template_name = "about.html"
 
 
-class CategoryListView(ListView):
-    model = Category
+class ClueDetailView(DetailView):
+    context_object_name = 'clue'
+    queryset = Clue.objects.all()
+    template_name = "clue_detail.html"
 
-    # def head(self, *args, **kwargs):
-    #     last_book = self.get_queryset().latest('publication_date')
-    #     response = HttpResponse('')
-    #     # RFC 1123 date format
-    #     response['Last-Modified'] = last_book.publication_date.strftime('%a, %d %b %Y %H:%M:%S GMT')
-    #     return response
+    def get_object(self):
+        object = super(ClueDetailView, self).get_object()
+        # Record the last accessed date
+        object.last_accessed = timezone.now()
+        object.save()
+        return object
+
+
+class ClueListView(ListView):
+    context_object_name = 'clue_list'
+    template_name = 'clue_list.html'
+    queryset = Clue.objects.all()
+
+
+# class ClueCreate(CreateView):
+#     model = Clue
+#     fields = ['category', 'question', 'answer']
+#
+#
+# class ClueUpdate(UpdateView):
+#     model = Clue
+#     fields = ['category', 'question', 'answer']
+#
+#
+# class ClueDelete(DeleteView):
+#     model = Clue
+#     success_url = reverse_lazy('clue-list')

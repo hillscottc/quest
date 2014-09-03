@@ -1,18 +1,16 @@
 import logging
 from django.db import models
-from questapp.utils import trim
-from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 
 log = logging.getLogger(__name__)
 
 
-class UpsertManager(models.Manager):
-    """Provides the upsert method for regular managers.
-    Creates the object if it doesn't exist.
-    If it exists, update it with the specified defaults.
-    Usage: x.upsert(id=1, defaults=dict(name='joe', addr='abc'))
-    """
+class BaseModelManager(models.Manager):
+
     def upsert(self, **kwargs):
+        """Insert or update.
+        Usage: x.upsert(name='joe', defaults=dict(id=1))
+        """
         obj, created = self.get_or_create(**kwargs)
         if not created and "defaults" in kwargs:
             for k, v in kwargs.get("defaults", {}).items():
@@ -30,16 +28,6 @@ class UpsertManager(models.Manager):
 
         return obj, created
 
-
-class BaseModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True, editable=False)
-
-    objects = UpsertManager()
-
-    class Meta:
-        abstract = True
-
     def update(self, **kwargs):
         fieldnames = [field.name for field in self._meta.fields]
         for attr, value in kwargs.iteritems():
@@ -48,13 +36,28 @@ class BaseModel(models.Model):
         self.save()
 
 
+class BaseModel(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True, editable=False)
+    last_accessed = models.DateTimeField(auto_now=True, editable=False)
+
+    objects = BaseModelManager()
+
+    class Meta:
+        abstract = True
+        ordering = ["-modified"]
+
+
 class Game(BaseModel):
     show_num = models.SmallIntegerField(primary_key=True)
     game_id = models.SmallIntegerField(null=True, blank=True,
                                        help_text="id assigned by data host.")
 
+    class Meta:
+        ordering = ["-modified"]
+
     def __unicode__(self):
-        return "Game {}".format(self.show_num)
+        return unicode(self.show_num)
 
 
 class Category(BaseModel):
@@ -63,6 +66,7 @@ class Category(BaseModel):
 
     class Meta:
         unique_together = ['game', 'name']
+        ordering = ["name"]
 
     def __unicode__(self):
         return unicode(self.name)
@@ -73,30 +77,17 @@ class Clue(BaseModel):
     category = models.ForeignKey(Category)
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
+    level = models.SmallIntegerField(default=0)
 
     class Meta:
-        unique_together = ['game', 'question', 'answer', 'category']
+        unique_together = ['game', 'question']
+        ordering = ['game', 'category', 'level', 'question']
 
-    # def clean_fields(self, exclude=None):
-    #     super(Clue, self).clean_fields()
-    #
-    # def clean(self):
-    #     # Don't allow draft entries to have a pub_date.
-    #     if self.status == 'draft' and self.pub_date is not None:
-    #         raise ValidationError('Draft entries may not have a publication date.')
+    def get_absolute_url(self):
+        return reverse('clue-detail', kwargs={'pk': self.pk})
 
     def desc(self):
-        # return " C:{} Q:{} A:{}".format(self.category, trim(self.question), trim(self.answer))
         return u"CAT:{} Q:{} A:{}".format(self.category, self.question, self.answer)
 
     def __unicode__(self):
         return u"Q:{} A:{}".format(self.question, self.answer)
-
-
-class ClueLink(BaseModel):
-    """An html link embededed in a question."""
-    clue = models.ForeignKey(Clue)
-    link = models.CharField(max_length=255)
-
-    def __unicode__(self):
-        return unicode(self.link)

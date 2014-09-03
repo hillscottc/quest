@@ -1,0 +1,12 @@
+{% extends "base_questapp.html" %}
+
+{% block title %}Clues{% endblock %}
+
+{% block content %}
+    <h2>Clues</h2>
+    <ul>
+        {% for clue in clue_list %}
+            <li>{{ clue }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
