@@ -6,7 +6,10 @@
     <h2>Clues</h2>
     <ul>
         {% for clue in clue_list %}
-            <li>{{ clue }}</li>
+            <li style="list-style: none">
+                <a href="{% url 'clue-detail' clue.pk %}">{{ clue.pk }}</a>
+                : {{ clue.question }}
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}
