@@ -1,0 +1,12 @@
+{% extends "base_questapp.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<ul>
+<li><a href="{% url 'clue-list' %}" >Clue List</a></li>
+<li><a href="{% url 'clue-detail' 1 %}" >Clue Detail 1</a></li>
+</ul>
+
+{% endblock %}

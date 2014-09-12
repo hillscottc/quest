@@ -6,8 +6,8 @@ from django.utils import timezone
 from .models import Clue
 
 
-class AboutView(TemplateView):
-    template_name = "about.html"
+class HomeView(TemplateView):
+    template_name = "home.html"
 
 
 class ClueDetailView(DetailView):
