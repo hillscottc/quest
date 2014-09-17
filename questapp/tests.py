@@ -90,7 +90,7 @@ class UnitTest(TestCase):
         self.assertTrue(os.path.isfile(fname))
 
     @override_settings(DEBUG=True)
-    def test_save(self):
+    def test_parse_game(self):
         """Parse the test game, save to db.
         Debug settings overrided.
         """
