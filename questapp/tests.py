@@ -4,8 +4,7 @@ from django.test.utils import override_settings
 from questapp.management.commands import load_samples
 from .models import Clue, Game, Category, get_relevant_counts
 from .parser import parse_game_html
-from .utils import (TEST_GAME_ID, TEST_SHOW_NUM,
-                    get_sample_ids, read_local_html,
+from .utils import (TEST_GAME_ID, TEST_SHOW_NUM, read_local_html,
                     get_fname, get_random_objs)
 from django.test import TestCase
 # from django_nose import FastFixtureTestCase as TestCase
@@ -59,10 +58,6 @@ class FixtureTest(TestCase):
 
 
 class UnitTest(TestCase):
-    def test_get_sample_ids(self):
-        """Get list of game_ids from samples."""
-        game_ids = list(get_sample_ids())
-        self.assertGreater(len(game_ids), 10)
 
     def test_read_local(self):
         """Open local test game file."""
