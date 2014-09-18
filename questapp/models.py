@@ -5,6 +5,12 @@ from django.core.urlresolvers import reverse
 log = logging.getLogger(__name__)
 
 
+def get_relevant_counts():
+    return {'Game': Game.objects.count(),
+            'Clue': Clue.objects.count(),
+            'Category': Category.objects.count()}
+
+
 class BaseModelManager(models.Manager):
 
     def upsert(self, **kwargs):

@@ -1,8 +1,8 @@
 import os
-from unittest import skipUnless
+from unittest import skip
 from django.test.utils import override_settings
 from questapp.management.commands import load_samples
-from .models import Clue, Game, Category
+from .models import Clue, Game, Category, get_relevant_counts
 from .parser import parse_game_html
 from .utils import (TEST_GAME_ID, TEST_SHOW_NUM,
                     get_sample_ids, read_local_html,
@@ -11,45 +11,32 @@ from django.test import TestCase
 # from django_nose import FastFixtureTestCase as TestCase
 # REUSE_DB = 1
 
-TEST_WITH_FIXTURES = True
 
+@skip
+class LoadSamplesTest(TestCase):
 
-class FuntionalTest(TestCase):
-
-    if TEST_WITH_FIXTURES:
-        fixtures = ['samples.json']
-
-    def setUp(self):
-        print
-
-    @skipUnless(TEST_WITH_FIXTURES, "Check the loaded test fixtures.")
-    def test_loaded_fixtures(self):
-        """Check the loaded test fixtures."""
-        print "Game count:", Game.objects.count()
-        self.assertGreater(Game.objects.count(), 100)
-        self.assertGreater(Clue.objects.count(), 7000)
-        num_cats = len(set([clue.category for clue in Clue.objects.all()]))
-        print "Categories  :", num_cats
-        self.assertGreater(num_cats, 900)
-
-    @skipUnless(not TEST_WITH_FIXTURES, "Parse and load all html sample files.")
     def test_load_samples(self):
         """Execute the load_samples mgmt command, loading the db."""
-        print
         load_samples.Command().handle()
+        counts = get_relevant_counts()
+        print 'Counts:', counts
+        self.assertGreater(counts['Game'], 400)
+        self.assertGreater(counts['Clue'], 20000)
+        self.assertGreater(counts['Category'], 1000)
 
-        game_count = Game.objects.count()
-        print "Count Games:", game_count
-        self.assertEqual(game_count,
-                         len(list(get_sample_ids())) - 1)
 
-        clue_count = Clue.objects.count()
-        print "Count Clues:", clue_count
-        self.assertGreater(clue_count, 9900)  # 9913
+class FixtureTest(TestCase):
+    """Test against a big data from an existing fixture.
+    """
+    fixtures = ['samples.json']
 
-        cat_count = Category.objects.count()
-        print "Count Categories:", cat_count
-        self.assertGreater(cat_count, 2300)  # 2358
+    def test_counts(self):
+        """Check the loaded test fixtures."""
+        counts = get_relevant_counts()
+        print 'Counts:', counts
+        self.assertGreater(counts['Game'], 400)
+        self.assertGreater(counts['Clue'], 20000)
+        self.assertGreater(counts['Category'], 1000)
 
     def test_get_random_objs(self):
         """Get a random Clue and Category."""
