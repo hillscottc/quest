@@ -3,15 +3,35 @@ from string import split
 from bs4 import BeautifulSoup
 from .models import Clue, Game, Category
 from django.db import DataError, transaction
-from django.db import DatabaseError
+from django.db import DatabaseError, IntegrityError
 import logging
 
 log = logging.getLogger(__name__)
 
 
+class ParseErrors(Exception):
+    """Takes a list of errors."""
+    def __init__(self, message, errors):
+        Exception.__init__(self, message)
+        self.errors = errors
+
+
+class HrefException(Exception):
+    pass
+
+
+class MetadataParseException(Exception):
+    pass
+
+
+class CluelessGameException(Exception):
+    pass
+
+
 def parse_game_html(page, game_id):
     """Parse game and clues from html page, saves to db.
     """
+    game, errors = None, []
     bs_game = BeautifulSoup(page)
 
     # Parse and upsert game metadata.
@@ -20,8 +40,8 @@ def parse_game_html(page, game_id):
         game, created = Game.objects.upsert(show_num=game_meta['show_num'],
                                             defaults=dict(game_id=game_id))
     except DatabaseError as err:
-        log.warn(err)
-        return
+        print err
+        raise MetadataParseException(err)
 
     # Delete any old clues or cats for this game.
     if not created:
@@ -29,9 +49,15 @@ def parse_game_html(page, game_id):
         [cat.delete() for cat in game.category_set.all()]
 
     # Parse and save the games's clues.
-    _parse_game_clues(bs_game, game)
+    try:
+        _parse_game_clues(bs_game, game)
+    except ParseErrors as pe:
+        errors = pe.errors
 
-    return game
+    # if len(game.clue_set.all()) == 0:
+    #     errors.append(CluelessGameException())
+
+    return game, errors
 
 
 def parse_game_meta(bs_game):
@@ -52,12 +78,16 @@ def parse_game_meta(bs_game):
 
 
 def _parse_game_clues(bs_game, game):
+
+    errors = []
+
     for clue_data in _parse_rounds(bs_game, game):
         if len(clue_data['question']) < 3:
             continue
 
         if '<a href' in clue_data['question']:
-            log.debug("Skipping a question containing an href.")
+            errors.append(HrefException(clue_data['question']))
+            # log.debug("Skipping a question containing an href.")
             continue
 
         with transaction.atomic():
@@ -65,8 +95,11 @@ def _parse_game_clues(bs_game, game):
                 Clue.objects.create(game=game, category=clue_data['category'],
                                     question=clue_data['question'],
                                     answer=clue_data['answer'])
-            except DataError as err:
-                log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
+            except (IntegrityError, DataError) as err:
+                errors.append(err)
+                # log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
+    if errors:
+        raise ParseErrors("Errors parsing game {}".format(game), errors)
 
 
 def _parse_rounds(bs_game, game):
@@ -76,7 +109,12 @@ def _parse_rounds(bs_game, game):
             continue
 
         # Get the categories
-        cats = _parse_round_cats(round_div, game)
+        try:
+            cats = _parse_round_cats(round_div, game)
+        except (IntegrityError, DataError):
+            ## Just log it for now, and try next round
+            log.exception("Err getting round cats for %s" % game)
+            continue
 
         for row in round_div.table.find_all('tr')[1:]:
             clues = row.find_all('td', {'class': "clue"})

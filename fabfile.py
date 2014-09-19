@@ -10,48 +10,24 @@ Usage:
 import os
 
 from fabric.api import local, sudo, env, task, abort
+from fabric.contrib.console import confirm
 from django.conf import settings as django_settings
 
 env.hosts = ['localhost', ]
 
+DB_NAME = django_settings.DATABASES['default']['NAME']
+DB_USER = django_settings.DATABASES['default']['USER']
 
 @task
-def rebuild(drop_db=True, user=None):
+def rebuild(db_user=DB_USER, db_name=DB_NAME):
+    """Recreate and sync db, load fixtures.
     """
-    Recreate and sync db, load fixtures.
-    """
-    recreate(drop_db, user)
-    local('./manage.py syncdb --noinput')
+    db_args = dict(db_name=db_name, db_user=db_user)
+    if not confirm("\nSettings module:{module}, db:{db_user}, owner:{db_name}. Proceed?".format(
+            module=os.environ['DJANGO_SETTINGS_MODULE'], **db_args)):
+        abort("Aborting at user request.")
 
+    sudo("psql template1 -U {db_user} -c \"DROP DATABASE IF EXISTS {db_name}\"".format(**db_args))
+    sudo("createdb -U {db_user} -E UTF8 --owner {db_user} {db_name}".format(**db_args))
+    local('django-admin.py syncdb')
 
-def recreate(drop_db=False, user=None):
-    """
-    Drop, then create the database.
-    """
-    sets = get_sets()
-    user_cmd = ''
-
-    if user:
-        user_cmd = '-U {}'.format(user)
-
-    if drop_db:
-        sudo("psql template1 {} -c \"DROP DATABASE IF EXISTS {}\"".format(user_cmd, sets['dbname']))
-
-    sudo("createdb {} -E UTF8 --echo --owner {} {}".format(
-        user_cmd,
-        sets['dbuser'],
-        sets['dbname'])
-    )
-
-
-def get_sets():
-    """Get settings from the user's DJANGO_SETTINGS_MODULE."""
-    sets = {
-        'dj_settings': os.environ['DJANGO_SETTINGS_MODULE'],
-        'dbname': django_settings.DATABASES['default']['NAME'],
-        'dbuser': django_settings.DATABASES['default']['USER']
-    }
-    for key, val in sets.iteritems():
-        if not val:
-            abort("Aborting...no value for " + key)
-    return sets

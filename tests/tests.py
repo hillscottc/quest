@@ -1,27 +1,10 @@
 import os
-from unittest import skip
 from django.test.utils import override_settings
-from questapp.management.commands import load_samples
-from .models import Clue, Game, Category, get_relevant_counts
-from .parser import parse_game_html
-from .utils import (TEST_GAME_ID, TEST_SHOW_NUM, read_local_html,
-                    get_fname, get_random_objs)
+from questapp.models import Clue, Game, Category, get_relevant_counts
+from questapp.parser import parse_game_html
+from questapp.utils import (TEST_GAME_ID, TEST_SHOW_NUM, read_local_html,
+                            get_fname, get_random_objs)
 from django.test import TestCase
-# from django_nose import FastFixtureTestCase as TestCase
-# REUSE_DB = 1
-
-
-@skip
-class LoadSamplesTest(TestCase):
-
-    def test_load_samples(self):
-        """Execute the load_samples mgmt command, loading the db."""
-        load_samples.Command().handle()
-        counts = get_relevant_counts()
-        print 'Counts:', counts
-        self.assertGreater(counts['Game'], 400)
-        self.assertGreater(counts['Clue'], 20000)
-        self.assertGreater(counts['Category'], 1000)
 
 
 class FixtureTest(TestCase):

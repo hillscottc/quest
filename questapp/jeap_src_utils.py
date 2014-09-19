@@ -1,6 +1,31 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+from questapp.utils import  read_local_html
+from questapp.parser import parse_game_html
+
+
+def load_samples(num=None):
+
+    parse_errs = []
+
+    for i, game_id in enumerate(SRC_GAME_IDS):
+        if num and i > num:
+            break
+        html = read_local_html(game_id)
+        if not html:
+            continue
+
+        game, errors = parse_game_html(html, game_id)
+        if errors:
+            parse_errs.append(errors)
+
+        err_count = 0 if not errors else len(errors)
+        print "{}, game:{}, clues:{}, errors:{}".format(i, game.game_id,
+                                                        len(game.clue_set.all()),
+                                                        err_count)
+
+    print "Total parse errors: %s" % len(parse_errs)
 
 
 def parse_seasons(count=1):
