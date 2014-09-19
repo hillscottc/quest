@@ -28,6 +28,10 @@ class CluelessGameException(Exception):
     pass
 
 
+class CategoryException(Exception):
+    pass
+
+
 def parse_game_html(page, game_id):
     """Parse game and clues from html page, saves to db.
     """
@@ -81,25 +85,31 @@ def _parse_game_clues(bs_game, game):
 
     errors = []
 
-    for clue_data in _parse_rounds(bs_game, game):
-        if len(clue_data['question']) < 3:
-            continue
+    try:
+        for clue_data in _parse_rounds(bs_game, game):
+            if len(clue_data['question']) < 3:
+                continue
 
-        if '<a href' in clue_data['question']:
-            errors.append(HrefException(clue_data['question']))
-            # log.debug("Skipping a question containing an href.")
-            continue
+            if '<a href' in clue_data['question']:
+                errors.append(HrefException(clue_data['question']))
+                # log.debug("Skipping a question containing an href.")
+                continue
 
-        with transaction.atomic():
-            try:
-                Clue.objects.create(game=game, category=clue_data['category'],
-                                    question=clue_data['question'],
-                                    answer=clue_data['answer'])
-            except (IntegrityError, DataError) as err:
-                errors.append(err)
-                # log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
+            with transaction.atomic():
+                try:
+                    Clue.objects.create(game=game, category=clue_data['category'],
+                                        question=clue_data['question'],
+                                        answer=clue_data['answer'])
+                except (IntegrityError, DataError) as err:
+                    errors.append(err)
+                    # log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
+    except CategoryException:
+        log.exception("Failed cat parse of %s" % game)
+
     if errors:
         raise ParseErrors("Errors parsing game {}".format(game), errors)
+
+
 
 
 def _parse_rounds(bs_game, game):
@@ -111,10 +121,8 @@ def _parse_rounds(bs_game, game):
         # Get the categories
         try:
             cats = _parse_round_cats(round_div, game)
-        except (IntegrityError, DataError):
-            ## Just log it for now, and try next round
-            log.exception("Err getting round cats for %s" % game)
-            continue
+        except:
+            raise CategoryException(game)
 
         for row in round_div.table.find_all('tr')[1:]:
             clues = row.find_all('td', {'class': "clue"})

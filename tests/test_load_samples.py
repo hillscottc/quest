@@ -6,7 +6,7 @@ from questapp.models import get_relevant_counts
 class LoadSamplesTest(TestCase):
 
     def test_load_samples(self):
-        """Loads some samples."""
-        load_samples(500)
+        """Loads some html sample files."""
+        load_samples(1000)
         counts = get_relevant_counts()
         print 'Counts:', counts
