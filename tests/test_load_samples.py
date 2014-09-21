@@ -8,5 +8,5 @@ class LoadSamplesTest(TestCase):
     def test_load_samples(self):
         """Loads some html sample files."""
         load_samples(1000)
-        counts = get_relevant_counts()
-        print 'Counts:', counts
+        # counts = get_relevant_counts()
+        # print 'Counts:', counts

@@ -22,9 +22,7 @@ def load_samples(num=None):
             parse_errs.append(errors)
 
         err_count = 0 if not errors else len(errors)
-        # clue_count = Clue.objects.filter(game=game).count()
-
-        print "{}, game:{},  errors:{}".format(i, game.game_id, err_count)
+        print "{}, game:{},  errors:{}".format(i, game, err_count)
 
     print "Total parse errors: %s" % len(parse_errs)
 

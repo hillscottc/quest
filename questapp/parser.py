@@ -44,19 +44,22 @@ def parse_game_html(page, game_id):
         game, created = Game.objects.upsert(show_num=game_meta['show_num'],
                                             defaults=dict(game_id=game_id))
     except DatabaseError as err:
-        print err
-        raise MetadataParseException(err)
-
-    # Delete any old clues or cats for this game.
-    if not created:
-        [clue.delete() for clue in game.clue_set.all()]
-        [cat.delete() for cat in game.category_set.all()]
+        mdp = MetadataParseException(err)
+        log.error(mdp)
+        return None, [mdp]
+    # # Delete any old clues or cats for this game.
+    # if not created:
+    #     [clue.delete() for clue in game.clue_set.all()]
+    #     [cat.delete() for cat in game.category_set.all()]
 
     # Parse and save the games's clues.
     try:
         _parse_game_clues(bs_game, game)
     except ParseErrors as pe:
         errors = pe.errors
+    except Exception as err:
+        log.exception("Failed parse clues for %s" % game)
+        errors.append(err)
 
     # if len(game.clue_set.all()) == 0:
     #     errors.append(CluelessGameException())
