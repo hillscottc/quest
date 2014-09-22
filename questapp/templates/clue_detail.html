@@ -1,8 +1,8 @@
-        {% extends "base_questapp.html" %}
+{% extends 'base.html' %}
 
-        {% block title %}Clue{% endblock %}
+{% block title %}Clue{% endblock %}
 
-        {% block content %}
+{% block content %}
             <div>{{ clue.question }}</div>
             <div></div>
             <div>{{ clue.answer }}</div>

@@ -9,8 +9,12 @@ urlpatterns = patterns(
 
     url(r'^$', HomeView.as_view()),
 
-    url(r'^clues/$',
-        ClueListView.as_view(), name='clue-list'),
+
+    url(r'^clues/$', ClueListView.as_view(), name='clue-list'),
+    url(r'^page/(?P<page>\d+)/$', ClueListView.as_view(), name='clues-paged'),
+
+
+
     url(r'^clues/(?P<pk>[0-9]+)/$',
         ClueDetailView.as_view(), name='clue-detail'),
 

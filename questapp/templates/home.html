@@ -1,13 +1,14 @@
-{% extends "base_questapp.html" %}
+{% extends 'base.html' %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
+    This is <em>bootstrap3</em> for <strong>Django</strong>.
 
 <ul>
 <li><a href="{% url 'clue-list' %}" >Clue List</a></li>
 <li><a href="{% url 'clue-detail' 1 %}" >Clue Detail 1</a></li>
-<li><a href="{% url 'random-cats' 5 %}">random-cats 5</a></li>
+<li><a href="{% url 'cat-list' 5 %}">Category List 5</a></li>
 </ul>
 
 {% endblock %}

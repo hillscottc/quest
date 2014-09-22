@@ -25,6 +25,7 @@ class ClueListView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
     queryset = Clue.objects.all()
+    paginate_by = 10
 
 
 class CatListView(ListView):
