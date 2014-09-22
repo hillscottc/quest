@@ -1,0 +1,14 @@
+{% extends "base_questapp.html" %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    <h2>Categories</h2>
+    <ul>
+        {% for cat in cat_list %}
+            <li style="list-style: none">
+                <a href="">{{ cat }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

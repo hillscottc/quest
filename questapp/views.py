@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
-from .models import Clue
+from .models import Clue, Category
 
 
 class HomeView(TemplateView):
@@ -25,3 +25,9 @@ class ClueListView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
     queryset = Clue.objects.all()
+
+
+class CatListView(ListView):
+    context_object_name = 'cat_list'
+    template_name = 'cat_list.html'
+    queryset = Category.objects.all()
