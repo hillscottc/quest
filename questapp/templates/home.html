@@ -1,14 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base_questapp.html' %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    This is <em>bootstrap3</em> for <strong>Django</strong>.
+    A Jeapordy-style Clues app.
 
-<ul>
-<li><a href="{% url 'clue-list' %}" >Clue List</a></li>
-<li><a href="{% url 'clue-detail' 1 %}" >Clue Detail 1</a></li>
-<li><a href="{% url 'cat-list' 5 %}">Category List 5</a></li>
-</ul>
-
+    <p>Built with Django, bootstrap3, and Postgresql.</p>
 {% endblock %}

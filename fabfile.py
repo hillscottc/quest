@@ -31,3 +31,8 @@ def rebuild(db_user=DB_USER, db_name=DB_NAME):
     sudo("createdb -U {db_user} -E UTF8 --owner {db_user} {db_name}".format(**db_args))
     local('django-admin.py syncdb')
 
+
+@task
+def dump_fixture(filename="sample_fixture"):
+    local('django-admin.py dumpdata questapp > questapp/fixtures/%s.json' % filename)
+

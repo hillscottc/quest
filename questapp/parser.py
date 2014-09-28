@@ -113,8 +113,6 @@ def _parse_game_clues(bs_game, game):
         raise ParseErrors("Errors parsing game {}".format(game), errors)
 
 
-
-
 def _parse_rounds(bs_game, game):
     for round_name in ['jeopardy_round', 'double_jeopardy_round']:
         round_div = bs_game.find('div', {'id': round_name})
@@ -124,8 +122,8 @@ def _parse_rounds(bs_game, game):
         # Get the categories
         try:
             cats = _parse_round_cats(round_div, game)
-        except:
-            raise CategoryException(game)
+        except CategoryException:
+            raise
 
         for row in round_div.table.find_all('tr')[1:]:
             clues = row.find_all('td', {'class': "clue"})
@@ -146,9 +144,18 @@ def _parse_rounds(bs_game, game):
 def _parse_round_cats(round_div, game):
     cat_row = round_div.table.find_all('tr')[0]
     cats = []
-    for cat_el in cat_row.find_all('td', {'class': "category_name"}):
-        # cat, _ = Category.objects.upsert(defaults=dict(name=cat_el.text, game=game))
-        cats.append(Category.objects.create(name=cat_el.text, game=game))
+
+    try:
+        for cat_el in cat_row.find_all('td', {'class': "category_name"}):
+            if not cat_el.text:
+                raise CategoryException("No category text in game %s" % game)
+            elif cat_el.text == '_______ & _______':
+                raise CategoryException("Bad category in game %s, %s" % (game, cat_el.text))
+            else:
+                cats.append(Category.objects.create(name=cat_el.text, game=game))
+    except CategoryException as cat_err:
+        raise CategoryException("Error parsing category in game %s, %s" % (game, cat_err))
+
     return cats
 
 

@@ -6,23 +6,16 @@
 
 {% block bootstrap3_content %}
     <div class="container">
-        <h1>{% block title %}(no title){% endblock %}</h1>
-
         <p>
-            <a href="{% url 'home' %}">home</a>
-            <a href="{% url 'formset_default' %}">formset</a>
-            <a href="{% url 'form_default' %}">form</a>
-            <a href="{% url 'form_by_field' %}">form_by_field</a>
-            <a href="{% url 'form_horizontal' %}">form_horizontal</a>
-            <a href="{% url 'form_inline' %}">form_inline</a>
-            <a href="{% url 'form_with_files' %}">form_with_files</a>
-            <a href="{% url 'pagination' %}">pagination</a>
-            <a href="{% url 'misc' %}">miscellaneous</a>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'clues-paged' 1 %}" >Clues</a>
+            <a href="{% url 'cats-paged' 1 %}">Categories</a>
         </p>
+
+        <h1>{% block title %}(no title){% endblock %}</h1>
 
         {% bootstrap_messages %}
 
         {% block content %}(no content){% endblock %}
     </div>
-
 {% endblock %}

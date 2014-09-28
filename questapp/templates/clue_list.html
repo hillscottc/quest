@@ -1,9 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'base_questapp.html' %}
 
-{% block title %}Clue{% endblock %}
+{% block title %}Clues{% endblock %}
 
 {% block content %}
-    <h2>Clues</h2>
 
     {% if clue_list %}
         <ul>
@@ -34,6 +33,5 @@
     {% else %}
         <p>No clues found.</p>
     {% endif %}
-
 
 {% endblock %}

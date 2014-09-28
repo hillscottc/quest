@@ -7,18 +7,15 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
 
-    url(r'^$', HomeView.as_view()),
+    url(r'^$', HomeView.as_view(), name='home'),
 
 
     url(r'^clues/$', ClueListView.as_view(), name='clue-list'),
-    url(r'^page/(?P<page>\d+)/$', ClueListView.as_view(), name='clues-paged'),
-
-
-
-    url(r'^clues/(?P<pk>[0-9]+)/$',
+    url(r'^clues/page/(?P<page>\d+)/$', ClueListView.as_view(), name='clues-paged'),
+    url(r'^clue/(?P<pk>[0-9]+)/$',
         ClueDetailView.as_view(), name='clue-detail'),
 
-    url(r'^cats/(?P<num>[0-9]+)/$',
-        CatListView.as_view(), name='cat-list'),
+    url(r'^cats/$', CatListView.as_view(), name='cat-list'),
+    url(r'^cats/page/(?P<page>\d+)/$', CatListView.as_view(), name='cats-paged'),
 
 )

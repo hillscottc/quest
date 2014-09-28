@@ -1,15 +1,33 @@
-{% extends 'base.html' %}
+{% extends 'base_questapp.html' %}
 
 {% block title %}Categories{% endblock %}
 
 {% block content %}
-    <h2>Categories</h2>
-    <ul>
-        {% for cat in cat_list %}
-            <li style="list-style: none">
-                <a href="">{{ cat }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+
+    {% if cat_list %}
+        <ul>
+            {% for cat in cat_list %}
+                <li style="list-style: none">{{ cat }}</li>
+            {% endfor %}
+        </ul>
+        {% if is_paginated %}
+            <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'cats-paged' page_obj.previous_page_number %}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'cats-paged' page_obj.next_page_number %}">next</a>
+                {% endif %}
+            </span>
+            </div>
+        {% endif %}
+
+    {% else %}
+        <p>No categories found.</p>
+    {% endif %}
 
 {% endblock %}
