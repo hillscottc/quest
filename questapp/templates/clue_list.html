@@ -1,18 +1,32 @@
-{% extends 'base_questapp.html' %}
+{% extends "base_questapp.html" %}
 
 {% block title %}Clues{% endblock %}
 
 {% block content %}
-
     {% if clue_list %}
-        <ul>
-            {% for clue in clue_list %}
-                <li style="list-style: none">
-                    <a href="{% url 'clue-detail' clue.pk %}">{{ clue.pk }}</a>
-                    : {{ clue.question }}
-                </li>
-            {% endfor %}
-        </ul>
+        <div style="height: 400px;overflow: auto">
+            <table id="quiz_table" class="table table-sorted">
+                <thead>
+                <tr>
+                    <th style="width: 35px"><span>id</span></th>
+                    <th><span>Game</span></th>
+                    <th><span>Question</span></th>
+                    <th><span>Answer</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for clue in clue_list %}
+                    <tr>
+                        <td>{{ clue.id }}</td>
+                        <td>{{ clue.game }}</td>
+                        <td>{{ clue.question }}</td>
+                        <td>{{ clue.answer }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
         {% if is_paginated %}
             <div class="pagination">
             <span class="page-links">
@@ -31,7 +45,15 @@
 
 
     {% else %}
-        <p>No clues found.</p>
+        <p>None available.</p>
     {% endif %}
 
 {% endblock %}
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+.table-sorted {
+  margin: 0 auto;
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+
+
+.table-sorted thead {
+  cursor: pointer;
+  background: #c9dff0;
+}
+.table-sorted thead tr th {
+  font-weight: bold;
+  padding: 12px 30px;
+  padding-left: 42px;
+}
+.table-sorted thead tr th span {
+  padding-right: 20px;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+}
+
+.table-sorted thead tr th.headerSortUp, #quiz_table thead tr th.headerSortDown {
+  background: #acc8dd;
+}
+
+.table-sorted thead tr th.headerSortUp span {
+  background-image: url("/static/img/up-arrow.png");
+}
+.table-sorted thead tr th.headerSortDown span {
+  background-image: url('/static/img/down-arrow.png');
+}
+
+.table-sortedtbody tr {
+  color: #555;
+}
+.table-sorted tbody tr td {
+  text-align: center;
+  padding: 15px 10px;
+}
+.table-sorted tbody tr td.lalign {
+  text-align: left;
+}
