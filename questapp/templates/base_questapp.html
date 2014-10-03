@@ -1,28 +1,16 @@
-
 {% extends "base.html" %}
-
 {% load url from future %}
-
 {% load i18n %}
 
 {% block title %} {{ SITE_NAME }}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name"> {{ SITE_NAME }}</h1>
+    <h1 id="site-name"> {{ SITE_NAME }}</h1>
 {% endblock %}
 
 {% block nav-global %}
-    <!-- Fixed navbar -->
-{#    {% include "snips/navbar.html" %}#}
-
-        <p>
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'clues-paged' 1 %}" >Clues</a>
-            <a href="{% url 'cats-paged' 1 %}">Categories</a>
-        </p>
-
+    {% include "snips/navbar.html" %}
 {% endblock %}
-
 
 {% block messages %}
     {% if messages %}

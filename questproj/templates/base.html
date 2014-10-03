@@ -34,15 +34,10 @@
         });
     </script>
 
-
-
-
-
     <!-- my site default css -->
     <link rel="stylesheet" href="{% static "css/style.css" %}" />
 
     <title>{% block title %}{% endblock %}</title>
-
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,15 +50,12 @@
 
 <body role="document">
 
-    {# Navbar in base_site.html #}
     {% block nav-global %}{% endblock %}
 
     <div class="container theme-showcase" role="main">
 
-        {# Messages in base_site.html #}
         {% block messages %}{% endblock messages %}
 
-        {# Content #}
         {% block content %}{% endblock %}
 
     </div>

@@ -4,7 +4,8 @@
 
 {% block content %}
     {% if clue_list %}
-        <div style="height: 400px;overflow: auto">
+        {# Want a scrollable panel? Use <div style="height: 400px;overflow: auto"> #}
+        <div style="">
             <table id="quiz_table" class="table table-sorted">
                 <thead>
                 <tr>
@@ -19,7 +20,7 @@
                     <tr>
                         <td>{{ clue.id }}</td>
                         <td>{{ clue.game }}</td>
-                        <td>{{ clue.question }}</td>
+                        <td style="text-align: left">{{ clue.question }}</td>
                         <td>{{ clue.answer }}</td>
                     </tr>
                     {% endfor %}

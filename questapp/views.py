@@ -25,11 +25,11 @@ class ClueListView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
     queryset = Clue.objects.all()
-    paginate_by = 5
+    paginate_by = 10
 
 
 class CatListView(ListView):
     context_object_name = 'cat_list'
     template_name = 'cat_list.html'
     queryset = Category.objects.distinct('name')
-    paginate_by = 5
+    paginate_by = 10
