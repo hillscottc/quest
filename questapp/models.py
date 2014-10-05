@@ -60,10 +60,14 @@ class Game(BaseModel):
                                        help_text="id assigned by data host.")
 
     class Meta:
+        unique_together = ['show_num', 'game_id']
         ordering = ["-modified"]
 
     def __unicode__(self):
         return unicode(self.show_num)
+
+    def get_absolute_url(self):
+        return reverse('game-detail', kwargs={'pk': self.pk})
 
 
 class Category(BaseModel):
@@ -76,6 +80,9 @@ class Category(BaseModel):
 
     def __unicode__(self):
         return unicode(self.name)
+
+    def get_absolute_url(self):
+        return reverse('game-detail', kwargs={'pk': self.pk})
 
 
 class Clue(BaseModel):
