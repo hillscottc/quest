@@ -65,7 +65,7 @@ class UnitTest(TestCase):
         print game
 
         self.assertEqual(game.gid, TEST_GAME_ID)
-        self.assertEqual(game.sid, TEST_SHOW_NUM)
+        self.assertEqual(game.sid, str(TEST_SHOW_NUM))
 
         clues = game.clue_set.all()
         self.assertEqual(len(clues), 48)
