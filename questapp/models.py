@@ -19,11 +19,15 @@ class Game(BaseModel):
     title = models.CharField(max_length=250)
 
     class Meta:
+        unique_together = ['show_num', 'game_id']
         ordering = ["-modified"]
         unique_together = ['gid', 'sid']
 
     def __unicode__(self):
         return u"%s-%s" % (self.gid, self.sid)
+
+    def get_absolute_url(self):
+        return reverse('game-detail', kwargs={'pk': self.pk})
 
     def get_absolute_url(self):
         return reverse('game-detail', kwargs={'pk': self.pk})
@@ -46,6 +50,9 @@ class Category(BaseModel):
 
     def get_absolute_url(self):
         return reverse('cat-detail', kwargs={'pk': self.pk})
+
+    def get_absolute_url(self):
+        return reverse('game-detail', kwargs={'pk': self.pk})
 
 
 class Clue(BaseModel):
