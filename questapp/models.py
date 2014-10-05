@@ -1,6 +1,7 @@
 import logging
 from django.db import models
 from django.core.urlresolvers import reverse
+from .models_base import BaseModel
 
 log = logging.getLogger(__name__)
 
@@ -11,83 +12,50 @@ def get_relevant_counts():
             'Category': Category.objects.count()}
 
 
-class BaseModelManager(models.Manager):
-
-    def upsert(self, **kwargs):
-        """Insert or update.
-        Usage: x.upsert(name='joe', defaults=dict(id=1))
-        """
-        obj, created = self.get_or_create(**kwargs)
-        if not created and "defaults" in kwargs:
-            for k, v in kwargs.get("defaults", {}).items():
-                if k not in dir(obj):
-                    raise AttributeError(
-                        "Bad attr {} for update on {} ({})".format(
-                            k, type(obj), obj.pk))
-                setattr(obj, k, v)
-            obj.save()
-
-        if created:
-            log.debug("Created {}.".format(obj))
-        else:
-            log.debug("Updated {}.".format(obj))
-
-        return obj, created
-
-    def update(self, **kwargs):
-        fieldnames = [field.name for field in self._meta.fields]
-        for attr, value in kwargs.iteritems():
-            if attr in fieldnames and hasattr(self, attr):
-                setattr(self, attr, value)
-        self.save()
-
-
-class BaseModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True, editable=False)
-    last_accessed = models.DateTimeField(auto_now=True, editable=False)
-
-    objects = BaseModelManager()
-
-    class Meta:
-        abstract = True
-        ordering = ["-modified"]
-
-
 class Game(BaseModel):
-    show_num = models.SmallIntegerField(primary_key=True)
-    game_id = models.SmallIntegerField(null=True, blank=True,
-                                       help_text="id assigned by data host.")
+    sid = models.CharField(primary_key=True, max_length=8, help_text="(Jeapordy) Show id.")
+    gid = models.CharField(unique=True, max_length=8, help_text="(External) Game id.",
+                           null=True, blank=True)
+    title = models.CharField(max_length=250)
 
     class Meta:
         ordering = ["-modified"]
+        unique_together = ['gid', 'sid']
 
     def __unicode__(self):
-        return unicode(self.show_num)
+        return u"%s-%s" % (self.gid, self.sid)
+
+    def get_absolute_url(self):
+        return reverse('game-detail', kwargs={'pk': self.pk})
 
 
 class Category(BaseModel):
+    """A category in a game. Names unique per game, not globally unique.
+    Also contains info about column and round."""
     game = models.ForeignKey(Game)
+    round_num = models.SmallIntegerField(default=0)
+    col_num = models.SmallIntegerField(default=0)
     name = models.CharField(max_length=100)
 
     class Meta:
-        unique_together = ['game', 'name']
-        ordering = ["name"]
+        unique_together = ['game', 'round_num', 'col_num']
+        ordering = ['round_num', 'col_num']
 
     def __unicode__(self):
-        return unicode(self.name)
+        return u"%s-%s-%s-%s" % (self.game, self.round_num, self.col_num, self.name)
+
+    def get_absolute_url(self):
+        return reverse('cat-detail', kwargs={'pk': self.pk})
 
 
 class Clue(BaseModel):
-    game = models.ForeignKey(Game, null=True, blank=True)
     category = models.ForeignKey(Category)
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
-    level = models.SmallIntegerField(default=0)
 
     class Meta:
-        unique_together = ['game', 'question']
-        ordering = ['game', 'category', 'level', 'question']
+        unique_together = ['category', 'question']
+        ordering = ['category', 'question']
 
     def get_absolute_url(self):
         return reverse('clue-detail', kwargs={'pk': self.pk})

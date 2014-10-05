@@ -3,7 +3,6 @@ import requests
 import re
 from questapp.utils import  read_local_html
 from questapp.parser import parse_game_html
-from .models import Clue
 
 
 def load_samples(num=None):
@@ -22,9 +21,11 @@ def load_samples(num=None):
             parse_errs.append(errors)
 
         err_count = 0 if not errors else len(errors)
-        print "{}, game:{},  errors:{}".format(i, game, err_count)
+        # print "{}, game:{},  errors:{}".format(i, game, err_count)
+        print "%s: %s" % (i, game)
 
     print "Total parse errors: %s" % len(parse_errs)
+
 
 
 def parse_seasons(count=1):

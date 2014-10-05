@@ -60,12 +60,12 @@ class UnitTest(TestCase):
         Debug settings overrided.
         """
         html = read_local_html(TEST_GAME_ID)
-        game = parse_game_html(html, TEST_GAME_ID)
+        game, errors = parse_game_html(html, TEST_GAME_ID)
 
         print game
 
-        self.assertEqual(game.game_id, TEST_GAME_ID)
-        self.assertEqual(game.show_num, TEST_SHOW_NUM)
+        self.assertEqual(game.gid, TEST_GAME_ID)
+        self.assertEqual(game.sid, TEST_SHOW_NUM)
 
         clues = game.clue_set.all()
         self.assertEqual(len(clues), 48)
@@ -74,28 +74,6 @@ class UnitTest(TestCase):
             print clue,
         print
 
-    def test_upsert(self):
-        """Test game upserts."""
-        html = read_local_html(TEST_GAME_ID)
-        test_game = parse_game_html(html, TEST_GAME_ID)
-        self.assertEqual(test_game.game_id, TEST_GAME_ID)
-        self.assertEqual(test_game.show_num, TEST_SHOW_NUM)
 
-        fake_game_id = 8888
-        fake_show_num = 9999
-
-        # update it by calling upsert with same num
-        game, created = Game.objects.upsert(show_num=test_game.show_num,
-                                            defaults=dict(game_id=fake_game_id))
-        self.assertEqual(game.game_id, fake_game_id)
-        self.assertEqual(game.show_num, TEST_SHOW_NUM)
-        self.assertFalse(created)
-
-        # create a game by upsert new num
-        game, created = Game.objects.upsert(show_num=fake_show_num,
-                                            defaults=dict(game_id=fake_game_id))
-        self.assertEqual(game.game_id, fake_game_id)
-        self.assertEqual(game.show_num, fake_show_num)
-        self.assertTrue(created)
 
 
