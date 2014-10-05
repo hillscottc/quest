@@ -1,21 +1,21 @@
-{% extends 'questapp.html' %}
-
+{% extends "base.html" %}
 {% load url from future %}
+{% load i18n %}
 
-{% load bootstrap3 %}
+{% block title %} {{ SITE_NAME }}{% endblock %}
 
-{% block bootstrap3_content %}
-    <div class="container">
-        <p>
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'clues-paged' 1 %}" >Clues</a>
-            <a href="{% url 'cats-paged' 1 %}">Categories</a>
-        </p>
-
-        <h1>{% block title %}(no title){% endblock %}</h1>
-
-        {% bootstrap_messages %}
-
-        {% block content %}(no content){% endblock %}
-    </div>
+{% block branding %}
+    <h1 id="site-name"> {{ SITE_NAME }}</h1>
 {% endblock %}
+
+{% block nav-global %}
+    {% include "snips/navbar.html" %}
+{% endblock %}
+
+{% block messages %}
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+    {% endfor %}</ul>
+    {% endif %}
+{% endblock messages %}

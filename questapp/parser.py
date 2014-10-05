@@ -44,9 +44,8 @@ def parse_game_html(page, game_id):
         game, created = Game.objects.upsert(show_num=game_meta['show_num'],
                                             defaults=dict(game_id=game_id))
     except DatabaseError as err:
-        mdp = MetadataParseException(err)
-        log.error(mdp)
-        return None, [mdp]
+        # mdp = MetadataParseException(err)
+        return None, [err]
     # # Delete any old clues or cats for this game.
     # if not created:
     #     [clue.delete() for clue in game.clue_set.all()]
@@ -88,48 +87,47 @@ def _parse_game_clues(bs_game, game):
 
     errors = []
 
-    try:
-        for clue_data in _parse_rounds(bs_game, game):
-            if len(clue_data['question']) < 3:
-                continue
+    round_clues = list(_parse_rounds(bs_game, game))
 
-            if '<a href' in clue_data['question']:
-                errors.append(HrefException(clue_data['question']))
-                # log.debug("Skipping a question containing an href.")
-                continue
+    for clue_data in round_clues:
+        if len(clue_data['question']) < 3:
+            continue
 
-            with transaction.atomic():
-                try:
-                    Clue.objects.create(game=game, category=clue_data['category'],
-                                        question=clue_data['question'],
-                                        answer=clue_data['answer'])
-                except (IntegrityError, DataError) as err:
-                    errors.append(err)
-                    # log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
-    except CategoryException:
-        log.exception("Failed cat parse of %s" % game)
+        if '<a href' in clue_data['question']:
+            errors.append(HrefException(clue_data['question']))
+            # log.debug("Skipping a question containing an href.")
+            continue
+
+        with transaction.atomic():
+            try:
+                Clue.objects.create(game=game, category=clue_data['category'],
+                                    question=clue_data['question'],
+                                    answer=clue_data['answer'])
+            except (IntegrityError, DataError) as err:
+                errors.append(err)
+                # log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
 
     if errors:
         raise ParseErrors("Errors parsing game {}".format(game), errors)
 
 
 def _parse_rounds(bs_game, game):
+
     for round_name in ['jeopardy_round', 'double_jeopardy_round']:
         round_div = bs_game.find('div', {'id': round_name})
         if not round_div:
             continue
 
         # Get the categories
-        try:
-            cats = _parse_round_cats(round_div, game)
-        except CategoryException:
-            raise
+        cats = _parse_round_cats(round_div, game)
 
         for row in round_div.table.find_all('tr')[1:]:
             clues = row.find_all('td', {'class': "clue"})
             if not clues:
                 continue
             for i, clue in enumerate(clues):
+                if not cats[i]:
+                    continue
                 if not clue.div:
                     continue
                 # Get the q and a by parsing the messy div javascript
@@ -142,19 +140,25 @@ def _parse_rounds(bs_game, game):
 
 
 def _parse_round_cats(round_div, game):
+    """Returns list of category_names found in a round. """
     cat_row = round_div.table.find_all('tr')[0]
     cats = []
 
-    try:
-        for cat_el in cat_row.find_all('td', {'class': "category_name"}):
-            if not cat_el.text:
-                raise CategoryException("No category text in game %s" % game)
-            elif cat_el.text == '_______ & _______':
-                raise CategoryException("Bad category in game %s, %s" % (game, cat_el.text))
-            else:
-                cats.append(Category.objects.create(name=cat_el.text, game=game))
-    except CategoryException as cat_err:
-        raise CategoryException("Error parsing category in game %s, %s" % (game, cat_err))
+    for cat_el in cat_row.find_all('td', {'class': "category_name"}):
+
+        category = None
+
+        if not cat_el.text:
+            log.error("No category text in game %s" % game)
+        elif cat_el.text == '_______ & _______':
+            log.error("Bad category in game %s, %s" % (game, cat_el.text))
+        else:
+            try:
+                category = Category.objects.create(name=cat_el.text, game=game)
+            except:
+                log.exception('Got a category exception.')
+
+        cats.append(category)
 
     return cats
 

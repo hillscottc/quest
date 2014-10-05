@@ -1,0 +1,76 @@
+{% extends "base_site.html" %}
+
+
+{% block content %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+{##}
+{#        {{ form.as_p }}#}
+{##}
+
+        {{ form.non_field_errors }}
+
+        {{ form.id }}
+
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+
+        <div class="fieldWrapper">
+            {{ form.text.errors }}
+            <label for="id_text">Question Text:</label>
+            {{ form.text }}
+        </div>
+
+    <div class="fieldWrapper">
+            {{ form.tags.errors }}
+            <label for="id_tags">Tags:</label>
+            {{ form.tags }}
+        </div>
+
+        <div class="fieldWrapper">
+            {{ form.answer_type.errors }}
+            <label for="id_answer_type">Answer Type:</label>
+            {{ form.answer_types }}
+        </div>
+
+
+        <div class="fieldWrapper">
+            {{ form.answers.errors }}
+            <label for="id_answers">Answers:</label>
+            {{ form.answers }}
+        </div>
+
+
+
+
+
+{#        {{ formset.management_form }}#}
+{##}
+{#    {% for form in formset %}#}
+{##}
+{#    <div>#}
+{#    {{ form.id }}#}
+{#         {{ form.non_field_errors }}#}
+{##}
+{#        {% for hidden in form.hidden_fields %}#}
+{#            {{ hidden }}#}
+{#        {% endfor %}#}
+{##}
+{#        {% for field in form.visible_fields %}#}
+{#            <div class="fieldWrapper">#}
+{#                {{ field.errors }}#}
+{#                {{ field.label_tag }} {{ field }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{##}
+{#    {% endfor %}#}
+    </form>
+
+{% endblock %}
+
+
+

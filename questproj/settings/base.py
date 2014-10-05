@@ -51,3 +51,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(PROJ_DIR, "static"), )
 TEMPLATE_DIRS = (os.path.join(PROJ_DIR, "templates"), )
+
+SITE_NAME = "Question Site"
+

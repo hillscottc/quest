@@ -13,5 +13,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         load_samples()
-        print get_relevant_counts()
+        # print get_relevant_counts()
 

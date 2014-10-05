@@ -3,13 +3,26 @@
 {% block title %}Categories{% endblock %}
 
 {% block content %}
-
     {% if cat_list %}
-        <ul>
-            {% for cat in cat_list %}
-                <li style="list-style: none">{{ cat }}</li>
-            {% endfor %}
-        </ul>
+        <div style="height: 400px;overflow: auto">
+            <table id="quiz_table" class="table table-sorted">
+                <thead>
+                <tr>
+                    <th style="width: 35px"><span>id</span></th>
+                    <th><span>Category</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for cat in cat_list %}
+                    <tr>
+                        <td>{{ cat.id }}</td>
+                        <td>{{ cat }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
         {% if is_paginated %}
             <div class="pagination">
             <span class="page-links">
@@ -27,7 +40,7 @@
         {% endif %}
 
     {% else %}
-        <p>No categories found.</p>
+        <p>None found.</p>
     {% endif %}
 
 {% endblock %}
