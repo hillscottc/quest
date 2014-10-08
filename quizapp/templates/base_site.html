@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Quiz Site Page{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{{ SITE_NAME }}</h1>
+{% endblock %}
+
+{% block nav-global %}
+    <!-- Fixed navbar -->
+    {% include "snips/navbar.html" %}
+{% endblock %}
+
+
+{% block messages %}
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+    {% endfor %}</ul>
+    {% endif %}
+{% endblock messages %}

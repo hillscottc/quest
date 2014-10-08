@@ -1,0 +1,769 @@
+[
+{
+    "pk": 1, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "logentry", 
+        "name": "log entry", 
+        "app_label": "admin"
+    }
+},
+{
+    "pk": 2, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "permission", 
+        "name": "permission", 
+        "app_label": "auth"
+    }
+},
+{
+    "pk": 3, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "group", 
+        "name": "group", 
+        "app_label": "auth"
+    }
+},
+{
+    "pk": 4, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "user", 
+        "name": "user", 
+        "app_label": "auth"
+    }
+},
+{
+    "pk": 5, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "contenttype", 
+        "name": "content type", 
+        "app_label": "contenttypes"
+    }
+},
+{
+    "pk": 6, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "session", 
+        "name": "session", 
+        "app_label": "sessions"
+    }
+},
+{
+    "pk": 7, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "quizlog", 
+        "name": "quiz log", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 8, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "rawlog", 
+        "name": "raw log", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 9, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "organization", 
+        "name": "organization", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 10, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "classroom", 
+        "name": "classroom", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 11, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "classroomteacher", 
+        "name": "classroom teacher", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 12, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "classroomstudent", 
+        "name": "classroom student", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 13, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "quiz", 
+        "name": "quiz", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 14, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "quizsession", 
+        "name": "quiz session", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 15, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "question", 
+        "name": "question", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": 16, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "answer", 
+        "name": "answer", 
+        "app_label": "quizapp"
+    }
+},
+{
+    "pk": "aidq4w1ge6t8mi7vl77clk1kkvjsfw5k", 
+    "model": "sessions.session", 
+    "fields": {
+        "expire_date": "2014-03-12T01:30:25.446Z", 
+        "session_data": "NjAzYjFlZmNjOTU2Yzg5ODc5MmVlOGYxZDM2ZmExOTVkYTU2OTU2MDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6MX0="
+    }
+},
+{
+    "pk": 1, 
+    "model": "quizapp.rawlog", 
+    "fields": {
+        "created_at": "2014-02-26T01:35:33.758Z", 
+        "message": "shill STARTED Sample Quiz 623", 
+        "updated_at": "2014-02-26T01:35:33.758Z"
+    }
+},
+{
+    "pk": 1, 
+    "model": "quizapp.question", 
+    "fields": {
+        "text": "What is the name of the first US president?", 
+        "created_at": "2014-02-26T01:31:23.690Z", 
+        "ans_type": "MC", 
+        "updated_at": "2014-02-26T01:31:23.690Z", 
+        "quiz": 1
+    }
+},
+{
+    "pk": 2, 
+    "model": "quizapp.question", 
+    "fields": {
+        "text": "How many planets are in our solar system?", 
+        "created_at": "2014-02-26T01:31:23.728Z", 
+        "ans_type": "MC", 
+        "updated_at": "2014-02-26T01:31:23.728Z", 
+        "quiz": 1
+    }
+},
+{
+    "pk": 3, 
+    "model": "quizapp.question", 
+    "fields": {
+        "text": "What is the fourth planet from the sun?", 
+        "created_at": "2014-02-26T01:31:23.762Z", 
+        "ans_type": "FI",
+        "updated_at": "2014-02-26T01:31:23.762Z", 
+        "quiz": 1
+    }
+},
+{
+    "pk": 1, 
+    "model": "quizapp.answer", 
+    "fields": {
+        "text": "Lincoln", 
+        "notes": null, 
+        "question": 1, 
+        "updated_at": "2014-02-26T01:31:23.702Z", 
+        "correct": false, 
+        "created_at": "2014-02-26T01:31:23.702Z"
+    }
+},
+{
+    "pk": 2, 
+    "model": "quizapp.answer", 
+    "fields": {
+        "text": "Kennedy", 
+        "notes": null, 
+        "question": 1, 
+        "updated_at": "2014-02-26T01:31:23.713Z", 
+        "correct": false, 
+        "created_at": "2014-02-26T01:31:23.713Z"
+    }
+},
+{
+    "pk": 3, 
+    "model": "quizapp.answer", 
+    "fields": {
+        "text": "Washington", 
+        "notes": null, 
+        "question": 1, 
+        "updated_at": "2014-02-26T01:31:23.717Z", 
+        "correct": true, 
+        "created_at": "2014-02-26T01:31:23.717Z"
+    }
+},
+{
+    "pk": 4, 
+    "model": "quizapp.answer", 
+    "fields": {
+        "text": "7", 
+        "notes": null, 
+        "question": 2, 
+        "updated_at": "2014-02-26T01:31:23.738Z", 
+        "correct": false, 
+        "created_at": "2014-02-26T01:31:23.738Z"
+    }
+},
+{
+    "pk": 5, 
+    "model": "quizapp.answer", 
+    "fields": {
+        "text": "8", 
+        "notes": null, 
+        "question": 2, 
+        "updated_at": "2014-02-26T01:31:23.742Z", 
+        "correct": true, 
+        "created_at": "2014-02-26T01:31:23.742Z"
+    }
+},
+{
+    "pk": 6, 
+    "model": "quizapp.answer", 
+    "fields": {
+        "text": "9", 
+        "notes": null, 
+        "question": 2, 
+        "updated_at": "2014-02-26T01:31:23.752Z", 
+        "correct": false, 
+        "created_at": "2014-02-26T01:31:23.752Z"
+    }
+},
+{
+    "pk": 7, 
+    "model": "quizapp.answer", 
+    "fields": {
+        "text": "Mars", 
+        "notes": null, 
+        "question": 3, 
+        "updated_at": "2014-02-26T01:31:23.766Z", 
+        "correct": true, 
+        "created_at": "2014-02-26T01:31:23.766Z"
+    }
+},
+{
+    "pk": 1, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_logentry", 
+        "name": "Can add log entry", 
+        "content_type": 1
+    }
+},
+{
+    "pk": 2, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_logentry", 
+        "name": "Can change log entry", 
+        "content_type": 1
+    }
+},
+{
+    "pk": 3, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_logentry", 
+        "name": "Can delete log entry", 
+        "content_type": 1
+    }
+},
+{
+    "pk": 4, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_permission", 
+        "name": "Can add permission", 
+        "content_type": 2
+    }
+},
+{
+    "pk": 5, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_permission", 
+        "name": "Can change permission", 
+        "content_type": 2
+    }
+},
+{
+    "pk": 6, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_permission", 
+        "name": "Can delete permission", 
+        "content_type": 2
+    }
+},
+{
+    "pk": 7, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_group", 
+        "name": "Can add group", 
+        "content_type": 3
+    }
+},
+{
+    "pk": 8, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_group", 
+        "name": "Can change group", 
+        "content_type": 3
+    }
+},
+{
+    "pk": 9, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_group", 
+        "name": "Can delete group", 
+        "content_type": 3
+    }
+},
+{
+    "pk": 10, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_user", 
+        "name": "Can add user", 
+        "content_type": 4
+    }
+},
+{
+    "pk": 11, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_user", 
+        "name": "Can change user", 
+        "content_type": 4
+    }
+},
+{
+    "pk": 12, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_user", 
+        "name": "Can delete user", 
+        "content_type": 4
+    }
+},
+{
+    "pk": 13, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_contenttype", 
+        "name": "Can add content type", 
+        "content_type": 5
+    }
+},
+{
+    "pk": 14, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_contenttype", 
+        "name": "Can change content type", 
+        "content_type": 5
+    }
+},
+{
+    "pk": 15, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_contenttype", 
+        "name": "Can delete content type", 
+        "content_type": 5
+    }
+},
+{
+    "pk": 16, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_session", 
+        "name": "Can add session", 
+        "content_type": 6
+    }
+},
+{
+    "pk": 17, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_session", 
+        "name": "Can change session", 
+        "content_type": 6
+    }
+},
+{
+    "pk": 18, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_session", 
+        "name": "Can delete session", 
+        "content_type": 6
+    }
+},
+{
+    "pk": 19, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_quizlog", 
+        "name": "Can add quiz log", 
+        "content_type": 7
+    }
+},
+{
+    "pk": 20, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_quizlog", 
+        "name": "Can change quiz log", 
+        "content_type": 7
+    }
+},
+{
+    "pk": 21, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_quizlog", 
+        "name": "Can delete quiz log", 
+        "content_type": 7
+    }
+},
+{
+    "pk": 22, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_rawlog", 
+        "name": "Can add raw log", 
+        "content_type": 8
+    }
+},
+{
+    "pk": 23, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_rawlog", 
+        "name": "Can change raw log", 
+        "content_type": 8
+    }
+},
+{
+    "pk": 24, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_rawlog", 
+        "name": "Can delete raw log", 
+        "content_type": 8
+    }
+},
+{
+    "pk": 25, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_organization", 
+        "name": "Can add organization", 
+        "content_type": 9
+    }
+},
+{
+    "pk": 26, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_organization", 
+        "name": "Can change organization", 
+        "content_type": 9
+    }
+},
+{
+    "pk": 27, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_organization", 
+        "name": "Can delete organization", 
+        "content_type": 9
+    }
+},
+{
+    "pk": 28, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_classroom", 
+        "name": "Can add classroom", 
+        "content_type": 10
+    }
+},
+{
+    "pk": 29, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_classroom", 
+        "name": "Can change classroom", 
+        "content_type": 10
+    }
+},
+{
+    "pk": 30, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_classroom", 
+        "name": "Can delete classroom", 
+        "content_type": 10
+    }
+},
+{
+    "pk": 31, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_classroomteacher", 
+        "name": "Can add classroom teacher", 
+        "content_type": 11
+    }
+},
+{
+    "pk": 32, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_classroomteacher", 
+        "name": "Can change classroom teacher", 
+        "content_type": 11
+    }
+},
+{
+    "pk": 33, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_classroomteacher", 
+        "name": "Can delete classroom teacher", 
+        "content_type": 11
+    }
+},
+{
+    "pk": 34, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_classroomstudent", 
+        "name": "Can add classroom student", 
+        "content_type": 12
+    }
+},
+{
+    "pk": 35, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_classroomstudent", 
+        "name": "Can change classroom student", 
+        "content_type": 12
+    }
+},
+{
+    "pk": 36, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_classroomstudent", 
+        "name": "Can delete classroom student", 
+        "content_type": 12
+    }
+},
+{
+    "pk": 37, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_quiz", 
+        "name": "Can add quiz", 
+        "content_type": 13
+    }
+},
+{
+    "pk": 38, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_quiz", 
+        "name": "Can change quiz", 
+        "content_type": 13
+    }
+},
+{
+    "pk": 39, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_quiz", 
+        "name": "Can delete quiz", 
+        "content_type": 13
+    }
+},
+{
+    "pk": 40, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_quizsession", 
+        "name": "Can add quiz session", 
+        "content_type": 14
+    }
+},
+{
+    "pk": 41, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_quizsession", 
+        "name": "Can change quiz session", 
+        "content_type": 14
+    }
+},
+{
+    "pk": 42, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_quizsession", 
+        "name": "Can delete quiz session", 
+        "content_type": 14
+    }
+},
+{
+    "pk": 43, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_question", 
+        "name": "Can add question", 
+        "content_type": 15
+    }
+},
+{
+    "pk": 44, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_question", 
+        "name": "Can change question", 
+        "content_type": 15
+    }
+},
+{
+    "pk": 45, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_question", 
+        "name": "Can delete question", 
+        "content_type": 15
+    }
+},
+{
+    "pk": 46, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "add_answer", 
+        "name": "Can add answer", 
+        "content_type": 16
+    }
+},
+{
+    "pk": 47, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "change_answer", 
+        "name": "Can change answer", 
+        "content_type": 16
+    }
+},
+{
+    "pk": 48, 
+    "model": "auth.permission", 
+    "fields": {
+        "codename": "delete_answer", 
+        "name": "Can delete answer", 
+        "content_type": 16
+    }
+},
+{
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "shill", 
+        "first_name": "", 
+        "last_name": "", 
+        "is_active": true, 
+        "is_superuser": true, 
+        "is_staff": true, 
+        "last_login": "2014-02-26T01:30:25.436Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$BwA6VgnD6nml$vo8yYulbnyyz7wUFGnAmk7mz23qBlaq7OQrDeqIuPsw=", 
+        "email": "", 
+        "date_joined": "2014-02-26T01:29:41.252Z"
+    }
+},
+{
+    "pk": 2, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "Teacher1", 
+        "first_name": "", 
+        "last_name": "", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-02-26T01:31:23.657Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "", 
+        "email": "", 
+        "date_joined": "2014-02-26T01:31:23.657Z"
+    }
+},
+{
+    "pk": 1, 
+    "model": "quizapp.quiz", 
+    "fields": {
+        "owner": 2, 
+        "created_at": "2014-02-26T01:31:23.679Z", 
+        "updated_at": "2014-02-26T01:31:23.679Z", 
+        "name": "Sample Quiz 623"
+    }
+},
+{
+    "pk": 1, 
+    "model": "quizapp.quizsession", 
+    "fields": {
+        "take_type": "STUDY", 
+        "created_at": "2014-02-26T01:35:33.751Z", 
+        "taker": 1, 
+        "updated_at": "2014-02-26T01:35:33.751Z", 
+        "quiz": 1
+    }
+}
+]

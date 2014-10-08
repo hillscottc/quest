@@ -1,0 +1,43 @@
+{% extends "base_site.html" %}
+
+{% block title %}Quizzes{% endblock %}
+
+{% block content %}
+    {% include "snips/../snips/page_header.html" with header_text="Quizzes" %}
+    {% if quiz_list %}
+        <div style="height: 300px;overflow: auto">
+            <table id="quiz_table" class="table table-sorted">
+                <thead>
+                <tr>
+                    <th style="width: 35px"><span>id</span></th>
+                    <th><span>Name</span></th>
+{#                    <th>Org</th>#}
+                    <th><span>Owner</span></th>
+                    <th><span>Created</span></th>
+                    <th><span>Updated</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for quiz in quiz_list %}
+                    <tr>
+                        <td>{{ quiz.id }}</td>
+                        <td><a href="{% url 'quiz_take' quiz.id %}">{{ quiz }}</a></td>
+{#                        <td>{{ quiz.organization }}</td>#}
+                        <td>{{ quiz.owner }}</td>
+                        <td>{{ quiz.created_at }}</td>
+                        <td>{{ quiz.updated_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No question sets are available.</p>
+    {% endif %}
+
+{#    <br/>#}
+{#    <div>#}
+{#        <a href="{% url 'quiz_add' %}"class="btn btn-info" role="button">Add a new Quiz</a>#}
+{#    </div>#}
+
+{% endblock %}

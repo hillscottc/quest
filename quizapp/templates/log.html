@@ -1,0 +1,33 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+
+    {% if all_log %}
+        <div class="log_list">
+            <ul class="list-group">
+                {% for row in all_log %}
+                    <li class="list-group-item">
+                        {{ row }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p>No log records available.</p>
+    {% endif %}
+
+
+    {% if my_quiz_log %}
+        <div class="log_list">
+            <ul class="list-group">
+                {% for row in my_quiz_log %}
+                    <li class="list-group-item">
+                        {{ row }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

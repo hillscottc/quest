@@ -1,0 +1,33 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+
+
+    {% include "snips/../snips/page_header.html" with header_text="Add a new quiz" %}
+
+    <form action="{% url 'quiz_add' %}" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
+            <div class="fieldWrapper">
+                {{ field.errors }}
+                {{ field.label_tag }} {{ field }}
+            </div>
+        {% endfor %}
+
+        <p>
+            <a href="{% url 'quiz_index' %}">
+                <button type="button" name="cancel" class="btn btn-danger">Cancel</button>
+            </a>
+            <button type="submit" class="btn btn-success">Add this quiz</button>
+        </p>
+
+
+    </form>
+
+{% endblock %}

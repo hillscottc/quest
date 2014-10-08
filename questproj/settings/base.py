@@ -20,7 +20,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_nose',
     'bootstrap3',
-    'questapp'
+    'questapp',
+    'quizapp',
+    'scrape'
 )
 
 MIDDLEWARE_CLASSES = (

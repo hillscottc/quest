@@ -1,0 +1,32 @@
+{% comment %}
+    Bootstrap, JQuery, and site default css.
+{% endcomment %}
+{% load staticfiles %}
+
+<!-- Bootstrap core CSS -->
+<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+{#    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" media="screen">#}
+
+<!-- Bootstrap theme -->
+<link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="{% static 'css/theme.css' %}" rel="stylesheet">
+
+<!-- my styles -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+<!-- JQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+<!-- Table sorting -->
+<link href="{% static 'css/sorted_table.css' %}" rel="stylesheet">
+<script src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $(function(){
+            $('.table-sorted').tablesorter();
+        });
+    });
+</script>
+
