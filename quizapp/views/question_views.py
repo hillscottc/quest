@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from quizapp.forms import QuestionForm, AnswerFormSet
 from quizapp.models import Question, Answer
-from .common_views import custom_context_proc
+from questproj.views import base_context
 from django.template import RequestContext
 
 
@@ -20,7 +20,7 @@ def answer_post(request, a_id):
 @login_required
 def question_add(request, quiz_id):
     return render(request, 'quizapp/home.html',
-                  context_instance=RequestContext(request, processors=[custom_context_proc]))
+                  context_instance=RequestContext(request, processors=[base_context]))
 
 # formset = AnswerFormSet(queryset=Answer.objects.filter(question=question))
 

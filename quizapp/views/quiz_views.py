@@ -7,7 +7,7 @@ from django.forms.models import inlineformset_factory
 from quizapp.models import Quiz, Question, QuizSession
 from quizapp.forms import QuizSessionForm, QuizForm
 from quizapp.quiz_mgr import log_message
-from .common_views import custom_context_proc
+from questproj.views import base_context
 from django.template import RequestContext
 
 
@@ -15,7 +15,7 @@ def quiz_index(request):
     """List all quizzes."""
     return render(request, 'quiz/index.html',
                   {'quiz_list': Quiz.objects.all().order_by('-updated_at')},
-                  context_instance=RequestContext(request, processors=[custom_context_proc]))
+                  context_instance=RequestContext(request, processors=[base_context]))
 
 
 @login_required
@@ -33,7 +33,7 @@ def quiz_add(request):
 
     return render(request, 'quiz/add.html',
                   {'form': form},
-                  context_instance=RequestContext(request, processors=[custom_context_proc]))
+                  context_instance=RequestContext(request, processors=[base_context]))
 
 
 @login_required
@@ -69,7 +69,7 @@ def quiz_edit(request, quiz_id):
                        'questions': quiz.questions.all(),
                        'back_to_url': reverse('quiz_index'),
                        'q_list': quiz.questions.all()},
-                      context_instance=RequestContext(request, processors=[custom_context_proc]))
+                      context_instance=RequestContext(request, processors=[base_context]))
 
 
 def quiz_take(request, quiz_id):
@@ -85,7 +85,7 @@ def quiz_take(request, quiz_id):
                           {'heading': "Congratulations!",
                            'lead': "Your results have been added to the board.",
                            'go_to': reverse('quiz_index')},
-                          context_instance=RequestContext(request, processors=[custom_context_proc]))
+                          context_instance=RequestContext(request, processors=[base_context]))
         else:
             resp = []
             for k in request.POST.keys():
@@ -109,7 +109,7 @@ def quiz_take(request, quiz_id):
                        'questions': quiz.questions.all(),
                        'back_to_url': reverse('quiz_index'),
                        'q_list': quiz.questions.all()},
-                      context_instance=RequestContext(request, processors=[custom_context_proc]))
+                      context_instance=RequestContext(request, processors=[base_context]))
 
 
 __all__ = [

@@ -1,17 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Quiz Site Page{% endblock %}
+{% block title %} {{ SITE_NAME }}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name">{{ SITE_NAME }}</h1>
+    <h1 id="site-name"> {{ SITE_NAME }}</h1>
 {% endblock %}
 
 {% block nav-global %}
-    <!-- Fixed navbar -->
-    {% include "snips/navbar.html" %}
+    {% include "navbar.html" %}
 {% endblock %}
-
 
 {% block messages %}
     {% if messages %}

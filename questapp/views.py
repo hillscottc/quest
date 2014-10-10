@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from .models import Clue, Category
+from django.conf import settings
 
 
 class HomeView(TemplateView):
@@ -20,6 +21,11 @@ class ClueDetailView(DetailView):
         object.save()
         return object
 
+    def get_context_data(self, **kwargs):
+        context = super(ClueDetailView, self).get_context_data(**kwargs)
+        context['SITE_NAME'] = settings.SITE_NAME
+        return context
+
 
 class ClueListView(ListView):
     context_object_name = 'clue_list'
@@ -27,9 +33,19 @@ class ClueListView(ListView):
     queryset = Clue.objects.all()
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super(ClueListView, self).get_context_data(**kwargs)
+        context['SITE_NAME'] = settings.SITE_NAME
+        return context
+
 
 class CatListView(ListView):
     context_object_name = 'cat_list'
     template_name = 'cat_list.html'
     queryset = Category.objects.distinct('name')
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(CatListView, self).get_context_data(**kwargs)
+        context['SITE_NAME'] = settings.SITE_NAME
+        return context

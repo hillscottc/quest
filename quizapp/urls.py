@@ -8,7 +8,6 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.home, name='home'),
 
     url(r'quiz/index/$', views.quiz_index, name='quiz_index'),
     url(r'quiz/take/(?P<quiz_id>\d+)/$', views.quiz_take, name='quiz_take'),
