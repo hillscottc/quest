@@ -4,8 +4,7 @@ from django.core.management.base import BaseCommand
 import requests
 from requests.exceptions import ConnectionError, HTTPError
 import os
-from ...utils import FILE_BASE_DIR, FILENAME_TEMPLATE
-
+from django.conf import settings
 
 QB_URLS = {
     "http://quizballs.com/quiz-{}-general-knowledge-qa/print/": [
@@ -35,7 +34,9 @@ class Command(BaseCommand):
         for url in QB_URLS.keys():
             for quiz_id in QB_URLS[url]:
                 url = url.format(quiz_id)
-                outfile = os.path.join(FILE_BASE_DIR, FILENAME_TEMPLATE.format(quiz_id))
+                filename_template = "{}.html"
+                outfile = os.path.join(settings.QUIZ_SCRAPE_DIR,
+                                       filename_template.format(quiz_id))
 
                 self.stdout.write("\nGET: %s" % url)
                 try:

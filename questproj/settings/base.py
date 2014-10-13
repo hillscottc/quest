@@ -60,3 +60,4 @@ TEMPLATE_DIRS = (
 
 SITE_NAME = "Question Site"
 
+QUIZ_SCRAPE_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'scrape', 'files', 'quizballs')

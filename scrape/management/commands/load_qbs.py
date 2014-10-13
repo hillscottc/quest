@@ -3,24 +3,24 @@ from bs4 import BeautifulSoup
 from quizapp.models import Question, Answer, Quiz
 import os
 import re
-from ...utils import FILE_BASE_DIR
+from django.conf import settings
 
 from os import walk
 
 FILES = []
-for (dirpath, dirnames, filenames) in walk(FILE_BASE_DIR):
+for (dirpath, dirnames, filenames) in walk(settings.QUIZ_SCRAPE_DIR):
     FILES.extend(filenames)
     break
 
 
 class Command(BaseCommand):
     args = ''
-    help = 'Parse quizball files.'
+    help = 'Parse and load quizball files.'
 
     def handle(self, *args, **options):
         for f in FILES:
 
-            soup = BeautifulSoup(open(os.path.join(FILE_BASE_DIR, f)))
+            soup = BeautifulSoup(open(os.path.join(settings.QUIZ_SCRAPE_DIR, f)))
 
             quiz = Quiz.objects.create(source="QUIZBALLS",
                                        name="Sample Quiz %s" % re.search(r'\d+', f).group())
@@ -37,5 +37,4 @@ class Command(BaseCommand):
                 quiz,
                 quiz.questions.count(),
                 Answer.objects.filter(question__in=Question.objects.filter(quiz=quiz)).count()))
-
 
