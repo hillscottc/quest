@@ -39,7 +39,8 @@ class Category(BaseModel):
 
     class Meta:
         # unique_together = ['game', 'round_num', 'col_num']
-        ordering = ['round_num', 'col_num']
+        # ordering = ['round_num', 'col_num']
+        ordering = ['name']
 
     def __unicode__(self):
         return u"%s-%s-%s-%s" % (self.game, self.round_num, self.col_num, self.name)

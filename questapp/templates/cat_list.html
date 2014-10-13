@@ -4,7 +4,7 @@
 
 {% block content %}
     {% if cat_list %}
-        <div style="height: 400px;overflow: auto">
+        <div>
             <table id="quiz_table" class="table table-sorted">
                 <thead>
                 <tr>
@@ -16,7 +16,7 @@
                     {% for cat in cat_list %}
                     <tr>
                         <td>{{ cat.id }}</td>
-                        <td>{{ cat }}</td>
+                        <td style="text-align: left">{{ cat.name }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
