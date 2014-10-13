@@ -1,19 +1,13 @@
 {% extends "base_site.html" %}
 
-
 {% block content %}
 
-
     <div class="jumbotron">
-        <h1>{{ SITE_NAME }}</h1>
-{#        <p><a href="{% url 'quiz_index' %}"#}
-{#              class="btn btn-primary btn-lg" role="button">Go to the Quizzes! &raquo;</a></p>#}
+        <h2>Welcome to {{ SITE_NAME }}.</h2>
 
-    <a href="/questapp/clues/page/1">clues</a>
-    <br>
-    <a href="/quizapp/quiz/index">quizzes</a>
+{#        <p><a href="{% url 'quiz_index' %}" class="btn btn-primary btn-lg" #}
+{#              role="button">Go to the Quizzes! &raquo;</a></p>#}
 
     </div>
-
 
 {% endblock %}
