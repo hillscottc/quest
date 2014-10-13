@@ -33,6 +33,6 @@ def rebuild(db_user=DB_USER, db_name=DB_NAME):
 
 
 @task
-def dump_fixture(filename="sample_fixture"):
-    local('django-admin.py dumpdata questapp > questapp/fixtures/%s.json' % filename)
+def dump_fixture(filename="proj_samples"):
+    local('django-admin.py dumpdata > questproj/fixtures/%s.json' % filename)
 
