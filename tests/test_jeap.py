@@ -3,8 +3,9 @@ from django.test.utils import override_settings
 from questapp.models import Clue, Game, Category, get_relevant_counts
 from questapp.parser import parse_game_html
 from questapp.utils import (TEST_GAME_ID, TEST_SHOW_NUM, read_local_html,
-                            get_fname, get_random_objs)
+                            get_fname)
 from django.test import TestCase
+from questproj.utils import get_random_objs
 
 
 class FixtureTest(TestCase):

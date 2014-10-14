@@ -1,23 +1,13 @@
 import os
-import requests
-import glob
-import re
 import logging
-from random import randint
+import requests
 
 log = logging.getLogger(__name__)
-
 
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
 SAMPLE_DIR = 'samples'
 TEST_GAME_ID = 4529
 TEST_SHOW_NUM = 153
-
-
-def get_random_objs(obj_type, num_returned=1):
-    db_count = obj_type.objects.count()
-    for i in range(num_returned):
-        yield obj_type.objects.all()[randint(0, db_count - 1)]
 
 
 def get_fname(game_id):
@@ -72,7 +62,5 @@ def read_local_html(game_id):
     return html
 
 
-def trim(txt, length=30):
-    if txt and len(txt) > length:
-        return txt[:length-1] + '...'
+
 

@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from .models import Clue, Category
 from django.conf import settings
-from .utils import get_random_objs
+from questproj.utils import get_random_objs
 
 
 class HomeView(TemplateView):

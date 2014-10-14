@@ -1,22 +1,19 @@
 """A python Fabric (http://www.fabfile.org/) module to assist in automating database tasks.
 Uses settings from the user's DJANGO_SETTINGS_MODULE.
-
-Usage:
-  fab rebuild     Executes the main rebuild task.
-  fab -l          Print these comments and available commands.
-  fab rebuild:drop_db=True,user=some_user
-                  To specify add'l options.
 """
 import os
 
 from fabric.api import local, sudo, env, task, abort
 from fabric.contrib.console import confirm
-from django.conf import settings as django_settings
+from questapp.jeap_src_utils import load_samples
+from quizapp.utils import load_all
+from django.conf import settings
 
 env.hosts = ['localhost', ]
 
-DB_NAME = django_settings.DATABASES['default']['NAME']
-DB_USER = django_settings.DATABASES['default']['USER']
+DB_NAME = settings.DATABASES['default']['NAME']
+DB_USER = settings.DATABASES['default']['USER']
+
 
 @task
 def rebuild(db_user=DB_USER, db_name=DB_NAME):
@@ -27,12 +24,33 @@ def rebuild(db_user=DB_USER, db_name=DB_NAME):
             module=os.environ['DJANGO_SETTINGS_MODULE'], **db_args)):
         abort("Aborting at user request.")
 
-    sudo("psql template1 -U {db_user} -c \"DROP DATABASE IF EXISTS {db_name}\"".format(**db_args))
-    sudo("createdb -U {db_user} -E UTF8 --owner {db_user} {db_name}".format(**db_args))
+    # sudo("psql template1 -U {db_user} -c \"DROP DATABASE IF EXISTS {db_name}\"".format(**db_args))
+    # sudo("createdb -U {db_user} -E UTF8 --owner {db_user} {db_name}".format(**db_args))
+
+    local("psql -c \"DROP DATABASE IF EXISTS %s\"" % db_name)
+    local('createdb -E UTF8 quest_db')
     local('django-admin.py syncdb')
 
 
 @task
-def dump_fixture(filename="proj_samples"):
-    local('django-admin.py dumpdata > questproj/fixtures/%s.json' % filename)
+def load_jeap(num=500):
+    load_samples(num)
 
+
+@task
+def load_qbs():
+    load_all()
+
+
+def _get_fixture_fname(name="proj_samples"):
+    return os.path.join(os.path.dirname(settings.PROJ_DIR), 'questproj', 'fixtures',
+                        '%s.json' % name)
+
+@task
+def dump_fixtures(filename="proj_samples"):
+    local("django-admin.py dumpdata > %s" % _get_fixture_fname(filename))
+
+
+@task
+def load_fixtures(filename="proj_samples"):
+    local("django-admin.py loaddata %s" % _get_fixture_fname(filename))

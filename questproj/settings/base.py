@@ -22,7 +22,6 @@ INSTALLED_APPS = (
     'bootstrap3',
     'questapp',
     'quizapp',
-    'scrape'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,4 +59,4 @@ TEMPLATE_DIRS = (
 
 SITE_NAME = "Question Site"
 
-QUIZ_SCRAPE_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'scrape', 'files', 'quizballs')
+QUIZ_SCRAPE_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'quizapp', 'source_html', 'quizballs')
