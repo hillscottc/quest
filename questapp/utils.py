@@ -1,11 +1,11 @@
 import os
 import logging
 import requests
+from django.conf import settings
 
 log = logging.getLogger(__name__)
 
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
-SAMPLE_DIR = 'samples'
 TEST_GAME_ID = 4529
 TEST_SHOW_NUM = 153
 
@@ -15,7 +15,7 @@ def get_fname(game_id):
     """
     if isinstance(game_id, int):
         game_id = str(game_id)
-    return os.path.join(SAMPLE_DIR, "game_{}.html".format(game_id))
+    return os.path.join(settings.JEAP_SRC_DIR, "game_{}.html".format(game_id))
 
 
 def write_game(game_id, html):
