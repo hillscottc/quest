@@ -1,6 +1,6 @@
 from django.test import TestCase
-from questapp.jeap_src_utils import load_samples
 from questapp.models import get_relevant_counts
+from questapp.utils import load_samples
 
 
 class LoadSamplesTest(TestCase):

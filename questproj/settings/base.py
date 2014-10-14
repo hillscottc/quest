@@ -61,3 +61,4 @@ SITE_NAME = "Question Site"
 
 QUIZ_SCRAPE_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'quizballs')
 JEAP_SRC_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'jeap')
+JEAP_ID_FILE = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'jeap_src_ids.txt')

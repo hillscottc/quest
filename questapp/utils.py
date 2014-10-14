@@ -1,7 +1,10 @@
 import os
 import logging
+import re
+from bs4 import BeautifulSoup
 import requests
 from django.conf import settings
+from questapp.parser import parse_game_html
 
 log = logging.getLogger(__name__)
 
@@ -62,5 +65,46 @@ def read_local_html(game_id):
     return html
 
 
+def load_samples(num=None):
+
+    parse_errs = []
+
+    # Get the ids out of space-delimmed jeap_src_ids.txt file.
+    src_game_ids = []
+    with open(settings.JEAP_ID_FILE) as myfile:
+        src_game_ids = myfile.read().split()
+
+    for i, game_id in enumerate(src_game_ids):
+        if num and i > num:
+            break
+        html = read_local_html(game_id)
+        if not html:
+            continue
+
+        game, errors = parse_game_html(html, game_id)
+        if errors:
+            parse_errs.append(errors)
+
+        err_count = 0 if not errors else len(errors)
+        # print "{}, game:{},  errors:{}".format(i, game, err_count)
+        print "%s: %s" % (i, game)
+
+    print "Total parse errors: %s" % len(parse_errs)
+
+
+def parse_seasons(count=1):
+    """Get game_ids from given number of seasons.
+    """
+    ids = range(count)
+    for seas_id in ids:
+        url = 'http://www.j-archive.com/showseason.php?season=' + str(seas_id + 1)
+        print 'Getting', url
+        soup = BeautifulSoup(requests.get(url).text)
+        for tag in soup.find_all('a'):
+            if 'game_id' in tag['href']:
+                match = re.search('\d+', tag['href'])
+                if match:
+                    # game_ids.append(match.group(0))
+                    yield match.group(0)
 
 
