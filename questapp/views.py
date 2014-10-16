@@ -1,13 +1,45 @@
 from django.views.generic import TemplateView
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 from .models import Clue, Category
+from .forms import TestForm
 from django.conf import settings
 from questproj.utils import get_random_objs
 
 
+class TestFormView(FormView):
+    template_name = "test.html"
+    form_class = TestForm
+
+    def get_context_data(self, **kwargs):
+        context = super(TestFormView, self).get_context_data(**kwargs)
+        context['SITE_NAME'] = settings.SITE_NAME
+        return context
+
+    def form_valid(self, form):
+        cd = form.cleaned_data
+        msg = None
+        if cd['test_txt']:
+            msg = "You said " + cd['test_txt']
+
+        context = self.get_context_data(form=form)
+        if msg:
+            context.update({'test_msg': msg})
+        return self.render_to_response(context)
+        # return super(TestFormView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('test-form')
+
+
 class HomeView(TemplateView):
     template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['SITE_NAME'] = settings.SITE_NAME
+        return context
 
 
 class ClueDetailView(DetailView):
