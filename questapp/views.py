@@ -1,21 +1,14 @@
-from django.views.generic import TemplateView
-from django.views.generic import ListView, DetailView, FormView
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from .models import Clue, Category
 from .forms import TestForm
-from django.conf import settings
 from questproj.utils import get_random_objs
+from questproj.views import BaseTemplateView, BaseDetailView, BaseListView, BaseFormView
 
 
-class TestFormView(FormView):
+class TestFormView(BaseFormView):
     template_name = "test.html"
     form_class = TestForm
-
-    def get_context_data(self, **kwargs):
-        context = super(TestFormView, self).get_context_data(**kwargs)
-        context['SITE_NAME'] = settings.SITE_NAME
-        return context
 
     def form_valid(self, form):
         cd = form.cleaned_data
@@ -33,16 +26,11 @@ class TestFormView(FormView):
         return reverse('test-form')
 
 
-class HomeView(TemplateView):
+class HomeView(BaseTemplateView):
     template_name = "home.html"
 
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        context['SITE_NAME'] = settings.SITE_NAME
-        return context
 
-
-class ClueDetailView(DetailView):
+class ClueDetailView(BaseDetailView):
     context_object_name = 'clue'
     queryset = Clue.objects.all()
     template_name = "clue_detail.html"
@@ -54,25 +42,15 @@ class ClueDetailView(DetailView):
         object.save()
         return object
 
-    def get_context_data(self, **kwargs):
-        context = super(ClueDetailView, self).get_context_data(**kwargs)
-        context['SITE_NAME'] = settings.SITE_NAME
-        return context
 
-
-class ClueListView(ListView):
+class ClueListView(BaseListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
     queryset = Clue.objects.all()
     paginate_by = 10
 
-    def get_context_data(self, **kwargs):
-        context = super(ClueListView, self).get_context_data(**kwargs)
-        context['SITE_NAME'] = settings.SITE_NAME
-        return context
 
-
-class ClueRandomView(ListView):
+class ClueRandomView(BaseListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
 
@@ -80,19 +58,10 @@ class ClueRandomView(ListView):
         output = list(get_random_objs(Clue, int(float(self.kwargs['num']))))
         return output
 
-    def get_context_data(self, **kwargs):
-        context = super(ClueRandomView, self).get_context_data(**kwargs)
-        context['SITE_NAME'] = settings.SITE_NAME
-        return context
 
-
-class CatListView(ListView):
+class CatListView(BaseListView):
     context_object_name = 'cat_list'
     template_name = 'cat_list.html'
     queryset = Category.objects.all()
     paginate_by = 10
 
-    def get_context_data(self, **kwargs):
-        context = super(CatListView, self).get_context_data(**kwargs)
-        context['SITE_NAME'] = settings.SITE_NAME
-        return context

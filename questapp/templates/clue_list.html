@@ -9,19 +9,17 @@
             <table id="quiz_table" class="table table-sorted">
                 <thead>
                 <tr>
-                    <th style="width: 35px"><span>id</span></th>
-                    <th><span>Game</span></th>
+                    <th><span>Category</span></th>
                     <th><span>Question</span></th>
-{#                    <th><span>Answer</span></th>#}
+                    <th><span><!-- blank --></span></th>
                 </tr>
                 </thead>
                 <tbody>
                     {% for clue in clue_list %}
                     <tr>
-                        <td>{{ clue.id }}</td>
-                        <td>{{ clue.game }}</td>
+                        <td>{{ clue.category.name }}</td>
                         <td style="text-align: left">{{ clue.question }}</td>
-{#                        <td>{{ clue.answer }}</td>#}
+                        <td style="text-align: right">answer</td>
                     </tr>
                     {% endfor %}
                 </tbody>
