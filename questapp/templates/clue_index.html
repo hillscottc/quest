@@ -1,0 +1,12 @@
+{% extends 'base_site.html' %}
+
+{% block title %}Clue Home{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'clue-search' %}">Clue Search</a></p>
+{#    <p><a href="{% url 'clue-list' %}">Clue List</a></p>#}
+    <p><a href="{% url 'clues-random' 20 %}">random clues (way too slow)</a></p>
+    <p><a href="{% url 'clues-paged' 1 %}">Clues paged</a></p>
+    <p><a href="{% url 'cats-paged' 1 %}">Categories paged</a></p>
+
+{% endblock %}

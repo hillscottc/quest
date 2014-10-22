@@ -1,8 +1,4 @@
-{% extends 'base_site.html' %}
 
-{% block title %}Clues{% endblock %}
-
-{% block content %}
     {% if clue_list %}
         {# Want a scrollable panel? Use <div style="height: 400px;overflow: auto"> #}
         <div style="">
@@ -46,13 +42,3 @@
     {% else %}
         <p>None available.</p>
     {% endif %}
-
-{% endblock %}
-
-
-
-
-
-
-
-

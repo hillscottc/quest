@@ -1,5 +1,7 @@
 from django import forms
 
 
-class TestForm(forms.Form):
-    test_txt = forms.CharField()
+class ClueSearchForm(forms.Form):
+    search_txt = forms.CharField(required=False)
+
+
