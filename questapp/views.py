@@ -7,11 +7,7 @@ from questproj.views import BaseTemplateView, BaseDetailView, BaseListView, Base
 
 
 class HomeView(BaseTemplateView):
-    template_name = "home.html"
-
-
-class ClueIndexView(BaseTemplateView):
-    template_name = "clue_index.html"
+    template_name = "questapp_home.html"
 
 
 class ClueDetailView(BaseDetailView):
@@ -43,11 +39,31 @@ class ClueRandomView(BaseListView):
         return output
 
 
+class CluesByCatView(BaseListView):
+    context_object_name = 'clue_list'
+    template_name = 'clue_paged_list.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CluesByCatView, self).get_context_data(*args, **kwargs)
+        context.update({'search_title': "Clues By Category"})
+        return context
+
+
+    def get_queryset(self):
+        cat_id = int(float(self.kwargs['cat_id']))
+        cat = Category.objects.get(id=cat_id)
+        qs = Clue.objects.filter(category=cat)
+        return qs.all()
+
+
 class CatListView(BaseListView):
     context_object_name = 'cat_list'
     template_name = 'cat_list.html'
-    queryset = Category.objects.all()
     paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Category.objects.all()
+        return queryset
 
 
 class ClueSearchView(BaseFormView):

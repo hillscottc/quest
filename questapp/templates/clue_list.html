@@ -12,7 +12,9 @@
             <tbody>
                 {% for clue in clue_list %}
                 <tr>
-                    <td>{{ clue.category.name }}</td>
+                    <td>
+                        <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
+                    </td>
                     <td style="text-align: left">{{ clue.question }}</td>
                     <td style="text-align: right">answer</td>
                 </tr>

@@ -16,7 +16,7 @@
                     {% for cat in cat_list %}
                     <tr>
                         <td>{{ cat.id }}</td>
-                        <td style="text-align: left">{{ cat.name }}</td>
+                        <td style="text-align: left"><a href="{% url 'clues-by-cat' cat.id %}">{{ cat.name }}</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
