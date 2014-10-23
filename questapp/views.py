@@ -66,7 +66,7 @@ class ClueSearchView(BaseFormView):
             qs = Clue.objects.filter(question__contains=cd['search_txt'])
 
         # I'd prefer to use pagination.....somehow use the ListView way.
-        max_recs = 20
+        max_recs = 50
         clue_list = qs[:max_recs]
 
         context.update({'test_msg': msg})

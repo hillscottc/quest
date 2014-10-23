@@ -1,44 +1,42 @@
-
-    {% if clue_list %}
-        {# Want a scrollable panel? Use <div style="height: 400px;overflow: auto"> #}
-        <div style="">
-            <table id="quiz_table" class="table table-sorted">
-                <thead>
+{% if clue_list %}
+    {# Want a scrollable panel? Use <div style="height: 400px;overflow: auto"> #}
+    <div style="">
+        <table id="quiz_table" class="table table-sorted">
+            <thead>
+            <tr>
+                <th><span>Category</span></th>
+                <th><span>Question</span></th>
+                <th><span><!-- blank --></span></th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for clue in clue_list %}
                 <tr>
-                    <th><span>Category</span></th>
-                    <th><span>Question</span></th>
-                    <th><span><!-- blank --></span></th>
+                    <td>{{ clue.category.name }}</td>
+                    <td style="text-align: left">{{ clue.question }}</td>
+                    <td style="text-align: right">answer</td>
                 </tr>
-                </thead>
-                <tbody>
-                    {% for clue in clue_list %}
-                    <tr>
-                        <td>{{ clue.category.name }}</td>
-                        <td style="text-align: left">{{ clue.question }}</td>
-                        <td style="text-align: right">answer</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-        {% if is_paginated %}
-            <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="{% url 'clues-paged' page_obj.previous_page_number %}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="{% url 'clues-paged' page_obj.next_page_number %}">next</a>
-                {% endif %}
+    {% if is_paginated %}
+        <div class="pagination">
+        <span class="page-links">
+            {% if page_obj.has_previous %}
+                <a href="{% url 'clues-paged' page_obj.previous_page_number %}">previous</a>
+            {% endif %}
+            <span class="page-current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
             </span>
-            </div>
-        {% endif %}
-
-
-    {% else %}
-        <p>None available.</p>
+            {% if page_obj.has_next %}
+                <a href="{% url 'clues-paged' page_obj.next_page_number %}">next</a>
+            {% endif %}
+        </span>
+        </div>
     {% endif %}
+
+{% else %}
+    <p>None available.</p>
+{% endif %}
