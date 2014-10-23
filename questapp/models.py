@@ -12,6 +12,15 @@ def get_relevant_counts():
             'Category': Category.objects.count()}
 
 
+def get_empty_cats():
+    """Get Categories with no questions. Somewtimes they get through the parser.
+    Usually one would delete them, as a clenaup.
+    """
+    for cat in Category.objects.all():
+        if not cat.clue_set.exists():
+            yield cat
+
+
 class Game(BaseModel):
     sid = models.CharField(primary_key=True, max_length=8, help_text="(Jeapordy) Show id.")
     gid = models.CharField(unique=True, max_length=8, help_text="(External) Game id.",
