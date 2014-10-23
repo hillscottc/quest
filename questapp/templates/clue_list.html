@@ -13,7 +13,12 @@
                 {% for clue in clue_list %}
                 <tr>
                     <td>
-                        <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
+                        {% if search_title == "Clues By Category" %}
+                            {# Dont link the cats, if its already by cat. #}
+                            {{ clue.category.name }}
+                        {% else %}
+                            <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
+                        {% endif %}
                     </td>
                     <td style="text-align: left">{{ clue.question }}</td>
                     <td style="text-align: right">answer</td>

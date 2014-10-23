@@ -48,7 +48,6 @@ class CluesByCatView(BaseListView):
         context.update({'search_title': "Clues By Category"})
         return context
 
-
     def get_queryset(self):
         cat_id = int(float(self.kwargs['cat_id']))
         cat = Category.objects.get(id=cat_id)
