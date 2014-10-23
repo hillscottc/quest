@@ -149,7 +149,8 @@ def _parse_round_cats(round_div, game):
         for cat_el in cat_row.find_all('td', {'class': "category_name"}):
             if not cat_el.text:
                 raise CategoryException("No category text in game %s" % game)
-            elif cat_el.text == '_______ & _______':
+            elif re.match('_+ *& *_+', cat_el.text):
+                ## Catches bad '___& ___' categories.
                 raise CategoryException("Bad category in game %s, %s" % (game, cat_el.text))
             else:
                 cats.append(Category.objects.create(name=cat_el.text, game=game))
