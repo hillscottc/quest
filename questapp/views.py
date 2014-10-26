@@ -35,7 +35,18 @@ class ClueRandomView(BaseListView):
     template_name = 'clue_paged_list.html'
 
     def get_queryset(self):
-        output = list(get_random_objs(Clue, int(float(self.kwargs['num']))))
+        num = int(float(self.kwargs['num']))
+        output = list(get_random_objs(Clue, num))
+        return output
+
+
+class CatRandomView(BaseListView):
+    context_object_name = 'cat_list'
+    template_name = 'cat_list.html'
+
+    def get_queryset(self):
+        num = int(float(self.kwargs['num']))
+        output = list(get_random_objs(Category, num))
         return output
 
 

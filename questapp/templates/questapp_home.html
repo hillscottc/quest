@@ -3,14 +3,7 @@
 {% block title %}Questapp Home{% endblock %}
 
 {% block content %}
-     <p style="font-style: italic">A collection of Jeapordy clues.</p>
 
-    <div class="jumbotron">
-        <p><a href="{% url 'clues-index' %}">Clues</a></p>
-        <p><a href="{% url 'cats-index' %}">Categories</a></p>
-    </div>
 
-    <p><a href="{% url 'clue-search' %}">Clue Search</a></p>
-    <p><a href="{% url 'clues-random' 20 %}">random clues (way too slow)</a></p>
 
 {% endblock %}

@@ -2,12 +2,24 @@
 
 {% block content %}
 
-    <div class="jumbotron">
-        <h2>Welcome to {{ SITE_NAME }}.</h2>
+     <p style="font-style: italic">{{ SITE_NAME }} is a collection of Jeapordy clues.</p>
 
-{#        <p><a href="{% url 'quiz_index' %}" class="btn btn-primary btn-lg" #}
-{#              role="button">Go to the Quizzes! &raquo;</a></p>#}
+    <div class="jumbotron">
+        <p><a href="{% url 'clues-index' %}">Clues</a></p>
+        <p><a href="{% url 'cats-index' %}">Categories</a></p>
+        <p>Random Clues (<a href="{% url 'clues-random' 5 %}">5</a>,
+                         <a href="{% url 'clues-random' 10 %}">10</a>,
+                         <a href="{% url 'clues-random' 25 %}">25</a>)
+        </p>
+
+        <p>Random Categories (<a href="{% url 'cats-random' 5 %}">5</a>,
+                         <a href="{% url 'cats-random' 10 %}">10</a>,
+                         <a href="{% url 'cats-random' 25 %}">25</a>)
+        </p>
+        <p><a href="{% url 'clue-search' %}">Clue Search</a></p>
 
     </div>
+
+
 
 {% endblock %}

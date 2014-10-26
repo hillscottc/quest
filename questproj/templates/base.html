@@ -34,7 +34,11 @@
         });
     </script>
 
-    <!-- my site default css -->
+
+    <!-- My project common javascript -->
+    <script src="{% static 'js/questproj_common.js' %}"></script>
+
+    <!-- My site default css -->
     <link rel="stylesheet" href="{% static "css/style.css" %}" />
 
     <title>{% block title %}{% endblock %}</title>
@@ -62,6 +66,7 @@
 
     <!-- Bootstrap styles and JQuery -->
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
 
 </body>
 </html>

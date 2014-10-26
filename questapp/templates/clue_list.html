@@ -6,7 +6,6 @@
             <tr>
                 <th><span>Category</span></th>
                 <th><span>Question</span></th>
-                <th><span><!-- blank --></span></th>
             </tr>
             </thead>
             <tbody>
@@ -20,8 +19,15 @@
                             <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
                         {% endif %}
                     </td>
-                    <td style="text-align: left">{{ clue.question }}</td>
-                    <td style="text-align: right">answer</td>
+                    <td style="text-align: left">
+                        <div class="question"><p>{{ clue.question }}</p>
+                            <div class="show-answer btn btn-sm btn-default">
+                                Answer:
+                                <span class="answer">{{ clue.answer }}</span>
+                            </div>
+                        </div>
+
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
