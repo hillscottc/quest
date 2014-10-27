@@ -1,5 +1,7 @@
 import logging
 from django.db import models
+from django.contrib.auth.models import User
+
 
 log = logging.getLogger(__name__)
 
@@ -46,4 +48,6 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
         ordering = ["-modified"]
+
+
 

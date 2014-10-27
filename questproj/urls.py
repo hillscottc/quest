@@ -14,6 +14,9 @@ urlpatterns = patterns(
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
 
 
+    # url(r'^user/account/$', views.user_account, name='user_account'),
+
+
     url(r'^questapp/', include('questapp.urls')),
     url(r'^quizapp/', include('quizapp.urls')),
 
