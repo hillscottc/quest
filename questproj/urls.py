@@ -19,7 +19,7 @@ urlpatterns = patterns(
 
 
     ## From quzapp.....
-    url(r'^user/account/$', user_account, name='user_account'),
+    # url(r'^user/account/$', user_account, name='user_account'),
     url(r'^user/password/reset/$',
         'django.contrib.auth.views.password_reset',
         {'post_reset_redirect': '/user/password/reset/done/'},
@@ -31,6 +31,4 @@ urlpatterns = patterns(
     {'post_reset_redirect': '/user/password/done/'}),
     (r'^user/password/done/$',
     'django.contrib.auth.views.password_reset_complete'),
-
-
 )
