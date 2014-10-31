@@ -1,54 +1,25 @@
 {% if clue_list %}
     {# Want a scrollable panel? Use <div style="height: 400px;overflow: auto"> #}
-    <div style="">
-        <table id="quiz_table" class="table table-sorted">
-            <thead>
-            <tr>
-                <th><span>Category</span></th>
-                <th><span>Question</span></th>
-            </tr>
-            </thead>
-            <tbody>
-                {% for clue in clue_list %}
-                <tr>
-                    <td>
-                        {% if search_title == "Clues By Category" %}
-                            {# Dont link the cats, if its already by cat. #}
-                            {{ clue.category.name }}
-                        {% else %}
-                            <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
-                        {% endif %}
-                    </td>
-                    <td style="text-align: left">
-                        <div class="question"><p>{{ clue.question }}</p>
-                            <div class="show-answer btn btn-sm btn-default">
-                                Answer:
-                                <span class="answer">{{ clue.answer }}</span>
-                            </div>
-                        </div>
-
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="clue-list">
+        {% for clue in clue_list %}
+            <div class="clue">
+                <span class="category">
+                    {% if search_title == "Clues By Category" %}
+                        {# Dont link the cats, if its already by cat. #}
+                        {{ clue.category.name }}
+                    {% else %}
+                        <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
+                    {% endif %}
+                </span>
+                <div class="question"><p>{{ clue.question }}</p>
+                    <div class="show-answer btn btn-xs btn-default">
+                        Answer
+                        <span class="answer">: {{ clue.answer }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-
-    {% if is_paginated %}
-        <div class="pagination">
-        <span class="page-links">
-            {% if page_obj.has_previous %}
-                <a href="{% url 'clues-paged' page_obj.previous_page_number %}">previous</a>
-            {% endif %}
-            <span class="page-current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-            {% if page_obj.has_next %}
-                <a href="{% url 'clues-paged' page_obj.next_page_number %}">next</a>
-            {% endif %}
-        </span>
-        </div>
-    {% endif %}
 
 {% else %}
     <p>None available.</p>
