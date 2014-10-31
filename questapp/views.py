@@ -55,8 +55,13 @@ class CluesByCatView(BaseListView):
     template_name = 'clue_paged_list.html'
 
     def get_context_data(self, *args, **kwargs):
+
+        cat_id = int(float(self.kwargs['cat_id']))
+        cat = Category.objects.get(id=cat_id)
+
         context = super(CluesByCatView, self).get_context_data(*args, **kwargs)
-        context.update({'search_title': "Clues By Category"})
+        context.update({'search_title': 'Clues By Category'})
+        context.update({'cat': cat})
         return context
 
     def get_queryset(self):

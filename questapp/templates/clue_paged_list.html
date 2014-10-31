@@ -5,7 +5,8 @@
 {% block content %}
 
     {% if search_title %}
-        <h3>{{ search_title }}</h3>
+        <h3>{{ search_title }}: {{ cat.name }}</h3>
+        <br/>
     {% endif %}
 
     {% include "clue_list.html" %}

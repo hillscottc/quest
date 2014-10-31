@@ -6,7 +6,7 @@
                 <span class="category">
                     {% if search_title == "Clues By Category" %}
                         {# Dont link the cats, if its already by cat. #}
-                        {{ clue.category.name }}
+                        {# {{ clue.category.name }} #}
                     {% else %}
                         <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
                     {% endif %}
