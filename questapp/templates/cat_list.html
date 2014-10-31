@@ -3,41 +3,15 @@
 {% block title %}Categories{% endblock %}
 
 {% block content %}
+    <h3>Categories</h3>
     {% if cat_list %}
         <div>
-            <table id="quiz_table" class="table table-sorted">
-                <thead>
-                <tr>
-                    <th style="width: 35px"><span>id</span></th>
-                    <th><span>Category</span></th>
-                </tr>
-                </thead>
-                <tbody>
-                    {% for cat in cat_list %}
-                    <tr>
-                        <td>{{ cat.id }}</td>
-                        <td style="text-align: left"><a href="{% url 'clues-by-cat' cat.id %}">{{ cat.name }}</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        {% if is_paginated %}
-            <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="{% url 'cats-paged' page_obj.previous_page_number %}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="{% url 'cats-paged' page_obj.next_page_number %}">next</a>
-                {% endif %}
-            </span>
+            {% for cat in cat_list %}
+            <div>
+                <a href="{% url 'clues-by-cat' cat.id %}">{{ cat.name }}</a>
             </div>
-        {% endif %}
+            {% endfor %}
+        </div>
 
     {% else %}
         <p>None found.</p>
