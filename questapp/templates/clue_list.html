@@ -1,26 +1,20 @@
-{% if clue_list %}
-    {# Want a scrollable panel? Use <div style="height: 400px;overflow: auto"> #}
-    <div class="clue-list">
-        {% for clue in clue_list %}
-            <div class="clue">
-                <span class="category">
-                    {% if search_title == "Clues By Category" %}
-                        {# Dont link the cats, if its already by cat. #}
-                        {# {{ clue.category.name }} #}
-                    {% else %}
-                        <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
-                    {% endif %}
-                </span>
-                <div class="question"><p>{{ clue.question }}</p>
-                    <div class="show-answer btn btn-xs btn-default">
-                        Answer
-                        <span class="answer">: {{ clue.answer }}</span>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+{% extends 'base_site.html' %}
 
-{% else %}
-    <p>None available.</p>
-{% endif %}
+{% block title %}Clues{% endblock %}
+
+{% block content %}
+
+    <h4 style="font-style: italic">{{ page_subtitle }}</h4>
+    <br/>
+
+    {% include "clue_list_snip.html" %}
+
+{% endblock %}
+
+
+
+
+
+
+
+

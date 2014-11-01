@@ -7,19 +7,8 @@
     <div class="jumbotron">
         <p><a href="{% url 'clues-index' %}">Clues</a></p>
         <p><a href="{% url 'cats-index' %}">Categories</a></p>
-        <p>Random Clues (<a href="{% url 'clues-random' 5 %}">5</a>,
-                         <a href="{% url 'clues-random' 10 %}">10</a>,
-                         <a href="{% url 'clues-random' 25 %}">25</a>)
-        </p>
-
-        <p>Random Categories (<a href="{% url 'cats-random' 5 %}">5</a>,
-                         <a href="{% url 'cats-random' 10 %}">10</a>,
-                         <a href="{% url 'cats-random' 25 %}">25</a>)
-        </p>
-        <p><a href="{% url 'clue-search' %}">Clue Search</a></p>
+        <p><a href="{% url 'clue-search' %}">Search</a></p>
 
     </div>
-
-
 
 {% endblock %}
