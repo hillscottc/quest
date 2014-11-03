@@ -3,7 +3,10 @@
 {% block title %}Categories{% endblock %}
 
 {% block content %}
-    <h3>Categories</h3>
+
+    <h4 style="font-style: italic">{{ page_subtitle }}</h4>
+    <br/>
+
     {% if cat_list %}
         <div>
             {% for cat in cat_list %}
