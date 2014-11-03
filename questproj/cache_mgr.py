@@ -1,37 +1,33 @@
 import random
 import logging
 from django.core.cache import cache
-from questapp.models import Clue
+from questapp.models import Clue, Category
 from questproj.utils import get_random_objs
 
 log = logging.getLogger(__name__)
 
 
-def reset_cache(key='rand_clues', timeout=3600, size=1000):
-    """
-    Resets the cache of Clues
-    :param size:
-    :param secs:
-    :return: the newly cached value
-    """
-    log.info('Begin reset cache.')
-    value = list(get_random_objs(Clue, size))
+def get_cache_key(obj):
+    """Get the string used for the key."""
+    return "random_%s" % obj.__name__
+
+
+def reset_object_cache(obj, timeout=3600, size=1000):
+    log.info('Begin reset cache of %s' % obj.__name__)
+    key = get_cache_key(obj)
+    value = list(get_random_objs(obj, size))
     cache.set(key, value, timeout)
-    log.info('End cache reset.')
-    return cache.get('rand_clues')
+    log.info('End cache reset of %s' % obj)
+    return cache.get(key)
 
 
-def get_cached_clues(num=5):
-    """
-    Get some clues from the cache.
-    :param num: how many
-    :return: a list of clues
-    """
-    log.info('Gettng %s cached clues.' % num)
-    rand_clues = cache.get('rand_clues')
-    if not rand_clues:
-        rand_clues = reset_cache()
-    clue_list = []
+def get_cached_objs(obj, num=5):
+    log.info('Getting %s from cache of %s.' % (num, obj.__name__))
+    rand_objs = cache.get(get_cache_key(obj))
+    if not rand_objs:
+        rand_objs = reset_object_cache(obj)
+    obj_list = []
     for i in range(num):
-        clue_list.append(random.choice(rand_clues))
-    return clue_list
+        obj_list.append(random.choice(rand_objs))
+    return obj_list
+

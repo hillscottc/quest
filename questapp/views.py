@@ -5,7 +5,6 @@ from django.views.generic import ListView, DetailView, FormView
 from django.views.generic import TemplateView
 from .models import Clue, Category
 from .forms import ClueSearchForm
-from questproj.utils import get_random_objs
 import questproj.cache_mgr as cache_mgr
 
 
@@ -44,7 +43,7 @@ class ClueRandomView(ListView):
         return context
 
     def get_queryset(self):
-        clue_list = cache_mgr.get_cached_clues()
+        clue_list = cache_mgr.get_cached_objs(Clue)
         return clue_list
 
 
@@ -54,8 +53,8 @@ class CatRandomView(ListView):
     num_returned = 5
 
     def get_queryset(self):
-        output = list(get_random_objs(Category, self.num_returned))
-        return output
+        cat_list = cache_mgr.get_cached_objs(Category)
+        return cat_list
 
 
 class CluesByCatView(ListView):
