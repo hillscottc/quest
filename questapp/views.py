@@ -3,14 +3,14 @@ from django.core.urlresolvers import reverse
 from .models import Clue, Category
 from .forms import ClueSearchForm
 from questproj.utils import get_random_objs
-from questproj.views import BaseTemplateView, BaseDetailView, BaseListView, BaseFormView
+from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import TemplateView
 
-
-class HomeView(BaseTemplateView):
+class HomeView(TemplateView):
     template_name = "questapp_home.html"
 
 
-class ClueDetailView(BaseDetailView):
+class ClueDetailView(DetailView):
     context_object_name = 'clue'
     queryset = Clue.objects.all()
     template_name = "clue_detail.html"
@@ -23,13 +23,13 @@ class ClueDetailView(BaseDetailView):
         return object
 
 
-class ClueListView(BaseListView):
+class ClueListView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
     queryset = Clue.objects.all()
 
 
-class ClueRandomView(BaseListView):
+class ClueRandomView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
     num_returned = 5
@@ -45,7 +45,7 @@ class ClueRandomView(BaseListView):
         return output
 
 
-class CatRandomView(BaseListView):
+class CatRandomView(ListView):
     context_object_name = 'cat_list'
     template_name = 'cat_list.html'
     num_returned = 5
@@ -55,7 +55,7 @@ class CatRandomView(BaseListView):
         return output
 
 
-class CluesByCatView(BaseListView):
+class CluesByCatView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
 
@@ -77,7 +77,7 @@ class CluesByCatView(BaseListView):
         return qs.all()
 
 
-class CatListView(BaseListView):
+class CatListView(ListView):
     context_object_name = 'cat_list'
     template_name = 'cat_list.html'
 
@@ -86,7 +86,7 @@ class CatListView(BaseListView):
         return queryset
 
 
-class ClueSearchView(BaseFormView):
+class ClueSearchView(FormView):
     template_name = "clue_search.html"
     form_class = ClueSearchForm
 

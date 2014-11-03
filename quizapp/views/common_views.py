@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 
+
 def log_view(request):
     """The log page."""
     # all_log = RawLog.objects.all().order_by('-created_at')[:50]

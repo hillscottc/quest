@@ -33,6 +33,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    # 'questapp.context_processors.cached_queries',
+    'questapp.context_processors.base_context',
+)
+
 ROOT_URLCONF = 'questproj.urls'
 WSGI_APPLICATION = 'questproj.wsgi.application'
 
