@@ -35,9 +35,15 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
-    # 'questapp.context_processors.cached_queries',
     'questapp.context_processors.base_context',
 )
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 ROOT_URLCONF = 'questproj.urls'
 WSGI_APPLICATION = 'questproj.wsgi.application'

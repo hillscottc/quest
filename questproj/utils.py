@@ -1,6 +1,5 @@
 from random import randint
 
-
 def get_random_objs(obj_type, num_returned=1):
     """Yields given number of random objects of given type."""
     # Get a list of all the object's ids.

@@ -76,3 +76,5 @@ class Clue(BaseModel):
 
     def __unicode__(self):
         return u"Q:{} A:{}".format(self.question, self.answer)
+
+

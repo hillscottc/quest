@@ -1,10 +1,13 @@
+import random
 from django.utils import timezone
 from django.core.urlresolvers import reverse
+from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import TemplateView
 from .models import Clue, Category
 from .forms import ClueSearchForm
 from questproj.utils import get_random_objs
-from django.views.generic import ListView, DetailView, FormView
-from django.views.generic import TemplateView
+import questproj.cache_mgr as cache_mgr
+
 
 class HomeView(TemplateView):
     template_name = "questapp_home.html"
@@ -15,8 +18,8 @@ class ClueDetailView(DetailView):
     queryset = Clue.objects.all()
     template_name = "clue_detail.html"
 
-    def get_object(self):
-        object = super(ClueDetailView, self).get_object()
+    def get_object(self, *args, **kwargs):
+        object = super(ClueDetailView, self).get_object(*args, **kwargs)
         # Record the last accessed date
         object.last_accessed = timezone.now()
         object.save()
@@ -41,8 +44,8 @@ class ClueRandomView(ListView):
         return context
 
     def get_queryset(self):
-        output = list(get_random_objs(Clue, self.num_returned))
-        return output
+        clue_list = cache_mgr.get_cached_clues()
+        return clue_list
 
 
 class CatRandomView(ListView):
