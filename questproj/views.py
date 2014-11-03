@@ -9,7 +9,7 @@ from .forms import UserProfileForm, UserForm
 
 
 BASE_CONTEXT = {
-    'SITE_NAME': settings.SITE_NAME,
+    # 'SITE_NAME': settings.SITE_NAME,
 }
 
 
@@ -18,10 +18,8 @@ def base_context(request):
     return BASE_CONTEXT
 
 
-def home(request):
-    """The project's home view."""
-    context = RequestContext(request, processors=[base_context])
-    return render(request, 'home.html', context_instance=context)
+class HomeView(TemplateView):
+    template_name = "home.html"
 
 
 class BaseDetailView(DetailView):
