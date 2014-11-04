@@ -8,14 +8,15 @@
     <br/>
 
     {% if cat_list %}
-        <div>
+        <div class="cat-list">
             {% for cat in cat_list %}
-            <div>
+            <div class="category">
                 <a href="{% url 'clues-by-cat' cat.id %}">{{ cat.name }}</a>
             </div>
             {% endfor %}
+            <br/>
+            <div><a href="">( get more )</a></div>
         </div>
-
     {% else %}
         <p>None found.</p>
     {% endif %}

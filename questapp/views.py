@@ -50,7 +50,6 @@ class ClueRandomView(ListView):
 class CatRandomView(ListView):
     context_object_name = 'cat_list'
     template_name = 'cat_list.html'
-    num_returned = 5
 
     def get_context_data(self, **kwargs):
         context = super(CatRandomView, self).get_context_data(**kwargs)
@@ -60,7 +59,7 @@ class CatRandomView(ListView):
 
 
     def get_queryset(self):
-        cat_list = cache_mgr.get_cached_objs(Category)
+        cat_list = cache_mgr.get_cached_objs(Category, 10)
         return cat_list
 
 
