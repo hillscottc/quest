@@ -52,7 +52,7 @@ class Category(BaseModel):
         ordering = ['name']
 
     def __unicode__(self):
-        return u"%s-%s-%s-%s" % (self.game, self.round_num, self.col_num, self.name)
+        return self.name
 
     def get_absolute_url(self):
         return reverse('game-detail', kwargs={'pk': self.pk})
