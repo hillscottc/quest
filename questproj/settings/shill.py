@@ -45,45 +45,46 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
-        'quest_log': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOGS_DIR, 'quest.log'),
-            'formatter': 'verbose'
-        },
-        'django_log': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOGS_DIR, 'django.log'),
-            'formatter': 'verbose'
-        },
+        # 'quest_log': {
+        #     'level': 'DEBUG',
+        #     'class': 'logging.FileHandler',
+        #     'filename': os.path.join(LOGS_DIR, 'quest.log'),
+        #     'formatter': 'verbose'
+        # },
+        # 'django_log': {
+        #     'level': 'DEBUG',
+        #     'class': 'logging.FileHandler',
+        #     'filename': os.path.join(LOGS_DIR, 'django.log'),
+        #     'formatter': 'verbose'
+        # },
     },
     'loggers': {
         '': {
-            'handlers': ['console', 'django_log'],
-            'propagate': True,
-            'level': 'DEBUG',
-        },
-        'django': {
-            'handlers': ['console', 'django_log'],
-            'propagate': True,
-            'level': 'DEBUG',
-        },
-        'django.db.backends': {
-            'handlers': ['console', 'django_log'],
-            'propagate': True,
-            'level': 'INFO',
-        },
-        'django.request': {
+            # 'handlers': ['console', 'django_log'],
             'handlers': ['console'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'questapp': {
-            'handlers': ['console', 'quest_log'],
             'propagate': True,
             'level': 'DEBUG',
-        }
+        },
+        # 'django': {
+        #     'handlers': ['console', 'django_log'],
+        #     'propagate': True,
+        #     'level': 'DEBUG',
+        # },
+        # 'django.db.backends': {
+        #     'handlers': ['console', 'django_log'],
+        #     'propagate': True,
+        #     'level': 'INFO',
+        # },
+        # 'django.request': {
+        #     'handlers': ['console'],
+        #     'level': 'ERROR',
+        #     'propagate': False,
+        # },
+        # 'questapp': {
+        #     'handlers': ['console', 'quest_log'],
+        #     'propagate': True,
+        #     'level': 'DEBUG',
+        # }
     }
 }
 
