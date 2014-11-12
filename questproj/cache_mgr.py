@@ -22,6 +22,8 @@ def reset_object_cache(obj, timeout=3600, size=1000):
 
 
 def get_cached_objs(obj, num=5):
+    """Get some objects from the cache.
+    If fails, cache for that object is reset. """
     log.info('Getting %s from cache of %s.' % (num, obj.__name__))
     rand_objs = cache.get(get_cache_key(obj))
     if not rand_objs:

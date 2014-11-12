@@ -77,6 +77,8 @@ def load_samples(num=None):
     with open(settings.JEAP_ID_FILE) as myfile:
         src_game_ids = myfile.read().split()
 
+    created = []
+
     for i, game_id in enumerate(src_game_ids):
         if num and i > num:
             break
@@ -85,14 +87,16 @@ def load_samples(num=None):
             continue
 
         game, errors = parse_game_html(html, game_id)
+        created.append(game)
         if errors:
             parse_errs.append(errors)
 
         err_count = 0 if not errors else len(errors)
         # print "{}, game:{},  errors:{}".format(i, game, err_count)
-        print "%s: %s" % (i, game)
+        log.debug("%s: %s" % (i, game))
 
-    print "Total parse errors: %s" % len(parse_errs)
+    log.info("Loaded %s J Games, %s parse_errs." % (len(created), len(parse_errs)))
+    return created
 
 
 def parse_seasons(count=1):

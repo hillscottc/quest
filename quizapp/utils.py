@@ -1,7 +1,7 @@
-from os import walk
 import os
 from random import randint
 import re
+import logging
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -9,12 +9,16 @@ import requests
 from requests import ConnectionError, HTTPError
 from quizapp.models import Quiz, Question, Answer
 
+log = logging.getLogger(__name__)
+
 
 def load_all():
     src_files = []
-    for (dirpath, dirnames, filenames) in walk(settings.QUIZ_SCRAPE_DIR):
+    for (dirpath, dirnames, filenames) in os.walk(settings.QUIZ_SCRAPE_DIR):
         src_files.extend(filenames)
         break
+
+    created = []
 
     for f in src_files:
 
@@ -22,6 +26,8 @@ def load_all():
 
         quiz = Quiz.objects.create(source="QUIZBALLS",
                                    name="Sample Quiz %s" % re.search(r'\d+', f).group())
+
+        created.append(quiz)
 
         for (i, td) in enumerate(soup.find_all('td', {"width": "350"})):
             Question.objects.create(quiz=quiz, text=td.get_text(),
@@ -31,10 +37,12 @@ def load_all():
             question = Question.objects.get(quiz=quiz, order=i)
             Answer.objects.create(question=question, text=td.get_text(), correct=True)
 
-        print("\nCreated quiz %s with %d questions and %d answers." % (
+        log.debug("Created quiz %s with %d questions and %d answers." % (
             quiz,
             quiz.questions.count(),
             Answer.objects.filter(question__in=Question.objects.filter(quiz=quiz)).count()))
+    log.info("Loaded %s quizzes." % len(created))
+    return created
 
 
 def get_or_create_profile():
