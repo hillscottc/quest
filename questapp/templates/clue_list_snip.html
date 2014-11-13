@@ -8,8 +8,8 @@
                         {# Dont link the cats, if its already by cat. #}
                         {# {{ clue.category.name }} #}
                     {% else %}
-{#                        <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>#}
-                        {{ clue.category.name }}
+                        <a href="{% url 'clues-by-cat' clue.category.id %}">{{ clue.category.name }}</a>
+{#                        {{ clue.category.name }}#}
                     {% endif %}
                 </span>
                 <div class="question"><p>{{ clue.question }}</p>
