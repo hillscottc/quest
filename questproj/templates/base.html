@@ -50,6 +50,22 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- Google Analytics Async Tracking -->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        // This is Scott's test acct
+        _gaq.push(['_setAccount', 'UA-56755608-1']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
 </head>
 
 <body role="document">
