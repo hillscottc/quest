@@ -1,5 +1,7 @@
 from base import *
 
+import dj_database_url
+
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     #'--failed',  # Run tests that failed in the last run.
@@ -12,16 +14,17 @@ NOSE_ARGS = [
     # '--with-fixture-bundling'
 ]
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'quest_db', 'USER': 'quest_acct', 'PASSWORD': '12345',
-#         'HOST': 'localhost', 'PORT': '5432'
-#     }
-# }
+## local db
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'quest_db', 'USER': 'quest_acct', 'PASSWORD': '12345',
+        'HOST': 'localhost', 'PORT': '5432'
+    }
+}
 
-import dj_database_url
-DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+## Heroku db
+# DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 
 
 def get_cache():
