@@ -81,7 +81,7 @@ class CluesByCatView(ListView):
     def get_queryset(self):
         cat_id = int(float(self.kwargs['cat_id']))
         cat = Category.objects.get(id=cat_id)
-        qs = Clue.objects.filter(category=cat)
+        qs = Clue.objects.filter(category__name=cat.name)
         return qs.all()
 
 
