@@ -1,5 +1,8 @@
 {% extends "base_site.html" %}
 
+{# http://stackoverflow.com/questions/346467/format-numbers-in-django-templates #}
+{% load humanize %}
+
 {% block content %}
 
      <p style="font-style: italic">{{ SITE_NAME }} is a collection of Jeapordy clues.</p>
@@ -8,7 +11,10 @@
         <p><a href="{% url 'clues-index' %}">Clues</a></p>
         <p><a href="{% url 'cats-index' %}">Categories</a></p>
         <p><a href="{% url 'clue-search' %}">Search</a></p>
+    </div>
 
+    <div>
+    <p>Database contains {{ clue_count|intcomma }} clues in {{ cat_count|intcomma }} categories.</p>
     </div>
 
 {% endblock %}

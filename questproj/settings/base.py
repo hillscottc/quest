@@ -20,7 +20,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_nose',
-    'bootstrap3',
+    'django.contrib.humanize',  # http://stackoverflow.com/questions/346467/format-numbers-in-django-templates
+    # 'bootstrap3',
     'questapp',
     'quizapp',
 )
