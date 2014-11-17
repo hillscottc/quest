@@ -1,20 +1,27 @@
-from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response, HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.template import RequestContext
-from django.views.generic import ListView, DetailView, FormView
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserProfileForm, UserForm
+from cache_mgr import get_dbstats
 
 
 def base_context(request):
     """The project's function-based home view needs this available in this way."""
-    return  {'SITE_NAME': settings.SITE_NAME}
+    return {'SITE_NAME': settings.SITE_NAME}
 
 
 class HomeView(TemplateView):
     template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        dbstats = get_dbstats()
+        context.update({'clue_count': dbstats['clue_count']})
+        context.update({'cat_count': dbstats['cat_count']})
+        return context
 
 
 def register(request):
