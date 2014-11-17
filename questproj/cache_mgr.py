@@ -7,6 +7,17 @@ from questproj.utils import get_random_objs
 log = logging.getLogger(__name__)
 
 
+def get_dbstats():
+    dbstats = cache.get('dbstats')
+    if not dbstats:
+        dbstats = {
+            'clue_count': Clue.objects.count(),
+            'cat_count': Category.objects.count(),
+        }
+        cache.set('dbstats', dbstats, 3600)
+    return dbstats
+
+
 def get_cache_key(obj):
     """Get the string used for the key."""
     return "random_%s" % obj.__name__
