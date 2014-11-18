@@ -1,0 +1,36 @@
+{% if clue_list %}
+    <div class="clue-list">
+        <ol class="list-group">
+        {% for clue in clue_list %}
+            <li class="list-group-item" >
+                <p class="clue">
+                    <span id="{{ clue.id }}">
+                            {{ clue.question }}
+                    </span>
+                </p>
+                <div>
+
+                    <input type="text"
+                               class="UL_answer"
+                               name="q_id_{{ question.id }}"
+                               value=""
+                               placeholder="Answer">
+                        <input type="hidden"
+                               id="ans_{{ question.id }}_hid"
+                               value="{{ answer.text }}">
+
+                </div>
+
+                <div class="answer-div" id="result_{{ question.id }}">
+                    &nbsp;
+                </div>
+                <input class="hidden_result" id="hidden_{{ question.id }}" type="hidden" value="">
+
+            </li>
+        {% endfor %}
+        </ol>
+    </div>
+
+{% else %}
+    <p>None available.</p>
+{% endif %}
