@@ -1,7 +1,7 @@
 import random
 import logging
 from django.core.cache import cache
-from questapp.models import Clue, Category
+from questapp.models import Clue, Category, Game
 from questproj.utils import get_random_objs
 
 log = logging.getLogger(__name__)
@@ -13,6 +13,7 @@ def get_dbstats():
         dbstats = {
             'clue_count': Clue.objects.count(),
             'cat_count': Category.objects.count(),
+            'game_count': Game.objects.count(),
         }
         cache.set('dbstats', dbstats, 3600)
     return dbstats

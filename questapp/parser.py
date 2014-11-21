@@ -1,4 +1,5 @@
 import re
+import datetime
 from string import split
 from bs4 import BeautifulSoup
 from .models import Clue, Game, Category
@@ -42,7 +43,10 @@ def parse_game_html(page, game_id):
     game_meta = parse_game_meta(bs_game)
 
     try:
-        game, created = Game.objects.get_or_create(sid=game_meta['show_num'], gid=game_id)
+        game, created = Game.objects.get_or_create(sid=game_meta['show_num'],
+                                                   gid=game_id,
+                                                   title=game_meta['title'],
+                                                   air_date=game_meta['air_date'])
     except DatabaseError as err:
         mdp = MetadataParseException(err)
         log.error(mdp)
@@ -74,14 +78,18 @@ def parse_game_meta(bs_game):
         log.warn("No title section.")
         return
 
-    # Get the show num
-    match_show_num = re.search(r'#(\d+)', bs_game.title.text)
-    if not match_show_num:
-        log.warn("No show number.")
-        return
-    show_num = match_show_num.group(1)
+    title = bs_game.title.text
 
-    return dict(show_num=show_num)
+    m = re.search(r'#(\d+)',title)
+    show_num = m.group(1) if m else None
+
+    m = re.search(r'(\d{4}-\d{2}-\d{2})', title)
+    if not m:
+        air_date = None
+    else:
+        air_date = datetime.datetime.strptime(m.group(1), '%Y-%m-%d')
+
+    return dict(title=title, show_num=show_num, air_date=air_date)
 
 
 def _parse_game_clues(bs_game, game):
