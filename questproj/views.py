@@ -25,6 +25,10 @@ class HomeView(TemplateView):
         return context
 
 
+class UserAccountView(TemplateView):
+    template_name = "registration/user_account.html"
+
+
 def register(request):
     context = RequestContext(request)
 
