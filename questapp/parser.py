@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from .models import Clue, Game, Category
 from django.db import DataError, transaction
 from django.db import DatabaseError, IntegrityError
+from .exceptions import MetadataParseException, CategoryException, HrefException
 import logging
 
 log = logging.getLogger(__name__)
@@ -15,22 +16,6 @@ class ParseErrors(Exception):
     def __init__(self, message, errors):
         Exception.__init__(self, message)
         self.errors = errors
-
-
-class HrefException(Exception):
-    pass
-
-
-class MetadataParseException(Exception):
-    pass
-
-
-class CluelessGameException(Exception):
-    pass
-
-
-class CategoryException(Exception):
-    pass
 
 
 def parse_game_html(page, game_id):
