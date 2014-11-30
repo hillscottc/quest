@@ -27,6 +27,7 @@ class Game(BaseModel):
                            null=True, blank=True)
     title = models.CharField(max_length=250)
     air_date = models.DateField(null=True, blank=True)
+    comments = models.CharField(max_length=250)
 
     class Meta:
         ordering = ["-modified"]

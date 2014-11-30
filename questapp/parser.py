@@ -31,15 +31,12 @@ def parse_game_html(page, game_id):
         game, created = Game.objects.get_or_create(sid=game_meta['show_num'],
                                                    gid=game_id,
                                                    title=game_meta['title'],
-                                                   air_date=game_meta['air_date'])
+                                                   air_date=game_meta['air_date'],
+                                                   comments=game_meta['comments'])
     except DatabaseError as err:
         mdp = MetadataParseException(err)
         log.error(mdp)
         return None, [mdp]
-    # # Delete any old clues or cats for this game.
-    # if not created:
-    #     [clue.delete() for clue in game.clue_set.all()]
-    #     [cat.delete() for cat in game.category_set.all()]
 
     # Parse and save the games's clues.
     try:
@@ -65,6 +62,11 @@ def parse_game_meta(bs_game):
 
     title = bs_game.title.text
 
+    comments = bs_game.find('div', {'id': 'game_comments'})
+    if comments:
+        comments = comments.text[:250]
+
+
     m = re.search(r'#(\d+)',title)
     show_num = m.group(1) if m else None
 
@@ -74,7 +76,8 @@ def parse_game_meta(bs_game):
     else:
         air_date = datetime.datetime.strptime(m.group(1), '%Y-%m-%d')
 
-    return dict(title=title, show_num=show_num, air_date=air_date)
+    return dict(title=title, show_num=show_num, air_date=air_date,
+                comments=comments)
 
 
 def _parse_game_clues(bs_game, game):
@@ -125,30 +128,46 @@ def _parse_rounds(bs_game, game):
             for i, clue in enumerate(clues):
                 if not clue.div:
                     continue
+
+                category = cats[i]
+                if not category:
+                    continue
+
                 # Get the q and a by parsing the messy div javascript
                 question, answer = _parse_qa(clue.div)
                 if not (question and answer):
                     continue
 
                 question, answer = _parse_qa(clue.div)
-                yield dict(category=cats[i], question=question, answer=answer)
+                yield dict(category=category, question=question, answer=answer)
 
 
 def _parse_round_cats(round_div, game):
-    cat_row = round_div.table.find_all('tr')[0]
     cats = []
 
-    try:
-        for cat_el in cat_row.find_all('td', {'class': "category_name"}):
-            if not cat_el.text:
-                raise CategoryException("No category text in game %s" % game)
-            elif re.match('_+ *& *_+', cat_el.text):
-                ## Catches bad '___& ___' categories.
-                raise CategoryException("Bad category in game %s, %s" % (game, cat_el.text))
-            else:
-                cats.append(Category.objects.create(name=cat_el.text, game=game))
-    except CategoryException as cat_err:
-        raise CategoryException("Error parsing category in game %s, %s" % (game, cat_err))
+    cat_row = round_div.table.find_all('tr')[0]
+    if not cat_row:
+        raise CategoryException("No cat row in game %s" % game)
+
+    cat_els = cat_row.find_all('td', {'class': "category_name"})
+    if not cat_els or len(cat_els) < 6:
+        raise CategoryException("Expected 6 cat els in %s, got %s" % (game, len(cat_els)))
+
+    for cat_el in cat_els:
+        if not cat_el.text:
+            # raise CategoryException("No category text in game %s" % game)
+            log.warn("No category text in game %s" % game)
+            cats.append(None)
+        elif re.match('_+ *& *_+', cat_el.text):
+            ## Catches bad '___& ___' categories.
+            # raise CategoryException("Bad category in game %s, %s" % (game, cat_el.text))
+            log.warn("Bad category in game %s, %s" % (game, cat_el.text))
+            cats.append(None)
+        else:
+            cats.append(Category.objects.create(name=cat_el.text, game=game))
+
+    if len(cats) is not 6:
+        raise CategoryException("Expected 6 cats in %s, got %s" % (game, len(cats)))
 
     return cats
 

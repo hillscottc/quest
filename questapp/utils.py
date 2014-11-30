@@ -13,9 +13,6 @@ TEST_GAME_ID = 4529
 TEST_SHOW_NUM = 153
 
 
-
-
-
 def get_fname(game_id):
     """Returns valid sampledir filename for given id.
     """
@@ -77,7 +74,7 @@ def load_samples(num=None):
     with open(settings.JEAP_ID_FILE) as myfile:
         src_game_ids = myfile.read().split()
 
-    created = []
+    created = 0
 
     for i, game_id in enumerate(src_game_ids):
         if num and i > num:
@@ -87,7 +84,7 @@ def load_samples(num=None):
             continue
 
         game, errors = parse_game_html(html, game_id)
-        created.append(game)
+        created += 1
         if errors:
             parse_errs.append(errors)
 
@@ -95,7 +92,7 @@ def load_samples(num=None):
         # print "{}, game:{},  errors:{}".format(i, game, err_count)
         log.debug("%s: %s" % (i, game))
 
-    log.info("Loaded %s J Games, %s parse_errs." % (len(created), len(parse_errs)))
+    log.info("Loaded %s J Games, %s parse_errs." % (created, len(parse_errs)))
     return created
 
 
