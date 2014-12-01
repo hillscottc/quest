@@ -1,10 +1,10 @@
 from django.contrib.admin.sites import AdminSite
 from django.contrib import admin
 
-from quizapp.models import (Quiz, Question, Answer)
-admin.site.register(Quiz)
-admin.site.register(Question)
-admin.site.register(Answer)
+# from quizapp.models import (Quiz, Question, Answer)
+# admin.site.register(Quiz)
+# admin.site.register(Question)
+# admin.site.register(Answer)
 
 # from django.db.models import CharField, TextField
 # from quizapp.models import (Quiz, Question, Answer)

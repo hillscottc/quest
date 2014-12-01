@@ -73,7 +73,7 @@ def user_login(request):
             # Is the account active? It could have been disabled.
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('quiz_index'))
+                return HttpResponseRedirect(reverse('home'))
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your account is disabled.")

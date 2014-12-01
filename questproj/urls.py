@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from quizapp.registration.views import register, user_login, user_account
+from questproj.registration.views import register, user_login, user_account
 import questproj.views as views
 admin.autodiscover()
 
@@ -16,7 +16,7 @@ urlpatterns = patterns(
 
     url(r'^user/account/$', views.UserAccountView.as_view(), name='user_account'),
     url(r'^questapp/', include('questapp.urls')),
-    url(r'^quizapp/', include('quizapp.urls')),
+    # url(r'^quizapp/', include('quizapp.urls')),
 
 
     ## From quzapp.....
