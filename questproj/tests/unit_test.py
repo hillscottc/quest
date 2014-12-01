@@ -47,18 +47,13 @@ class UnitTest(TestCase):
         reset_object_cache(Clue)
 
 
-@skip('Skip the load all tests.')
+# @skip('Skip the load all tests.')
 class TestLoad(TestCase):
     def test_load_samples(self):
         """Load some jeapordy html game files."""
-        num_files = 5
+        num_files = 100
         load_samples(num_files)
         self.assertEqual(Game.objects.count(), num_files)
-
-    def test_load(self):
-        """Load all the QuizBall html sample files."""
-        created = load_all()
-        self.assertEqual(Quiz.objects.count(), 36)
 
 
 # class FixtureTest(TestCase):
