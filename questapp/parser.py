@@ -81,9 +81,7 @@ def parse_game_meta(bs_game):
 
 
 def _parse_game_clues(bs_game, game):
-
     errors = []
-
     try:
         for clue_data in _parse_rounds(bs_game, game):
             if len(clue_data['question']) < 3:
@@ -110,6 +108,7 @@ def _parse_game_clues(bs_game, game):
 
 
 def _parse_rounds(bs_game, game):
+    clue_data_list = []
     for round_name in ['jeopardy_round', 'double_jeopardy_round']:
         round_div = bs_game.find('div', {'id': round_name})
         if not round_div:
@@ -139,7 +138,9 @@ def _parse_rounds(bs_game, game):
                     continue
 
                 question, answer = _parse_qa(clue.div)
-                yield dict(category=category, question=question, answer=answer)
+                # yield dict(category=category, question=question, answer=answer)
+                clue_data_list.append(dict(category=category, question=question, answer=answer))
+    return clue_data_list
 
 
 def _parse_round_cats(round_div, game):
