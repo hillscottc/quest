@@ -40,17 +40,23 @@ class Game(BaseModel):
         return reverse('game-detail', kwargs={'pk': self.pk})
 
 
-class Category(BaseModel):
-    """A category in a game. Names unique per game, not globally unique.
-    Also contains info about column and round."""
+class Round(BaseModel):
     game = models.ForeignKey(Game)
-    round_num = models.SmallIntegerField(default=0)
-    col_num = models.SmallIntegerField(default=0)
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        unique_together = ['game', 'name']
+
+    def __unicode__(self):
+        return self.name
+
+
+class Category(BaseModel):
+    round = models.ForeignKey(Round)
     name = models.CharField(max_length=100)
 
     class Meta:
-        # unique_together = ['game', 'round_num', 'col_num']
-        # ordering = ['round_num', 'col_num']
+        unique_together = ['round', 'name']
         ordering = ['name']
 
     def __unicode__(self):
@@ -61,7 +67,7 @@ class Category(BaseModel):
 
 
 class Clue(BaseModel):
-    game = models.ForeignKey(Game)
+    # game = models.ForeignKey(Game)
     category = models.ForeignKey(Category)
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
