@@ -55,6 +55,7 @@ class Category(BaseModel):
     round = models.ForeignKey(Round)
     name = models.CharField(max_length=100)
 
+
     class Meta:
         unique_together = ['round', 'name']
         ordering = ['name']
