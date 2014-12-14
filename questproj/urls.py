@@ -2,6 +2,15 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from questproj.registration.views import register, user_login, user_account
 import questproj.views as views
+from tastypie.api import Api
+from questapp.api import ClueResource, CategoryResource
+
+# clue_resource = ClueResource()
+
+v1_api = Api(api_name='v1')
+v1_api.register(ClueResource())
+v1_api.register(CategoryResource())
+
 admin.autodiscover()
 
 urlpatterns = patterns(
@@ -16,10 +25,9 @@ urlpatterns = patterns(
 
     url(r'^user/account/$', views.UserAccountView.as_view(), name='user_account'),
     url(r'^questapp/', include('questapp.urls')),
-    # url(r'^quizapp/', include('quizapp.urls')),
 
+    url(r'^api/', include(v1_api.urls)),
 
-    ## From quzapp.....
     # url(r'^user/account/$', user_account, name='user_account'),
     url(r'^user/password/reset/$',
         'django.contrib.auth.views.password_reset',

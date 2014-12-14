@@ -9,7 +9,9 @@ urlpatterns = patterns(
 
     url(r'^$', views.HomeView.as_view(), name='questapp-home'),
 
-    ## Using a RandomView as a deafault for clue index,, instead of a plain list.
+    url(r'^bbtest$', views.BBTestView.as_view(), name='bbtest'),
+
+    ## Using a RandomView as a default for clue index,, instead of a plain list.
     url(r'^clues/$', views.ClueRandomView.as_view(), name='clues-index'),
 
     ## Using a RandomView as a deafault for cats index,, instead of a plain list.
