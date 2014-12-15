@@ -21,14 +21,14 @@ app.CluesView = Backbone.View.extend({
 
         var formData = {};
 
-        $( '#addClue div' ).children( 'input' ).each( function( i, el ) {
-            if( $( el ).val() != '' )
-            {
-                formData[ el.id ] = $( el ).val();
-            }
-            // Clear input field value
-            $( el ).val('');
-        });
+//        $( '#addClue div' ).children( 'input' ).each( function( i, el ) {
+//            if( $( el ).val() != '' )
+//            {
+//                formData[ el.id ] = $( el ).val();
+//            }
+//            // Clear input field value
+//            $( el ).val('');
+//        });
 
         this.collection.create( formData );
     },

@@ -4,11 +4,38 @@
 
 {% block content %}
 
-http://127.0.0.1:8000/api/v1/clue/1/?format=json
+    <div id="clues">
+    </div>
 
-<script id="clueTemplate" type="text/template">
-    blah
-    <button class="delete">Delete</button>
-</script>
+    <script id="clueTemplate" type="text/template">
+        <div class="clue">
+                <span class="category">
+                    <%= category %>
+                </span>
+            <div class="question"><p><%= question %></p>
+                <div class="show-answer btn btn-xs btn-default">
+                    Answer
+                    <span class="answer">: <%= answer %></span>
+                </div>
+            </div>
+        </div>
+
+    </script>
 
 {% endblock %}
+
+{% load staticfiles %}
+
+{% block extrajs %}
+    <!-- backbone, tastypie, underscore -->
+    <script src="{% static 'js/lib/underscore-min.js' %}"></script>
+    <script src="{% static 'js/lib/backbone.js' %}"></script>
+    <script src="{% static 'js/lib/backbone-tastypie.js' %}"></script>
+
+    <script src="{% static 'js/models/clue.js' %}"></script>
+    <script src="{% static 'js/collections/clues.js' %}"></script>
+    <script src="{% static 'js/views/clue.js' %}"></script>
+    <script src="{% static 'js/views/clues.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+
+{% endblock extrajs %}

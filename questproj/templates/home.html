@@ -13,6 +13,9 @@
         <p><a href="{% url 'clue-search' %}">Search</a></p>
     </div>
 
+    <p><a href="/api/v1/?format=json">api</a>,
+        <a href="{% url 'bbtest' %}">bbtest</a>
+    </p>
     <div>
     <p>Database contains {{ clue_count|intcomma }} clues,
         in {{ cat_count|intcomma }} categories,
@@ -20,3 +23,5 @@
     </div>
 
 {% endblock %}
+
+{% block extrajs %}{% endblock extrajs %}
