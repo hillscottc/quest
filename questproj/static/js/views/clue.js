@@ -10,23 +10,11 @@ app.ClueView = Backbone.View.extend({
         'click .show-answer': 'showAnswer'
     },
 
-    showAnswer: function(e) {
-//        console.log("ok " + $(this).attr("className"));
-//        console.log(this.model.attributes['id']);
+    showAnswer: function() {
+        //console.log("ok " + $(this).attr("className"));
         ans_id = this.model.attributes['id'];
         $("#ans_" + ans_id).toggle();
     },
-
-
-//        $( '#addClue div' ).children( 'input' ).each( function( i, el ) {
-//            if( $( el ).val() != '' )
-//            {
-//                formData[ el.id ] = $( el ).val();
-//            }
-//            // Clear input field value
-//            $( el ).val('');
-//        });
-
 
     render: function() {
         this.$el.html( this.template( this.model.attributes ) );
