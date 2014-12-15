@@ -1,16 +1,26 @@
 import os
 import logging
 import re
+import json
 from bs4 import BeautifulSoup
 import requests
 from django.conf import settings
 from questapp.parser import parse_game_html
+from django.core import serializers
+from questapp.models import Clue
 
 log = logging.getLogger(__name__)
 
 URL_BASE = 'http://www.j-archive.com/showgame.php?game_id='
 TEST_GAME_ID = 4529
 TEST_SHOW_NUM = 153
+
+
+def write_json(clues):
+    jdata = [clue.get_json() for clue in clues]
+    # print json.dumps(jdata, indent=2)
+    with open("clues.json", "w") as out:
+        json.dump(jdata, out, indent=4)
 
 
 def get_fname(game_id):
@@ -110,5 +120,6 @@ def parse_seasons(count=1):
                 if match:
                     # game_ids.append(match.group(0))
                     yield match.group(0)
+
 
 
