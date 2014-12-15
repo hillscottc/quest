@@ -37,6 +37,8 @@
 .clue {padding-bottom: 30px;}
 .category {font-size: 120%;}
 
+.answer {display: none;}
+
 .cat-list {
     text-align: left;
 }
