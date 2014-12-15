@@ -10,12 +10,12 @@
     <script id="clueTemplate" type="text/template">
         <div class="clue">
                 <span class="category">
-                    <%= category %>
+                    <%= category.name %>
                 </span>
             <div class="question"><p><%= question %></p>
                 <div class="show-answer btn btn-xs btn-default">
                     Answer
-                    <span class="answer">: <%= answer %></span>
+                    <span id="ans_<%= id %>" class="answer">: <%= answer %></span>
                 </div>
             </div>
         </div>
@@ -37,5 +37,14 @@
     <script src="{% static 'js/views/clue.js' %}"></script>
     <script src="{% static 'js/views/clues.js' %}"></script>
     <script src="{% static 'js/app.js' %}"></script>
+
+{#    <script type="text/javascript">#}
+{#        $(document).ready(function() {#}
+{#            $('.answer').toggle();#}
+{#            $('.show-answer').click(function(){#}
+{#                $(this).children().toggle();#}
+{#            })#}
+{#        });#}
+{#    </script>#}
 
 {% endblock extrajs %}

@@ -11,7 +11,7 @@ class CategoryResource(ModelResource):
 
 
 class ClueResource(ModelResource):
-    category = fields.ForeignKey(CategoryResource, 'category')
+    category = fields.ToOneField(CategoryResource, 'category', full=True)
 
     class Meta:
         queryset = Clue.objects.all()
