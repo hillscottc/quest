@@ -38,7 +38,8 @@ class ClueListView(ListView):
 class ClueRandomView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
-    num_returned = 15
+    # num_returned = 15
+    num_returned = None
 
     def get_context_data(self, **kwargs):
         context = super(ClueRandomView, self).get_context_data(**kwargs)
