@@ -6,7 +6,6 @@ import os
 from fabric.api import local, sudo, env, task, abort
 from fabric.contrib.console import confirm
 from questapp.utils import load_samples
-from quizapp.utils import load_all
 from django.conf import settings
 
 env.hosts = ['localhost', ]
@@ -36,10 +35,6 @@ def rebuild(db_user=DB_USER, db_name=DB_NAME):
 def load_jeap(num=500):
     load_samples(num)
 
-
-@task
-def load_qbs():
-    load_all()
 
 
 def _get_fixture_fname(name="proj_samples"):

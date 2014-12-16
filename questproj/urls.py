@@ -3,10 +3,9 @@ from django.contrib import admin
 from questproj.registration.views import register, user_login, user_account
 import questproj.views as views
 from tastypie.api import Api
-from questapp.api import ClueResource, CategoryResource, RandomCluesResource
+from questapp.api import ClueResource, RandomCluesResource
 
 v1_api = Api(api_name='v1')
-v1_api.register(CategoryResource())
 v1_api.register(ClueResource())
 v1_api.register(RandomCluesResource())
 

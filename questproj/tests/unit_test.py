@@ -6,9 +6,7 @@ from questproj.cache_mgr import reset_object_cache
 from questapp.models import Clue, Game
 from questapp.parser import parse_game_html
 from questapp.utils import (TEST_GAME_ID, TEST_SHOW_NUM, read_local_html, get_fname)
-from quizapp.utils import load_all
 from questapp.utils import load_samples
-from quizapp.models import Quiz
 
 
 class UnitTest(TestCase):

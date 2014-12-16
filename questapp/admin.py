@@ -1,5 +1,5 @@
 from django.contrib import admin
-from questapp.models import Clue, Game, Category
+from questapp.models import Clue, Game
 
 
 from django.contrib.admin.sites import AdminSite
@@ -19,4 +19,3 @@ class BasicAdmin(AdminSite):
 
 admin.site.register(Clue)
 admin.site.register(Game)
-admin.site.register(Category)

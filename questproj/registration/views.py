@@ -1,7 +1,7 @@
 from django.shortcuts import (HttpResponse, RequestContext, render,
                               render_to_response, HttpResponseRedirect)
 from django.core.urlresolvers import reverse
-from quizapp.forms import UserForm, UserProfileForm
+from questproj.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 

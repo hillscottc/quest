@@ -9,28 +9,7 @@
 
     <div class="jumbotron">
         <p><a href="{% url 'clues-index' %}">Clues</a></p>
-        <p><a href="{% url 'cats-index' %}">Categories</a></p>
         <p><a href="{% url 'clue-search' %}">Search</a></p>
-    </div>
-
-    <div class="page-header">
-        <h1>Sample Clue List</h1>
-    </div>
-    <div class="row">
-        <div class="list-group">
-            <a href="#" class="list-group-item active">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            </a>
-        </div>
     </div>
 
     <p><a href="{% url 'bbtest' %}">bbtest</a></p>
@@ -43,17 +22,8 @@
         <li><a target="_blank" href="/api/v1/random_clues?format=json">/api/v1/random_clues?format=json</a></li>
     </ul>
 
-
-
-
-
-
-
-
     <div>
-        <p>Database contains {{ clue_count|intcomma }} clues,
-            in {{ cat_count|intcomma }} categories,
-            from {{ game_count|intcomma  }} games.</p>
+        <p>Database contains {{ clue_count|intcomma }} clues.</p>
     </div>
 
 {% endblock %}

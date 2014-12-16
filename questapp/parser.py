@@ -2,7 +2,7 @@ import re
 import datetime
 from string import split
 from bs4 import BeautifulSoup
-from .models import Clue, Game, Category
+from .models import Clue, Game
 from django.db import DataError, transaction
 from django.db import DatabaseError, IntegrityError
 from .exceptions import MetadataParseException, CategoryException, HrefException
@@ -165,7 +165,8 @@ def _parse_round_cats(round_div, game):
             log.warn("Bad category in game %s, %s" % (game, cat_el.text))
             cats.append(None)
         else:
-            cats.append(Category.objects.create(name=cat_el.text, game=game))
+            # cats.append(Category.objects.create(name=cat_el.text, game=game))
+            cats.append(cat_el.text)
 
     if len(cats) is not 6:
         raise CategoryException("Expected 6 cats in %s, got %s" % (game, len(cats)))
