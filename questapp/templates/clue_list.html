@@ -6,12 +6,18 @@
 
 {% block content %}
 
-    <h4 style="font-style: italic">{{ page_subtitle }}</h4>
-    <br/>
+    <div class="page-header">
+        <h4 style="font-style:italic">{{ page_subtitle }}</h4>
+    </div>
 
-    {% include "clue_list_snip.html" %}
 
-    <div><a href="">( get more )</a></div>
+    {% if clue_list %}
+        {% include "clue_list_snip.html" %}
+    {% else %}
+        <p>None available.</p>
+    {% endif %}
+
+{#    <div><a href="">( get more )</a></div>#}
 
 {% endblock %}
 
@@ -20,11 +26,9 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
-    $('.answer').toggle();
-
-    $('.show-answer').click(function(){
-        $(this).children().toggle();
+    $('.clue').click(function(e){
+        $(this).children('.answer').toggle();
+        e.preventDefault(); // dont want href action
     })
 });
 </script>
