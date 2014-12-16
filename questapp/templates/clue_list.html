@@ -28,6 +28,11 @@
 $(document).ready(function() {
     $('.clue').click(function(e){
         $(this).children('.answer').toggle();
+        if ($(this).hasClass("active")) {
+            $(this).removeClass("active");
+        } else {
+            $(this).addClass("active");
+        }
         e.preventDefault(); // dont want href action
     })
 });
