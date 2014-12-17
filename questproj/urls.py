@@ -20,9 +20,10 @@ urlpatterns = patterns(
     url(r'^login/$', user_login, name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
 
-
     url(r'^user/account/$', views.UserAccountView.as_view(), name='user_account'),
-    url(r'^questapp/', include('questapp.urls')),
+
+    # url(r'^questapp/', include('questapp.urls')), # put app at /questapp
+    url(r'^', include('questapp.urls')),            # put app at /
 
     url(r'^api/', include(v1_api.urls)),
 
