@@ -2,7 +2,6 @@ import os
 from unittest import skip
 from django.test.utils import override_settings
 from django.test import TestCase
-from questproj.cache_mgr import reset_object_cache
 from questapp.models import Clue, Game
 from questapp.parser import parse_game_html
 from questapp.utils import (TEST_GAME_ID, TEST_SHOW_NUM, read_local_html, get_fname)
@@ -39,10 +38,6 @@ class UnitTest(TestCase):
         for clue in game.clue_set.all()[:5]:
             print clue,
         print
-
-    def test_reset_object_cache(self):
-        """Test reset of Clue cache."""
-        reset_object_cache(Clue)
 
 
 # @skip('Skip the load all tests.')

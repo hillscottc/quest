@@ -18,34 +18,38 @@ def get_dbstats():
     return dbstats
 
 
-def get_cache_key(obj):
-    """Get the string used for the key."""
-    return "random_%s" % obj.__name__
+"""
+NOT DOING ANY CACHING AT THE MOMENT.
+"""
 
-
-def reset_object_cache(obj, timeout=3600, size=1000):
-    log.info('Begin reset cache of %s' % obj.__name__)
-    key = get_cache_key(obj)
-    value = list(get_random_objs(obj, size))
-    cache.set(key, value, timeout)
-    log.info('End cache reset of %s' % obj)
-    return cache.get(key)
-
-
-def get_cached_objs(obj, num=None):
-    """Get some objects from the cache.
-    If fails, cache for that object is reset. """
-    log.info('Getting %s from cache of %s.' % (num, obj.__name__))
-    rand_objs = cache.get(get_cache_key(obj))
-    if not rand_objs:
-        rand_objs = reset_object_cache(obj)
-
-    obj_list = []
-
-    if not num:
-        obj_list = rand_objs
-    else:
-        for i in range(num):
-            obj_list.append(random.choice(rand_objs))
-    return obj_list
+# def get_cache_key(obj):
+#     """Get the string used for the key."""
+#     return "random_%s" % obj.__name__
+#
+#
+# def reset_object_cache(obj, timeout=3600, size=1000):
+#     log.info('Begin reset cache of %s' % obj.__name__)
+#     key = get_cache_key(obj)
+#     value = list(get_random_objs(obj, size))
+#     cache.set(key, value, timeout)
+#     log.info('End cache reset of %s' % obj)
+#     return cache.get(key)
+#
+#
+# def get_cached_objs(obj, num=None):
+#     """Get some objects from the cache.
+#     If fails, cache for that object is reset. """
+#     log.info('Getting %s from cache of %s.' % (num, obj.__name__))
+#     rand_objs = cache.get(get_cache_key(obj))
+#     if not rand_objs:
+#         rand_objs = reset_object_cache(obj)
+#
+#     obj_list = []
+#
+#     if not num:
+#         obj_list = rand_objs
+#     else:
+#         for i in range(num):
+#             obj_list.append(random.choice(rand_objs))
+#     return obj_list
 
