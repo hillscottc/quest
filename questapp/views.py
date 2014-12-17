@@ -29,15 +29,18 @@ class ClueDetailView(DetailView):
         return object
 
 
-class ClueListView(ListView):
+class ClueIndexView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
     queryset = Clue.objects.all()
+    paginate_by = 10
+
 
 
 class ClueRandomView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list.html'
+    # paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(ClueRandomView, self).get_context_data(**kwargs)
