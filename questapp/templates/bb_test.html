@@ -9,10 +9,10 @@
 
     <script id="clueTemplate" type="text/template">
 
-        <a href="#" class="clue list-group-item">
+        <a id="<%= id %>" href="#" class="clue list-group-item">
             <h4 class="list-group-item-heading"><%= category %></h4>
             <p class="list-group-item-text"><%= question %></p>
-            <p class="answer list-group-item-text"><% answer %></p>
+            <p id="ans_<%= id %>" class="answer list-group-item-text"><% answer %></p>
         </a>
 
 

@@ -15,7 +15,7 @@
 #content
 {
 	clear: left;
-	padding: 20px;
+	padding: 10px;
 }
 
 #content h2
@@ -24,6 +24,7 @@
 	font-size: 160%;
 	margin: 0 0 .5em;
 }
+
 
 .messages { border:1px solid #C8DCC2; margin:1em 0; padding: 1em}
 .messages ul .debug{ background: #EEFAEA; padding: 0.5em, 0 0.5em 0; list-style: none;}
@@ -43,36 +44,37 @@
     color: darkmagenta;
 }
 
-.cat-list {
-    text-align: left;
-}
-.cat-list div {
-    padding-bottom: 10px;
-}
 
-.take-answers ul
-{
-    list-style-type: none;
-    margin-left: 0;
-    padding-left: 1em;
-    text-indent: -1em;
-}
+/*.cat-list {*/
+    /*text-align: left;*/
+/*}*/
+/*.cat-list div {*/
+    /*padding-bottom: 10px;*/
+/*}*/
 
-.take-answers ul li
-{
-border-top: 1px solid #ddd;
-border-right: none;
-border-bottom: none;
-border-left: none;
-}
+/*.take-answers ul*/
+/*{*/
+    /*list-style-type: none;*/
+    /*margin-left: 0;*/
+    /*padding-left: 1em;*/
+    /*text-indent: -1em;*/
+/*}*/
 
-.take-questions li
-{
-    border-style: none;
-}
+/*.take-answers ul li*/
+/*{*/
+/*border-top: 1px solid #ddd;*/
+/*border-right: none;*/
+/*border-bottom: none;*/
+/*border-left: none;*/
+/*}*/
 
-.take-question span
-{
-    font-size: large
-}
+/*.take-questions li*/
+/*{*/
+    /*border-style: none;*/
+/*}*/
+
+/*.take-question span*/
+/*{*/
+    /*font-size: large*/
+/*}*/
 
