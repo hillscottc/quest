@@ -1,8 +1,6 @@
 {% extends 'base_site.html' %}
 
-
 {% block title %}Clues{% endblock %}
-
 
 {% block content %}
 
@@ -10,43 +8,19 @@
         <h4 style="font-style:italic">{{ page_subtitle }}</h4>
     </div>
 
-
     {% if clue_list %}
+
         <div class="list-group">
             {% for clue in clue_list %}
                 {% include "clue_list_item.html" %}
             {% endfor %}
         </div>
 
-        {% if page_obj %}
-        <div class="pagination">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="{% url 'clues-index' page_obj.previous_page_number %}">previous</a>
-                {% endif %}
-
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                </span>
-
-                {% if page_obj.has_next %}
-                    <a href="{% url 'clues-index' page_obj.next_page_number %}">next</a>
-                {% endif %}
-            </span>
-        </div>
-            {% endif %}
-
+        {% if page_obj %}{% include "pagination.html" %}{% endif %}
 
     {% else %}
         <p>None available.</p>
     {% endif %}
-
-
-
-
-
-
-{#    <div><a href="">( get more )</a></div>#}
 
 {% endblock %}
 
@@ -54,17 +28,17 @@
 {% block extrajs %}
 
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('.clue').click(function(e){
-            $(this).children('.answer').toggle();
-            if ($(this).hasClass("active")) {
-                $(this).removeClass("active");
-            } else {
-                $(this).addClass("active");
-            }
-            e.preventDefault(); // dont want href action
-        })
-    });
+        $(document).ready(function() {
+            $('.clue').click(function(e){
+                $(this).children('.answer').toggle();
+                if ($(this).hasClass("active")) {
+                    $(this).removeClass("active");
+                } else {
+                    $(this).addClass("active");
+                }
+                e.preventDefault(); // dont want href action
+            })
+        });
     </script>
 
 {% endblock extrajs %}

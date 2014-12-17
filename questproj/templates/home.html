@@ -1,33 +1,22 @@
 {% extends "base_site.html" %}
 
-{# http://stackoverflow.com/questions/346467/format-numbers-in-django-templates #}
 {% load humanize %}
 
 {% block content %}
 
-    <p style="font-style: italic">{{ SITE_NAME }} is a collection of Jeapordy clues.</p>
+{#    <p style="font-style: italic">{{ SITE_NAME }} is a collection of Jeapordy clues.</p>#}
 
     <div class="jumbotron">
-        <p><a href="{% url 'clues-index' 1 %}">All Clues</a></p>
+        <p><a href="{% url 'clues-index' %}">All Clues</a></p>
         <p><a href="{% url 'clues-random' %}">Random Clues</a></p>
         <p><a href="{% url 'clue-search' %}">Search</a></p>
-
-    http://127.0.0.1:8000/clues/?page=5
     </div>
-
-    <p><a href="{% url 'bbtest' %}">bbtest</a></p>
-
-    <p>API Samples:</p>
-    <ul>
-        <li><a target="_blank" href="/api/v1/?format=json">/api/v1/?format=json</a></li>
-        <li><a target="_blank" href="/api/v1/clue?format=json">/api/v1/clue?format=json</a></li>
-        <li><a target="_blank" href="/api/v1/clue/1/?format=json">/api/v1/clue/1/?format=json</a></li>
-        <li><a target="_blank" href="/api/v1/random_clues?format=json">/api/v1/random_clues?format=json</a></li>
-    </ul>
 
     <div>
         <p>Database contains {{ clue_count|intcomma }} clues.</p>
     </div>
+
+    <p><a href="{% url 'bbtest' %}">bbtest</a></p>
 
 {% endblock %}
 
