@@ -16,6 +16,8 @@ app.ClueView = Backbone.View.extend({
         $("#ans_" + ans_id).toggle();
     },
 
+
+
     render: function() {
         this.$el.html( this.template( this.model.attributes ) );
         return this;

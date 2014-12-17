@@ -12,7 +12,11 @@
 
 
     {% if clue_list %}
-        {% include "clue_list_snip.html" %}
+        <div class="list-group">
+            {% for clue in clue_list %}
+                {% include "clue_list_item.html" %}
+            {% endfor %}
+        </div>
     {% else %}
         <p>None available.</p>
     {% endif %}
@@ -24,19 +28,19 @@
 
 {% block extrajs %}
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('.clue').click(function(e){
-        $(this).children('.answer').toggle();
-        if ($(this).hasClass("active")) {
-            $(this).removeClass("active");
-        } else {
-            $(this).addClass("active");
-        }
-        e.preventDefault(); // dont want href action
-    })
-});
-</script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.clue').click(function(e){
+            $(this).children('.answer').toggle();
+            if ($(this).hasClass("active")) {
+                $(this).removeClass("active");
+            } else {
+                $(this).addClass("active");
+            }
+            e.preventDefault(); // dont want href action
+        })
+    });
+    </script>
 
 {% endblock extrajs %}
 
