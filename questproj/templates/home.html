@@ -6,14 +6,17 @@
 
     {#    <p style="font-style: italic">{{ SITE_NAME }} is a collection of Jeapordy clues.</p>#}
 
-    <div class="jumbotron">
-        <p><a href="{% url 'clues-index' %}">All Clues</a></p>
-        <p><a href="{% url 'clues-random' %}">Random Clues</a></p>
-        <p><a href="{% url 'clue-search' %}">Search</a></p>
+    <div class="jumbotron" style="text-align: center">
+        <p>
+            <a href="{% url 'clues-random' %}" class="btn btn-primary btn-lg">Some Random Questions</a>
+        </p>
+        <p>
+            <a href="{% url 'clue-search' %}" class="btn btn-primary btn-lg">Search</a>
+        </p>
     </div>
 
     <div>
-        <p>Database contains {{ clue_count|intcomma }} clues.</p>
+        <p>The database contains <a href="{% url 'clues-index' %}">{{ clue_count|intcomma }} Questions.</a></p>
     </div>
 
     <p><a href="{% url 'index' %}">backbone index</a></p>
