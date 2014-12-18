@@ -12,12 +12,13 @@ app.ClueView = Backbone.View.extend({
 
     showAnswer: function(e) {
         console.log("ok " + $(this).attr("className"));
+        console.log($(e.currentTarget).text())
 
         // This gets the ans el
-        $(e.target.nextElementSibling)
+//        $(e.target.nextElementSibling)
 
-        $(this).children('.XXanswer').toggle();
-        $(this).children('.clue').children('.XXanswer').toggle();
+//        $(this).children('.XXanswer').toggle();
+//        $(this).children('.clue').children('.XXanswer').toggle();
 
 //        $(this).children('p').toggle(true);
 //        var ans_id = this.model.attributes['id'];
