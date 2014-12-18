@@ -1,45 +1,28 @@
-{% extends 'base_site.html' %}
-
-{% block title %}Clues{% endblock %}
-
-{% block content %}
-
-    <h4 style="font-style:italic;">{{ page_subtitle }}</h4>
-
-    {% if clue_list %}
-
-        <div class="list-group">
-            {% for clue in clue_list %}
-                {% include "clue_list_item.html" %}
-            {% endfor %}
-        </div>
-
-        {% if page_obj %}{% include "pagination.html" %}{% endif %}
-
-    {% else %}
-        <p>None available.</p>
-    {% endif %}
-
-{% endblock %}
 
 
-{% block extrajs %}
+<div class="list-group">
+    {% for clue in clue_list %}
+        {% include "clue/clue_list_item.html" %}
+    {% endfor %}
+</div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.clue').click(function(e){
-                $(this).children('.answer').toggle();
-                if ($(this).hasClass("active")) {
-                    $(this).removeClass("active");
-                } else {
-                    $(this).addClass("active");
-                }
-                e.preventDefault(); // dont want href action
-            })
-        });
-    </script>
+{% if page_obj %}{% include "pagination.html" %}{% endif %}
 
-{% endblock extrajs %}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.clue').click(function(e){
+            $(this).children('.answer').toggle();
+            if ($(this).hasClass("active")) {
+                $(this).removeClass("active");
+            } else {
+                $(this).addClass("active");
+            }
+            e.preventDefault(); // dont want href action
+        })
+    });
+</script>
+
 
 
 {#$(document).ready(function() {#}

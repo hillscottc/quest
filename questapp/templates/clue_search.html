@@ -4,48 +4,23 @@
 
 {% block content %}
 
-<h3>Test Form</h3>
+    <h3>Test Form</h3>
 
-<form action="{% url 'clue-search' %}" id="clue_search_form" method="post">
-    {%  csrf_token %}
-    {{ form }}
+    <form action="{% url 'clue-search' %}" id="clue_search_form" method="post">
+        {%  csrf_token %}
+        {{ form }}
 
-    <input type="SUBMIT" value="Show Clues">
-
-
-    {% if clue_list %}
-
-        <div class="list-group">
-            {% for clue in clue_list %}
-                {% include "clue_list_item.html" %}
-            {% endfor %}
-        </div>
-
-        {% if page_obj %}{% include "pagination.html" %}{% endif %}
-
-    {% else %}
-        <p>None available.</p>
-    {% endif %}
+        <input type="SUBMIT" value="Show Clues">
 
 
-</form>
+        {% if clue_list %}
+            {% include "clue/clue_list.html" %}
+        {% else %}
+            <p>None available.</p>
+        {% endif %}
+
+
+    </form>
 
 {% endblock %}
 
-{% block extrajs %}
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.clue').click(function(e){
-                $(this).children('.answer').toggle();
-                if ($(this).hasClass("active")) {
-                    $(this).removeClass("active");
-                } else {
-                    $(this).addClass("active");
-                }
-                e.preventDefault(); // dont want href action
-            })
-        });
-    </script>
-
-{% endblock extrajs %}

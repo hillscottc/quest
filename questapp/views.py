@@ -19,7 +19,7 @@ class BBTestView(TemplateView):
 class ClueDetailView(DetailView):
     context_object_name = 'clue'
     queryset = Clue.objects.all()
-    template_name = "clue_detail.html"
+    template_name = "clue/clue_detail.html"
 
     def get_object(self, *args, **kwargs):
         object = super(ClueDetailView, self).get_object(*args, **kwargs)
@@ -31,14 +31,14 @@ class ClueDetailView(DetailView):
 
 class ClueIndexView(ListView):
     context_object_name = 'clue_list'
-    template_name = 'clue_list.html'
+    template_name = 'clue_list_view.html'
     queryset = Clue.objects.all()
     paginate_by = 20
 
 
 class ClueRandomView(ListView):
     context_object_name = 'clue_list'
-    template_name = 'clue_list.html'
+    template_name = 'clue_list_view.html'
     paginate_by = 20
 
     def get_context_data(self, **kwargs):
