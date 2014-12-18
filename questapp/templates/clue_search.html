@@ -12,8 +12,40 @@
 
     <input type="SUBMIT" value="Show Clues">
 
-    {% include "clue_list.html" %}
+
+    {% if clue_list %}
+
+        <div class="list-group">
+            {% for clue in clue_list %}
+                {% include "clue_list_item.html" %}
+            {% endfor %}
+        </div>
+
+        {% if page_obj %}{% include "pagination.html" %}{% endif %}
+
+    {% else %}
+        <p>None available.</p>
+    {% endif %}
+
 
 </form>
 
 {% endblock %}
+
+{% block extrajs %}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.clue').click(function(e){
+                $(this).children('.answer').toggle();
+                if ($(this).hasClass("active")) {
+                    $(this).removeClass("active");
+                } else {
+                    $(this).addClass("active");
+                }
+                e.preventDefault(); // dont want href action
+            })
+        });
+    </script>
+
+{% endblock extrajs %}
