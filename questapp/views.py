@@ -12,9 +12,6 @@ class HomeView(TemplateView):
     template_name = "questapp_home.html"
 
 
-
-
-
 class ClueDetailView(DetailView):
     context_object_name = 'clue'
     queryset = Clue.objects.all()
@@ -38,7 +35,6 @@ class ClueIndexView(ListView):
 class ClueRandomView(ListView):
     context_object_name = 'clue_list'
     template_name = 'clue_list_view.html'
-    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(ClueRandomView, self).get_context_data(**kwargs)
@@ -47,7 +43,7 @@ class ClueRandomView(ListView):
         return context
 
     def get_queryset(self):
-        return Clue.objects.all().order_by('?')[:1000]
+        return Clue.objects.all().order_by('?')[:100]
 
 
 class ClueSearchView(FormView):
