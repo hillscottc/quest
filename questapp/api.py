@@ -16,7 +16,5 @@ class ClueResource(ModelResource):
 class RandomCluesResource(ModelResource):
 
     class Meta:
-        rand_ids = get_random_ids(Clue, 1000)
-        queryset = Clue.objects.filter(id__in=rand_ids)
+        queryset = Clue.objects.all().order_by('?')[:100]
         resource_name = 'random_clues'
-        paginator_class = Paginator
