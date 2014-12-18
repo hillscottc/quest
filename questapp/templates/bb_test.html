@@ -8,26 +8,12 @@
     </div>
 
     <script id="clueTemplate" type="text/template">
-
-        <a id="<%= id %>" href="#" class="clue list-group-item">
+        <a href="#" class="clue list-group-item">
             <h4 class="list-group-item-heading"><%= category %></h4>
             <p class="list-group-item-text"><%= question %></p>
-            <p id="ans_<%= id %>" class="answer list-group-item-text"><%= answer %></p>
+            <p class="answer list-group-item-text"></p>
         </a>
     </script>
-
-
-    <script id="bookTemplate" type="text/template">
-        <img src="<%= coverImage %>" />
-        <ul>
-            <li><%=title %></li>
-            <li><%=author %></li>
-            <li><%= $.format.date( new Date( releaseDate ), 'MMMM yyyy' ) %></li>
-            <li><% _.each( keywords, function( keyobj ) {%> <%= keyobj.keyword %><% } ); %></li>
-        </ul>
-        <button class="delete">Delete</button>
-    </script>
-
 
 {% endblock %}
 
@@ -44,19 +30,5 @@
     <script src="{% static 'js/views/clue.js' %}"></script>
     <script src="{% static 'js/views/clues.js' %}"></script>
     <script src="{% static 'js/app.js' %}"></script>
-
-{#    <script type="text/javascript">#}
-{#    $(document).ready(function() {#}
-{#        $('.clue').click(function(e){#}
-{#            $(this).children('.answer').toggle();#}
-{#            if ($(this).hasClass("active")) {#}
-{#                $(this).removeClass("active");#}
-{#            } else {#}
-{#                $(this).addClass("active");#}
-{#            }#}
-{#            e.preventDefault(); // dont want href action#}
-{#        })#}
-{#    });#}
-{#    </script>#}
 
 {% endblock extrajs %}

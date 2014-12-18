@@ -9,16 +9,27 @@
 {% if page_obj %}{% include "pagination.html" %}{% endif %}
 
 
+<style>
+    .answer { display: none; }
+</style>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('.clue').click(function(e){
-            $(this).children('.answer').toggle();
-            if ($(this).hasClass("active")) {
-                $(this).removeClass("active");
+
+            var targ_el = $(e.currentTarget);
+            var ans_el = $(e.currentTarget).find('.answer');
+
+            if (targ_el.hasClass("active")) {
+                // Remove active class, toggle display
+                targ_el.removeClass("active");
+                ans_el.toggle(false)
             } else {
-                $(this).addClass("active");
+                // Add active class, toggle display
+                targ_el.addClass("active");
+                ans_el.toggle(true)
             }
-            e.preventDefault(); // dont want href action
+            e.preventDefault();
         })
     });
 </script>
