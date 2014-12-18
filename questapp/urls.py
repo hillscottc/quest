@@ -16,8 +16,6 @@ urlpatterns = patterns(
 
     url(r'^$', views.HomeView.as_view(), name='questapp-home'),
 
-    url(r'^bbtest$', views.BBTestView.as_view(), name='bbtest'),
-
     url(r'^clues/$', views.ClueIndexView.as_view(), name='clues-index'),
 
     url(r'^clues/random/$', views.ClueRandomView.as_view(), name='clues-random'),

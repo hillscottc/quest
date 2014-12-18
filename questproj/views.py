@@ -23,6 +23,10 @@ class HomeView(TemplateView):
         return context
 
 
+class IndexView(TemplateView):
+    template_name = "index.html"
+
+
 class UserAccountView(TemplateView):
     template_name = "registration/user_account.html"
 

@@ -12,8 +12,7 @@ class HomeView(TemplateView):
     template_name = "questapp_home.html"
 
 
-class BBTestView(TemplateView):
-    template_name = "bb_test.html"
+
 
 
 class ClueDetailView(DetailView):
