@@ -12,12 +12,22 @@
         <a id="<%= id %>" href="#" class="clue list-group-item">
             <h4 class="list-group-item-heading"><%= category %></h4>
             <p class="list-group-item-text"><%= question %></p>
-            <p id="ans_<%= id %>" class="answer list-group-item-text"><% answer %></p>
+            <p id="ans_<%= id %>" class="answer list-group-item-text"><%= answer %></p>
         </a>
-
-
-
     </script>
+
+
+    <script id="bookTemplate" type="text/template">
+        <img src="<%= coverImage %>" />
+        <ul>
+            <li><%=title %></li>
+            <li><%=author %></li>
+            <li><%= $.format.date( new Date( releaseDate ), 'MMMM yyyy' ) %></li>
+            <li><% _.each( keywords, function( keyobj ) {%> <%= keyobj.keyword %><% } ); %></li>
+        </ul>
+        <button class="delete">Delete</button>
+    </script>
+
 
 {% endblock %}
 

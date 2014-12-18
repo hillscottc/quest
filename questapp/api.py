@@ -10,6 +10,7 @@ class ClueResource(ModelResource):
     class Meta:
         queryset = Clue.objects.all()
         resource_name = 'clue'
+        paginator_class = Paginator
 
 
 class RandomCluesResource(ModelResource):
