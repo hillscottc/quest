@@ -14,15 +14,6 @@ def get_relevant_counts():
             'Clue': Clue.objects.count()}
 
 
-# def get_empty_cats():
-#     """Get Categories with no questions. Somewtimes they get through the parser.
-#     Usually one would delete them, as a clenaup.
-#     """
-#     for cat in Category.objects.all():
-#         if not cat.clue_set.exists():
-#             yield cat
-
-
 class Game(BaseModel):
     sid = models.CharField(primary_key=True, max_length=8, help_text="(Jeapordy) Show id.")
     gid = models.CharField(unique=True, max_length=8, help_text="(External) Game id.",
@@ -40,26 +31,6 @@ class Game(BaseModel):
 
     def get_absolute_url(self):
         return reverse('game-detail', kwargs={'pk': self.pk})
-
-
-# class Category(BaseModel):
-#     """A category in a game. Names unique per game, not globally unique.
-#     Also contains info about column and round."""
-#     game = models.ForeignKey(Game)
-#     round_num = models.SmallIntegerField(default=0)
-#     col_num = models.SmallIntegerField(default=0)
-#     name = models.CharField(max_length=100)
-#
-#     class Meta:
-#         # unique_together = ['game', 'round_num', 'col_num']
-#         # ordering = ['round_num', 'col_num']
-#         ordering = ['name']
-#
-#     def __unicode__(self):
-#         return self.name
-#
-#     def get_absolute_url(self):
-#         return reverse('game-detail', kwargs={'pk': self.pk})
 
 
 class Clue(BaseModel):
