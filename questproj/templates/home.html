@@ -7,15 +7,13 @@
     {#    <p style="font-style: italic">{{ SITE_NAME }} is a collection of Jeapordy clues.</p>#}
 
     <div class="jumbotron" style="text-align: center">
-            <a href="{% url 'clues-random' %}" class="btn btn-primary btn-lg">Random Questions</a>
+            <a href="{% url 'clue-index' %}" class="btn btn-primary btn-lg">Random Questions</a>
             <a href="{% url 'clue-search' %}" class="btn btn-primary btn-lg">Search</a>
     </div>
 
     <div>
-        <p>The database contains <a href="{% url 'clues-index' %}">{{ clue_count|intcomma }} Questions.</a></p>
+        <p>The database contains {{ clue_count|intcomma }} Questions.</p>
     </div>
-
-    <p>The main <a href="{% url 'index' %}">Clues Index</a> handles data on the client with <a href="http://backbonejs.org/">Backbone.js</a></p>
 
     <div id="api_samples" style="cursor: pointer;">
         <h4>API Samples</h4>
