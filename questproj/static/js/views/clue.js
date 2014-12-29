@@ -7,7 +7,12 @@ app.ClueView = Backbone.View.extend({
     template: _.template( $('#clueTemplate').html() ),
 
     events: {
-        'click .clue': 'clueClick'
+        'click .clue': 'clueClick',
+        'click .guess-btn': 'guessClick'
+    },
+
+    guessClick: function(e) {
+        console.log("guess!");
     },
 
     clueClick: function(e) {
@@ -33,3 +38,6 @@ app.ClueView = Backbone.View.extend({
         return this;
     }
 });
+
+
+
