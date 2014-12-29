@@ -76,19 +76,17 @@ def read_local_html(game_id):
 
 
 def load_samples(num=None):
-
+    created = 0
     parse_errs = []
 
     # Get the ids out of space-delimmed jeap_src_ids.txt file.
     src_game_ids = []
     with open(settings.JEAP_ID_FILE) as myfile:
         src_game_ids = myfile.read().split()
-
-    created = 0
+    if num:
+        src_game_ids = src_game_ids[:int(float(num))]
 
     for i, game_id in enumerate(src_game_ids):
-        if num and i > num:
-            break
         html = read_local_html(game_id)
         if not html:
             continue
@@ -98,7 +96,7 @@ def load_samples(num=None):
         if errors:
             parse_errs.append(errors)
 
-        err_count = 0 if not errors else len(errors)
+        # err_count = 0 if not errors else len(errors)
         # print "{}, game:{},  errors:{}".format(i, game, err_count)
         log.debug("%s: %s" % (i, game))
 
