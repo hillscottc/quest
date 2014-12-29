@@ -51,12 +51,11 @@ USE_TZ = True
 
 TEMPLATE_DIRS = (
     os.path.join(PROJ_DIR, "templates"),
-    os.path.join('questapp', "templates"),
+    # os.path.join('questapp', "templates"),
 )
 
 SITE_NAME = "Question Site"
 
-QUIZ_SCRAPE_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'quizballs')
 JEAP_SRC_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'jeap')
 JEAP_ID_FILE = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'jeap_src_ids.txt')
 
@@ -67,7 +66,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Static asset configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # STATIC_ROOT = 'staticfiles'
-STATIC_ROOT= os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(PROJ_DIR, "static"), )
@@ -80,12 +79,9 @@ LOGGING = {
     'formatters': {
         'verbose': {
             'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
+            'datefmt': "%d/%b/%Y %H:%M:%S"
         },
-        'simple': {
-            'format': '%(levelname)s [%(name)s:%(lineno)s] %(message)s'
-
-        },
+        'simple': {'format': '%(levelname)s [%(name)s:%(lineno)s] %(message)s'},
     },
     'filters': {},
     'handlers': {

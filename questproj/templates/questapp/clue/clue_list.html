@@ -2,11 +2,11 @@
 
 <div class="list-group">
     {% for clue in clue_list %}
-        {% include "clue/clue_list_item.html" %}
+        {% include "questapp/clue/clue_list_item.html" %}
     {% endfor %}
 </div>
 
-{% if page_obj %}{% include "pagination.html" %}{% endif %}
+{% if page_obj %}{% include "questapp/pagination.html" %}{% endif %}
 
 
 <style>

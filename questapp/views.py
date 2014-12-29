@@ -9,13 +9,13 @@ import questproj.cache_mgr as cache_mgr
 
 
 class HomeView(TemplateView):
-    template_name = "questapp_home.html"
+    template_name = "questapp/questapp_home.html"
 
 
 class ClueDetailView(DetailView):
     context_object_name = 'clue'
     queryset = Clue.objects.all()
-    template_name = "clue/clue_detail.html"
+    template_name = "questapp/clue/clue_detail.html"
 
     def get_object(self, *args, **kwargs):
         object = super(ClueDetailView, self).get_object(*args, **kwargs)
@@ -27,14 +27,14 @@ class ClueDetailView(DetailView):
 
 class ClueIndexView(ListView):
     context_object_name = 'clue_list'
-    template_name = 'clue_list_view.html'
+    template_name = 'questapp/clue_list_view.html'
     queryset = Clue.objects.all()
     paginate_by = 20
 
 
 class ClueRandomView(ListView):
     context_object_name = 'clue_list'
-    template_name = 'clue_list_view.html'
+    template_name = 'questapp/clue_list_view.html'
 
     def get_context_data(self, **kwargs):
         context = super(ClueRandomView, self).get_context_data(**kwargs)
@@ -48,7 +48,7 @@ class ClueRandomView(ListView):
 
 class ClueSearchView(FormView):
     context_object_name = 'clue_list'
-    template_name = "clue_search.html"
+    template_name = "questapp/clue_search.html"
     form_class = ClueSearchForm
     paginate_by = 20
 
