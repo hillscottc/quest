@@ -13,6 +13,20 @@ app.ClueView = Backbone.View.extend({
 
     guessClick: function(e) {
         console.log("guess!");
+        var targ_el = $(e.currentTarget);
+        var guess_el = targ_el.siblings('.guess-text');
+        var results_el = targ_el.siblings('.results');
+
+        if (guess_el.val().toLowerCase() == this.model.attributes['answer'].toLocaleLowerCase()) {
+            results_el.text("Right!")
+            var clue_el = targ_el.siblings('.clue');
+            // Add active class, write answer text
+            clue_el.addClass("active");
+            clue_el.find('.answer').text(this.model.attributes['answer']);
+        } else {
+            results_el.text("Wrong!")
+        }
+
     },
 
     clueClick: function(e) {
