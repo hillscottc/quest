@@ -16,6 +16,12 @@ class HomeView(TemplateView):
 class IndexView(TemplateView):
     template_name = "index.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context.update({'page_subtitle': "Random Clues (backbone)"})
+        context.update({'list_type': 'clues-list'})
+        return context
+
 
 class ClueDetailView(DetailView):
     context_object_name = 'clue'
