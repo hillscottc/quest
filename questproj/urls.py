@@ -11,9 +11,6 @@ urlpatterns = patterns(
 
     url(r'^$', views.HomeView.as_view(), name="home"),
 
-    # For the backbone index.html
-    url(r'^index$', views.IndexView.as_view(), name="index"),
-
     # url(r'^questapp/', include('questapp.urls')), # put app at /questapp
     url(r'^', include('questapp.urls')),            # put app at /
 

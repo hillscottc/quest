@@ -12,6 +12,11 @@ class HomeView(TemplateView):
     template_name = "questapp/questapp_home.html"
 
 
+# The backbone-enabled clue index page.
+class IndexView(TemplateView):
+    template_name = "index.html"
+
+
 class ClueDetailView(DetailView):
     context_object_name = 'clue'
     queryset = Clue.objects.all()
@@ -25,25 +30,27 @@ class ClueDetailView(DetailView):
         return object
 
 
-class ClueIndexView(ListView):
-    context_object_name = 'clue_list'
-    template_name = 'questapp/clue_list_view.html'
-    queryset = Clue.objects.all()
-    paginate_by = 20
+# # Instead of this, the default index is the random view, following.
+# class ClueIndexView(ListView):
+#     context_object_name = 'clue_list'
+#     template_name = 'questapp/clue_list_view.html'
+#     queryset = Clue.objects.all()
+#     paginate_by = 20
 
 
 class ClueRandomView(ListView):
     context_object_name = 'clue_list'
     template_name = 'questapp/clue_list_view.html'
+    num_returned = 100
 
     def get_context_data(self, **kwargs):
         context = super(ClueRandomView, self).get_context_data(**kwargs)
-        context.update({'page_subtitle': 'Some Random Clues'})
+        context.update({'page_subtitle': "{} Random Clues".format(self.num_returned)})
         context.update({'list_type': 'clues-list'})
         return context
 
     def get_queryset(self):
-        return Clue.objects.all().order_by('?')[:100]
+        return Clue.objects.all().order_by('?')[:self.num_returned]
 
 
 class ClueSearchView(FormView):

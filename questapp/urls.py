@@ -16,8 +16,11 @@ urlpatterns = patterns(
 
     url(r'^$', views.HomeView.as_view(), name='questapp-home'),
 
-    url(r'^clues/$', views.ClueIndexView.as_view(), name='clues-index'),
+    # For the backbone index.html
+    url(r'^index$', views.IndexView.as_view(), name="index"),
 
+    # Both of these return the same Random view.
+    url(r'^clues/$', views.ClueRandomView.as_view(), name='clues-index'),
     url(r'^clues/random/$', views.ClueRandomView.as_view(), name='clues-random'),
 
     url(r'^clue/(?P<pk>[0-9]+)/$', views.ClueDetailView.as_view(), name='clue-detail'),
