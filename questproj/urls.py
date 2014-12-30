@@ -7,12 +7,13 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^admin/', include(admin.site.urls)),
-
     url(r'^$', views.HomeView.as_view(), name="home"),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^about/$', views.AboutView.as_view(), name="about"),
 
-    # url(r'^questapp/', include('questapp.urls')), # put app at /questapp
-    url(r'^', include('questapp.urls')),            # put app at /
+    # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
+    url(r'^', include('questapp.urls')),            # put questapp at /
+
 
     url(r'^register/$', register, name='register'),
     url(r'^login/$', user_login, name='login'),

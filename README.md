@@ -1,4 +1,4 @@
-- [Django](https://www.djangoproject.com/) for orm, admin, auth, routing
+- [Django](https://docs.djangoproject.com/) for orm, admin, auth, routing
 - [Postgresql](http://www.postgresql.org/)
 - [Tastypie](https://django-tastypie.readthedocs.org/en/latest/toc.html) for data api
 - Data on the client is managed with [Backbone.js](http://backbonejs.org/)

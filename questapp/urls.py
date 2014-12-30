@@ -14,11 +14,6 @@ v1_api.register(RandomCluesResource())
 urlpatterns = patterns(
     '',
 
-    url(r'^$', views.HomeView.as_view(), name='questapp-home'),
-
-    # For the backbone index.html
-    url(r'^index$', views.IndexView.as_view(), name="clue-index"),
-
     url(r'^clue/(?P<pk>[0-9]+)/$', views.ClueDetailView.as_view(), name='clue-detail'),
 
     # url(r'^clues/cat/(?P<cat_id>\d+)/$', views.CluesByCatView.as_view(), name='clues-by-cat'),

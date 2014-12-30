@@ -1,26 +1,9 @@
-import random
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic import TemplateView
 from .models import Clue
 from .forms import ClueSearchForm
-import questproj.cache_mgr as cache_mgr
-
-
-class HomeView(TemplateView):
-    template_name = "questapp/questapp_home.html"
-
-
-# The backbone-enabled clue index page.
-class IndexView(TemplateView):
-    template_name = "index.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context.update({'page_subtitle': "Random Clues (backbone)"})
-        context.update({'list_type': 'clues-list'})
-        return context
 
 
 class ClueDetailView(DetailView):
@@ -34,14 +17,6 @@ class ClueDetailView(DetailView):
         object.last_accessed = timezone.now()
         object.save()
         return object
-
-
-# # Instead of this, the default index is the random view, following.
-# class ClueIndexView(ListView):
-#     context_object_name = 'clue_list'
-#     template_name = 'questapp/clue_list_view.html'
-#     queryset = Clue.objects.all()
-#     paginate_by = 20
 
 
 class ClueRandomView(ListView):
