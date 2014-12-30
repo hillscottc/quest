@@ -10,14 +10,19 @@
     </div>
 
     <script id="clueTemplate" type="text/template">
-        <a href="#" class="clue list-group-item">
-            <h4 class="list-group-item-heading"><%= category %></h4>
-            <p class="list-group-item-text"><%= question %></p>
-            <p class="answer list-group-item-text"></p>
-        </a>
-        <input class="guess-text"/>
-        <button type="button" class="guess-btn btn btn-xs btn-primary">Guess</button>
-        <span class="results list-group-item-text"></span>
+        <div class="list-group-item">
+            <a href="#" class="clue list-group-item">
+                <h4 class="list-group-item-heading"><%= category %></h4>
+                <p class="list-group-item-text"><%= question %></p>
+                <p class="answer list-group-item-text"></p>
+            </a>
+            <div class="clue-controls">
+                <button type="button" class="tellme-btn btn btn-xs btn-primary">Tell Me</button>
+                <button type="button" class="guess-btn btn btn-xs btn-primary">Guess</button>
+                <input class="guess-text"/>
+                <span class="results list-group-item-text"></span>
+            </div>
+        </div>
     </script>
 
 {% endblock %}

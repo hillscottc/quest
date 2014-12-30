@@ -43,6 +43,10 @@
     color: darkmagenta;
 }
 
+.clue-controls {
+    display: none;
+}
+
 
 /*.cat-list {*/
     /*text-align: left;*/

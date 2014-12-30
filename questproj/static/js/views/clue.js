@@ -8,41 +8,39 @@ app.ClueView = Backbone.View.extend({
 
     events: {
         'click .clue': 'clueClick',
-        'click .guess-btn': 'guessClick'
+        'click .guess-btn': 'guessClick',
+        'click .tellme-btn': 'tellmeClick'
     },
 
     guessClick: function(e) {
-        console.log("guess!");
         var targ_el = $(e.currentTarget);
         var guess_el = targ_el.siblings('.guess-text');
         var results_el = targ_el.siblings('.results');
 
         if (guess_el.val().toLowerCase() == this.model.attributes['answer'].toLocaleLowerCase()) {
-            results_el.text("Right!")
-            var clue_el = targ_el.siblings('.clue');
-            // Add active class, write answer text
-            clue_el.addClass("active");
-            clue_el.find('.answer').text(this.model.attributes['answer']);
+            results_el.text("Right!");
         } else {
             results_el.text("Wrong!")
         }
 
     },
 
-    clueClick: function(e) {
-        // Set target el class to active and write to answer el.
+    tellmeClick: function(e) {
+        var guess_el = $(e.currentTarget).siblings('.guess-text');
+        guess_el.val(this.model.attributes['answer']);
+        e.preventDefault();
+    },
 
+    clueClick: function(e) {
         var targ_el = $(e.currentTarget);
-        var ans_el = $(e.currentTarget).find('.answer');
+        var controls_el = $(e.currentTarget).siblings('.clue-controls');
 
         if (targ_el.hasClass("active")) {
-            // Remove active class, erase answer text
             targ_el.removeClass("active");
-            ans_el.text('');
+            controls_el.toggle(false)
         } else {
-            // Add active class, write answer text
             targ_el.addClass("active");
-            ans_el.text(this.model.attributes['answer']);
+            controls_el.toggle(true)
         }
         e.preventDefault();
     },
