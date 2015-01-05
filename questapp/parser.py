@@ -4,8 +4,8 @@ from string import split
 from bs4 import BeautifulSoup
 from .models import Clue, Game
 from django.db import DataError, transaction
-from django.db import DatabaseError, IntegrityError
-from .exceptions import MetadataParseException, CategoryException, HrefException
+from django.db import IntegrityError
+from .exceptions import MetadataParseException, CategoryException, HrefException, QuestionException
 import logging
 
 log = logging.getLogger(__name__)
@@ -21,36 +21,30 @@ class ParseErrors(Exception):
 def parse_game_html(page, game_id):
     """Parse game and clues from html page, saves to db.
     """
-    game, errors = None, []
+    game, clues, errors = None, [], []
     bs_game = BeautifulSoup(page)
 
     # Parse and upsert game metadata.
     game_meta = parse_game_meta(bs_game)
-
-    try:
+    if not game_meta:
+        raise MetadataParseException("Invalid metadata for %s" % game_id)
+    else:
         game, created = Game.objects.get_or_create(sid=game_meta['show_num'],
                                                    gid=game_id,
                                                    title=game_meta['title'],
                                                    air_date=game_meta['air_date'],
                                                    comments=game_meta['comments'])
-    except DatabaseError as err:
-        mdp = MetadataParseException(err)
-        log.error(mdp)
-        return None, [mdp]
-
     # Parse and save the games's clues.
     try:
-        _parse_game_clues(bs_game, game)
-    except ParseErrors as pe:
-        errors = pe.errors
+        clue_data = _parse_rounds(bs_game, game)
     except Exception as err:
         log.exception("Failed parse clues for %s" % game)
-        errors.append(err)
+        return None, [], [err]
 
-    # if len(game.clue_set.all()) == 0:
-    #     errors.append(CluelessGameException())
+    if clue_data:
+        clues, errors = parse_game_clues(clue_data, game)
 
-    return game, errors
+    return game, clues, errors
 
 
 def parse_game_meta(bs_game):
@@ -66,7 +60,6 @@ def parse_game_meta(bs_game):
     if comments:
         comments = comments.text[:250]
 
-
     m = re.search(r'#(\d+)',title)
     show_num = m.group(1) if m else None
 
@@ -80,32 +73,34 @@ def parse_game_meta(bs_game):
                 comments=comments)
 
 
-def _parse_game_clues(bs_game, game):
+def parse_game_clues(clue_data, game):
     errors = []
-    try:
-        for clue_data in _parse_rounds(bs_game, game):
-            if len(clue_data['question']) < 3:
-                continue
+    clues = []
+    # for clue_data in _parse_rounds(bs_game, game):
+    for raw_clue in clue_data:
+        if len(raw_clue['question']) < 3:
+            errors.append(QuestionException(raw_clue['question']))
+            continue
 
-            if '<a href' in clue_data['question']:
-                errors.append(HrefException(clue_data['question']))
-                # log.debug("Skipping a question containing an href.")
-                continue
+        if '<a href' in raw_clue['question']:
+            errors.append(HrefException(raw_clue['question']))
+            continue
 
-            with transaction.atomic():
-                try:
-                    Clue.objects.create(game=game, category=clue_data['category'],
-                                        question=clue_data['question'],
-                                        answer=clue_data['answer'])
-                except (IntegrityError, DataError) as err:
-                    errors.append(err)
-                    # log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
-    except CategoryException:
-        log.exception("Failed cat parse of %s" % game)
+        with transaction.atomic():
+            try:
+                clue = Clue.objects.create(game=game,
+                                           category=raw_clue['category'],
+                                           question=raw_clue['question'],
+                                           answer=raw_clue['answer'])
+                clues.append(clue)
+            except (IntegrityError, DataError) as err:
+                errors.append(err)
+                # log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
 
-    if errors:
-        raise ParseErrors("Errors parsing game {}".format(game), errors)
+    # if errors:
+    #     raise ParseErrors("Errors parsing game {}".format(game), errors)
 
+    return clues, errors
 
 def _parse_rounds(bs_game, game):
     clue_data_list = []

@@ -94,10 +94,10 @@ def read_local_html(game_id):
 
 def load_samples(num=None):
     created = 0
-    parse_errs = []
+    clue_count = 0
+    err_count = 0
 
     # Get the ids out of space-delimmed jeap_src_ids.txt file.
-    src_game_ids = []
     with open(settings.JEAP_ID_FILE) as myfile:
         src_game_ids = myfile.read().split()
     if num:
@@ -106,18 +106,17 @@ def load_samples(num=None):
     for i, game_id in enumerate(src_game_ids):
         html = read_local_html(game_id)
         if not html:
+            log.info("%s: Skipping %s, no html." % (i, game_id))
             continue
 
-        game, errors = parse_game_html(html, game_id)
+        game, clues, errors = parse_game_html(html, game_id)
         created += 1
-        if errors:
-            parse_errs.append(errors)
+        clue_count += len(clues)
+        err_count += len(errors)
 
-        # err_count = 0 if not errors else len(errors)
-        # print "{}, game:{},  errors:{}".format(i, game, err_count)
-        log.debug("%s: %s" % (i, game))
+        log.info("{}: {}, {} clues, {} parse_errs.".format(i, game, len(clues), len(errors)))
 
-    log.info("Loaded %s J Games, %s parse_errs." % (created, len(parse_errs)))
+    log.info("Loaded {} Games, {} clues, {} parse_errs.".format(created, clue_count, err_count))
     return created
 
 
