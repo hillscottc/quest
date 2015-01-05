@@ -10,5 +10,9 @@ class CluelessGameException(Exception):
     pass
 
 
+class QuestionException(Exception):
+    pass
+
+
 class CategoryException(Exception):
     pass
