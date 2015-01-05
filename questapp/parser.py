@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from .models import Clue, Game
 from django.db import DataError, transaction
 from django.db import IntegrityError
-from .exceptions import MetadataParseException, CategoryException, HrefException, QuestionException
+from .exceptions import MetadataParseException, CategoryException, HrefException, ShortQuestionException
 import logging
 
 log = logging.getLogger(__name__)
@@ -27,7 +27,7 @@ def parse_game_html(page, game_id):
     # Parse and upsert game metadata.
     game_meta = parse_game_meta(bs_game)
     if not game_meta:
-        raise MetadataParseException("Invalid metadata for %s" % game_id)
+        return None, [], [MetadataParseException("Invalid metadata for %s" % game_id)]
     else:
         game, created = Game.objects.get_or_create(sid=game_meta['show_num'],
                                                    gid=game_id,
@@ -36,13 +36,24 @@ def parse_game_html(page, game_id):
                                                    comments=game_meta['comments'])
     # Parse and save the games's clues.
     try:
-        clue_data = _parse_rounds(bs_game, game)
-    except Exception as err:
-        log.exception("Failed parse clues for %s" % game)
-        return None, [], [err]
+        clue_data = parse_rounds(bs_game, game)
+    except CategoryException as ce:
+        log.exception("Failed parsing categories for %s" % game)
+        return None, [], [ce]
 
     if clue_data:
-        clues, errors = parse_game_clues(clue_data, game)
+        clues, errors = parse_clue_data(clue_data, game)
+
+    # Iterate through a copy of the list, so i can remove while traversing when necess
+    # http://stackoverflow.com/questions/1352885/remove-elements-as-you-traverse-a-list-in-python
+    for clue in clues[:]:
+        with transaction.atomic():
+            try:
+                clue.save()
+            except IntegrityError as ie:
+                log.error("Failed to save {}, {}".format(clue, ie.message))
+                clues.remove(clue)
+                errors.append(ie)
 
     return game, clues, errors
 
@@ -60,7 +71,7 @@ def parse_game_meta(bs_game):
     if comments:
         comments = comments.text[:250]
 
-    m = re.search(r'#(\d+)',title)
+    m = re.search(r'#(\d+)', title)
     show_num = m.group(1) if m else None
 
     m = re.search(r'(\d{4}-\d{2}-\d{2})', title)
@@ -73,36 +84,34 @@ def parse_game_meta(bs_game):
                 comments=comments)
 
 
-def parse_game_clues(clue_data, game):
+def parse_clue_data(clue_data, game):
     errors = []
     clues = []
     # for clue_data in _parse_rounds(bs_game, game):
     for raw_clue in clue_data:
         if len(raw_clue['question']) < 3:
-            errors.append(QuestionException(raw_clue['question']))
+            errors.append(ShortQuestionException(raw_clue['question']))
             continue
 
         if '<a href' in raw_clue['question']:
-            errors.append(HrefException(raw_clue['question']))
+            # This isnt an error, its just unhandled at the moment.
+            # errors.append(HrefException(raw_clue['question']))
             continue
 
-        with transaction.atomic():
-            try:
-                clue = Clue.objects.create(game=game,
-                                           category=raw_clue['category'],
-                                           question=raw_clue['question'],
-                                           answer=raw_clue['answer'])
-                clues.append(clue)
-            except (IntegrityError, DataError) as err:
-                errors.append(err)
-                # log.warn(("Failed parse clue_data {}, {}".format(clue_data, err)))
+        clue = Clue(game=game,
+                    category=raw_clue['category'],
+                    question=raw_clue['question'],
+                    answer=raw_clue['answer'])
+
+        clues.append(clue)
 
     # if errors:
     #     raise ParseErrors("Errors parsing game {}".format(game), errors)
 
     return clues, errors
 
-def _parse_rounds(bs_game, game):
+
+def parse_rounds(bs_game, game):
     clue_data_list = []
     for round_name in ['jeopardy_round', 'double_jeopardy_round']:
         round_div = bs_game.find('div', {'id': round_name})

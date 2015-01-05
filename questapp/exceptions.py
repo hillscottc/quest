@@ -6,11 +6,7 @@ class MetadataParseException(Exception):
     pass
 
 
-class CluelessGameException(Exception):
-    pass
-
-
-class QuestionException(Exception):
+class ShortQuestionException(Exception):
     pass
 
 

@@ -106,17 +106,18 @@ def load_samples(num=None):
     for i, game_id in enumerate(src_game_ids):
         html = read_local_html(game_id)
         if not html:
-            log.info("%s: Skipping %s, no html." % (i, game_id))
             continue
 
         game, clues, errors = parse_game_html(html, game_id)
         created += 1
         clue_count += len(clues)
         err_count += len(errors)
+        # get a set of the names of the errors, for reference.
+        err_set = set([type(err).__name__ for err in errors])
 
-        log.info("{}: {}, {} clues, {} parse_errs.".format(i, game, len(clues), len(errors)))
+        log.info("{}: {}, clues={}, errs={}, {}".format(i, game, len(clues), len(errors), err_set))
 
-    log.info("Loaded {} Games, {} clues, {} parse_errs.".format(created, clue_count, err_count))
+    log.info("Loaded Games={}, clues={}, errs={}".format(created, clue_count, err_count))
     return created
 
 
