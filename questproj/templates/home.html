@@ -6,16 +6,21 @@
 
     <h4 style="font-style:italic;">{{ page_subtitle }}</h4>
 
-    <div id="clues" class="list-group">
+    <div id="stats">
+
     </div>
 
     <script id="statsTemplate" type="text/template">
-        <div>ljldjsalkdj
-            <label>some text</label>
-            <span>the val</span>
-        </div>
+        <span>right</span>
+        <span id="rights"></span>
+        <span>wrong</span>
+        <span id="wrongs"></span>
     </script>
 
+
+
+    <div id="clues" class="list-group">
+    </div>
 
     <script id="clueTemplate" type="text/template">
         <div class="list-group-item">
@@ -44,6 +49,7 @@
     <script src="{% static 'js/lib/backbone-tastypie.js' %}"></script>
 
     <script src="{% static 'js/models/clue.js' %}"></script>
+    <script src="{% static 'js/models/stats.js' %}"></script>
     <script src="{% static 'js/collections/clues.js' %}"></script>
     <script src="{% static 'js/views/clue.js' %}"></script>
     <script src="{% static 'js/views/clues.js' %}"></script>
