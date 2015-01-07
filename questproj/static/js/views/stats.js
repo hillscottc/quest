@@ -8,7 +8,7 @@ app.StatsView = Backbone.View.extend({
 
     initialize: function() {
         this.model = new app.Stats();
-        console.log("StatsView Initialized.")
+        console.log("StatsView Initialized.");
         this.render();
     },
 
