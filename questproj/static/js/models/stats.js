@@ -3,8 +3,8 @@ var app = app || {};
 app.Stats = Backbone.Model.extend({
 
     defaults: {
-        rights: '1',
-        wrongs: '2'
+        rights: '0',
+        wrongs: '0'
     },
 
 	initialize: function() {

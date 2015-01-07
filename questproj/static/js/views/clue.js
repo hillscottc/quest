@@ -16,11 +16,18 @@ app.ClueView = Backbone.View.extend({
         var targ_el = $(e.currentTarget);
         var guess_el = targ_el.siblings('.guess-text');
         var results_el = targ_el.siblings('.results');
+        var stats_el = $('#stats');
 
         if (guess_el.val().toLowerCase() == this.model.attributes['answer'].toLocaleLowerCase()) {
             results_el.text("Right!");
+            var rights_el = stats_el.find('#rights');
+            var old_rights = parseInt(rights_el.text());
+            rights_el.text(old_rights + 1);
         } else {
             results_el.text("Wrong!")
+            var wrongs_el = stats_el.find('#wrongs');
+            var old_wrongs = parseInt(wrongs_el.text());
+            wrongs_el.text(old_wrongs + 1);
         }
 
     },
