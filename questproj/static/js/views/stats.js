@@ -1,19 +1,20 @@
 var app = app || {};
 
 app.StatsView = Backbone.View.extend({
-    tagName: 'div',
-    className: 'container stats',
+
     el: '#stats',
 
-    initialize: function() {
-        console.log("Initialized.")
-    }
+    template: _.template( $('#statsTemplate').html() ),
 
-    //// render by rendering each item in the collection
-    //render: function() {
-    //    this.collection.each(function( item ) {
-    //        this.renderClue( item );
-    //    }, this );
-    //},
+    initialize: function() {
+        this.model = new app.Stats();
+        console.log("StatsView Initialized.")
+        this.render();
+    },
+
+    render: function() {
+        this.$el.html( this.template( this.model.attributes ) );
+        return this;
+    }
 
 });

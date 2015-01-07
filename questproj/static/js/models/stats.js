@@ -9,7 +9,10 @@ app.Stats = Backbone.Model.extend({
 
 	initialize: function() {
         console.log('This model has been initialized.');
-	}
+        this.on('change', function(){
+            console.log('- Values for this model have changed.');
+        });
+    }
 
     //, urlRoot : function(){
     	//return '/api/v1/clue/';
