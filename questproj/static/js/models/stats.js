@@ -8,6 +8,7 @@ app.Stats = Backbone.Model.extend({
     },
 
 	initialize: function() {
+        console.log('This model has been initialized.');
 	}
 
     //, urlRoot : function(){
