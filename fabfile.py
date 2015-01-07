@@ -13,10 +13,12 @@ env.hosts = ['localhost', ]
 DB_NAME = settings.DATABASES['default']['NAME']
 DB_USER = settings.DATABASES['default']['USER']
 
+DUMP_FILE = os.path.join(os.path.dirname(settings.PROJ_DIR), 'questproj', 'fixtures', 'quest_dump.json.gz')
+
 
 @task
 def rebuild(db_user=DB_USER, db_name=DB_NAME):
-    """Recreate and sync db, load fixtures.
+    """Create a fresh new database.
     """
     db_args = dict(db_name=db_name, db_user=db_user)
     if not confirm("\nSettings module:{module}, db:{db_user}, owner:{db_name}. Proceed?".format(
@@ -28,24 +30,32 @@ def rebuild(db_user=DB_USER, db_name=DB_NAME):
 
     local("psql -c \"DROP DATABASE IF EXISTS %s\"" % db_name)
     local('createdb -E UTF8 quest_db')
-    local('django-admin.py syncdb')
+    local('django-admin.py migrate')
 
 
 @task
-def load_jeap(num=500):
-    load_samples(num)
-
-
-
-def _get_fixture_fname(name="proj_samples"):
-    return os.path.join(os.path.dirname(settings.PROJ_DIR), 'questproj', 'fixtures',
-                        '%s.json' % name)
-
-@task
-def dump_fixtures(filename="proj_samples"):
-    local("django-admin.py dumpdata > %s" % _get_fixture_fname(filename))
+def load_samples():
+    """Load database by parsing the html game files.
+    """
+    local('django-admin.py load_samples')
 
 
 @task
-def load_fixtures(filename="proj_samples"):
-    local("django-admin.py loaddata %s" % _get_fixture_fname(filename))
+def dump_data(dump_file=DUMP_FILE):
+    """Dump database to fixture dump file.
+    """
+    local('python manage.py dumpdata | gzip > %s' % dump_file)
+
+
+@task
+def load_data(dump_file=DUMP_FILE):
+    """Load database from fixture dump file.
+    """
+    local("django-admin.py loaddata %s" % dump_file)
+
+
+# @task
+# def dump_fixtures(filename="proj_samples"):
+#     local("django-admin.py dumpdata > %s" % _get_fixture_fname(filename))
+
+
