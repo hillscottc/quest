@@ -18,13 +18,21 @@ app.ClueView = Backbone.View.extend({
         var results_el = targ_el.siblings('.results');
         var stats_el = $('#stats');
 
+        // If answer is correct
         if (guess_el.val().toLowerCase() == this.model.attributes['answer'].toLocaleLowerCase()) {
-            results_el.text("Right!");
-            var rights_el = stats_el.find('#rights');
-            var old_rights = parseInt(rights_el.text());
-            rights_el.text(old_rights + 1);
+            // If it isn't already showing as right, make it so.
+            if (results_el.text() != "Right!") {
+                // Write the message.
+                results_el.text("Right!");
+                // Increment the rights count.
+                var rights_el = stats_el.find('#rights');
+                var old_rights = parseInt(rights_el.text());
+                rights_el.text(old_rights + 1);
+            }
         } else {
-            results_el.text("Wrong!")
+            // Write the message.
+            results_el.text("Wrong!");
+            // Increment the wrongs count.
             var wrongs_el = stats_el.find('#wrongs');
             var old_wrongs = parseInt(wrongs_el.text());
             wrongs_el.text(old_wrongs + 1);
