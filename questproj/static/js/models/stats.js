@@ -8,10 +8,10 @@ app.Stats = Backbone.Model.extend({
     },
 
 	initialize: function() {
-        console.log('This model has been initialized.');
         this.on('change', function(){
             console.log('- Values for this model have changed.');
         });
+        console.log('A Stats model has been initialized.');
     }
 
     //, urlRoot : function(){

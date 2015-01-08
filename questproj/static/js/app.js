@@ -2,6 +2,7 @@ var app = app || {};
 
 $(function() {
     new app.CluesView();
-    new app.StatsView();
+    var stats = new app.Stats();
+    new app.StatsView(stats);
 });
 

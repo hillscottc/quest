@@ -6,10 +6,15 @@ app.StatsView = Backbone.View.extend({
 
     template: _.template( $('#statsTemplate').html() ),
 
-    initialize: function() {
-        this.model = new app.Stats();
-        console.log("StatsView Initialized.");
+    initialize: function(stats) {
+        this.model = stats;
+        this.model
         this.render();
+        console.log("StatsView Initialized.");
+    },
+
+    events: {
+        "click .": "open"
     },
 
     render: function() {
