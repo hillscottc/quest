@@ -1,27 +1,18 @@
-'''
+"""
 Add CORS headers for tastypie APIs
-
+Source: http://codeispoetry.me/index.php/make-your-django-tastypie-api-cross-domain/
 Usage:
    class MyModelResource(CORSModelResource):
        ...
-       
    class MyResource(CORSResource):
        ...
-       
-Authors:
-   original source by http://codeispoetry.me/index.php/make-your-django-tastypie-api-cross-domain/
-   extensions by @miraculixx
-   * deal with ?format requests
-   * always return CORS headers, even if always_return_data is False
-   * handle exceptions properly (e.g. raise tastypie.BadRequests) 
-   * provide two distinct classes for ModelResource and Resource classes
-'''
+"""
 from django.http.response import HttpResponse
 from tastypie import http
 from tastypie.exceptions import ImmediateHttpResponse
 from tastypie.resources import csrf_exempt
 from tastypie.resources import Resource, ModelResource
-import logging
+
 
 class BaseCorsResource(Resource):
     """

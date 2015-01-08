@@ -1,17 +1,31 @@
 import logging
 from django.db import models
-from django.core import serializers
 from django.core.urlresolvers import reverse
-from .models_base import BaseModel
 from django.contrib.auth.models import User
-import json
 
 log = logging.getLogger(__name__)
 
 
-def get_relevant_counts():
-    return {'Game': Game.objects.count(),
-            'Clue': Clue.objects.count()}
+class BaseModelManager(models.Manager):
+
+    def update(self, **kwargs):
+        fieldnames = [field.name for field in self._meta.fields]
+        for attr, value in kwargs.iteritems():
+            if attr in fieldnames and hasattr(self, attr):
+                setattr(self, attr, value)
+        self.save()
+
+
+class BaseModel(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True, editable=False)
+    last_accessed = models.DateTimeField(auto_now=True, editable=False)
+
+    objects = BaseModelManager()
+
+    class Meta:
+        abstract = True
+        ordering = ["-modified"]
 
 
 class Game(BaseModel):

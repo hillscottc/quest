@@ -14,10 +14,6 @@ v1_api.register(RandomCluesResource())
 urlpatterns = patterns(
     '',
 
-    url(r'^clue/(?P<pk>[0-9]+)/$', views.ClueDetailView.as_view(), name='clue-detail'),
-
-    # url(r'^clues/cat/(?P<cat_id>\d+)/$', views.CluesByCatView.as_view(), name='clues-by-cat'),
-
     url(r'^clues/search/$', views.ClueSearchView.as_view(), name='clue-search'),
 
     url(r'^api/', include(v1_api.urls)),
