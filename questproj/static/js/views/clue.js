@@ -30,8 +30,6 @@ app.ClueView = Backbone.View.extend({
                 var old_rights = parseInt(rights_el.text());
                 rights_el.text(old_rights + 1);
 
-                //app.StatsView.model.attributes('rights', 50)
-
             }
         } else {
             // Write the message.

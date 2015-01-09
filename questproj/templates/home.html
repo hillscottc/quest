@@ -6,18 +6,14 @@
 
     <h4 style="font-style:italic;">{{ page_subtitle }}</h4>
 
-    <div id="stats"></div>
-    <script id="statsTemplate" type="text/template">
-        <span>right</span>
-        <span id="rights"><%= rights %></span>
-        <span>wrong</span>
-        <span id="wrongs"><%= wrongs %></span>
-    </script>
-
 
     <div id="clues" class="list-group">
-
-
+        <div id="stats">
+            <span>right</span>
+            <span id="rights">0</span>
+            <span>wrong</span>
+            <span id="wrongs">0</span>
+        </div>
     </div>
 
     <script id="clueTemplate" type="text/template">
@@ -47,11 +43,9 @@
     <script src="{% static 'js/lib/backbone-tastypie.js' %}"></script>
 
     <script src="{% static 'js/models/clue.js' %}"></script>
-    <script src="{% static 'js/models/stats.js' %}"></script>
     <script src="{% static 'js/collections/clues.js' %}"></script>
     <script src="{% static 'js/views/clue.js' %}"></script>
     <script src="{% static 'js/views/clues.js' %}"></script>
-    <script src="{% static 'js/views/stats.js' %}"></script>
     <script src="{% static 'js/app.js' %}"></script>
 
 {% endblock extrajs %}
