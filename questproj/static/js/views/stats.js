@@ -8,14 +8,11 @@ app.StatsView = Backbone.View.extend({
 
     initialize: function(stats) {
         this.model = stats;
-        this.model
         this.render();
+        //this.listenTo( this.model, 'change', this.render );
         console.log("StatsView Initialized.");
     },
 
-    events: {
-        "click .": "open"
-    },
 
     render: function() {
         this.$el.html( this.template( this.model.attributes ) );
