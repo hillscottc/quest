@@ -29,11 +29,11 @@ app.ClueView = Backbone.View.extend({
                 var rights_el = stats_el.find('#rights');
                 var old_rights = parseInt(rights_el.text());
                 rights_el.text(old_rights + 1);
-
             }
         } else {
             // Write the message.
             results_el.text("Wrong!");
+
             // Increment the wrongs count.
             var wrongs_el = stats_el.find('#wrongs');
             var old_wrongs = parseInt(wrongs_el.text());

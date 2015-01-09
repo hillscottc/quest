@@ -7,31 +7,30 @@ app.CluesView = Backbone.View.extend({
     initialize: function( initialClues ) {
         this.collection = new app.Clues( initialClues );
         this.collection.fetch({reset: true});
+        this.model = new app.Stats();
         this.render();
         this.listenTo( this.collection, 'add', this.renderClue );
         this.listenTo( this.collection, 'reset', this.render );
+        this.listenTo(Backbone, 'change:rights', this.rightsChange);
     },
 
-    events:{
-        'click #add':'addClue'
+    rightsChange: function() {
+      console.log("heard rights change")
     },
 
-    addClue: function( e ) {
-        e.preventDefault();
-
-        var formData = {};
-
-//        $( '#addClue div' ).children( 'input' ).each( function( i, el ) {
-//            if( $( el ).val() != '' )
-//            {
-//                formData[ el.id ] = $( el ).val();
-//            }
-//            // Clear input field value
-//            $( el ).val('');
-//        });
-
-        this.collection.create( formData );
-    },
+    //events:{
+    //    'click #add':'addClue'
+    //},
+    //
+    //addClue: function( e ) {
+    //    e.preventDefault();
+    //    var formData = {};
+    //    $( '#addClue div' ).children( 'input' ).each( function( i, el ) {
+    //        if( $( el ).val() != '' ) { formData[ el.id ] = $( el ).val(); }
+    //        $( el ).val('');
+    //    });
+    //    this.collection.create( formData );
+    //},
 
     // render by rendering each item in the collection
     render: function() {
