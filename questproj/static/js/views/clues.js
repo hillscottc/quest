@@ -11,12 +11,12 @@ app.CluesView = Backbone.View.extend({
         this.render();
         this.listenTo( this.collection, 'add', this.renderClue );
         this.listenTo( this.collection, 'reset', this.render );
-        this.listenTo(Backbone, 'change:rights', this.rightsChange);
+        //this.listenTo(Backbone, 'change:rights', this.rightsChange);
     },
 
-    rightsChange: function() {
-      console.log("heard rights change")
-    },
+    //rightsChange: function() {
+    //  console.log("heard rights change")
+    //},
 
     //events:{
     //    'click #add':'addClue'
