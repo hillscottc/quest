@@ -7,7 +7,7 @@ app.CluesView = Backbone.View.extend({
     initialize: function( initialClues ) {
         this.collection = new app.Clues( initialClues );
         this.collection.fetch({reset: true});
-        this.model = new app.Stats();
+        //this.model = new app.Stats();
         this.render();
         this.listenTo( this.collection, 'add', this.renderClue );
         this.listenTo( this.collection, 'reset', this.render );
