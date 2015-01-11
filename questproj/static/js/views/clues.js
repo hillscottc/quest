@@ -14,6 +14,17 @@ app.CluesView = Backbone.View.extend({
         //this.listenTo(Backbone, 'change:rights', this.rightsChange);
     },
 
+
+    //// MOVE THE guesclick to here?
+    //
+    //events: {
+    //    'click .guess-btn': 'guessClick'
+    //},
+    //guessClick: function(e) {
+    //    alert("ok")
+    //},
+
+
     //rightsChange: function() {
     //  console.log("heard rights change")
     //},
