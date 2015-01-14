@@ -21,7 +21,7 @@ app.CluesView = Backbone.View.extend({
     //    'click .guess-btn': 'guessClick'
     //},
     //guessClick: function(e) {
-    //    alert("ok")
+    //    alert("ok" + $(e.currentTarget).className + e);
     //},
 
 
