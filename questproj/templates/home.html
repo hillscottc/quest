@@ -15,7 +15,7 @@
         $(function() {
             var links_el = $('#home-links');
             var urls = [{% url 'backbone-index' %}, {% url 'ember-index' %}];
-            for (var i=0; i < urls.length; i++){
+            for (var i=0; i < urls.length; i++) {
                 links_el.append("<li><a href='" + urls[i] + "'>" + urls[i] + "</a></li>");
             }
         });
