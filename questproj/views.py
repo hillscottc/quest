@@ -16,15 +16,18 @@ def base_context(request):
 class HomeView(TemplateView):
     template_name = "home.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context.update({'some_var': "some_value"})
+        return context
+
+
+class EmberIndexView(TemplateView):
+    template_name = "ember/index.html"
+
 
 class BackboneIndexView(TemplateView):
     template_name = "backbone/index.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(BackboneIndexView, self).get_context_data(**kwargs)
-        context.update({'page_subtitle': "Home"})
-        context.update({'list_type': 'clues-list'})
-        return context
 
 
 class AboutView(TemplateView):

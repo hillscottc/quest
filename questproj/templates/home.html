@@ -3,7 +3,22 @@
 
 {% block content %}
 
-<a href="{% url 'backbone-index' %}">Backbone.js Index</a>
+    <p>Links:</p>
+    <ul id="home-links"></ul>
 
 {% endblock %}
 
+{% block extrajs %}
+
+    <script type="text/javascript">
+        // Write href code for each url in the list
+        $(function() {
+            var links_el = $('#home-links');
+            var urls = [{% url 'backbone-index' %}, {% url 'ember-index' %}];
+            for (var i=0; i < urls.length; i++){
+                links_el.append("<li><a href='" + urls[i] + "'>" + urls[i] + "</a></li>");
+            }
+        });
+    </script>
+
+{% endblock extrajs %}
