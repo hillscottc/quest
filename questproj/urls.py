@@ -7,9 +7,10 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.IndexView.as_view(), name="index"),
+    url(r'^$', views.HomeView.as_view(), name="home"),
+    url(r'^backbone/$', views.BackboneIndexView.as_view(), name="backbone-index"),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^about/$', views.AboutView.as_view(), name="about"),
+    url(r'^about$', views.AboutView.as_view(), name="about"),
 
     # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
     url(r'^', include('questapp.urls')),            # put questapp at /

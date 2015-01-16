@@ -1,3 +1,4 @@
+{# Backbone.js index.html. #}
 {% extends 'base_site.html' %}
 
 {% block title %}Home{% endblock %}
@@ -46,11 +47,11 @@
     <script src="{% static 'js/lib/backbone.js' %}"></script>
     <script src="{% static 'js/lib/backbone-tastypie.js' %}"></script>
 
-    <script src="{% static 'js/models/clue.js' %}"></script>
-    <script src="{% static 'js/models/stats.js' %}"></script>
-    <script src="{% static 'js/collections/clues.js' %}"></script>
-    <script src="{% static 'js/views/clue.js' %}"></script>
-    <script src="{% static 'js/views/clues.js' %}"></script>
+    <script src="{% static 'js/backbone/models/clue.js' %}"></script>
+    <script src="{% static 'js/backbone/models/stats.js' %}"></script>
+    <script src="{% static 'js/backbone/collections/clues.js' %}"></script>
+    <script src="{% static 'js/backbone/views/clue.js' %}"></script>
+    <script src="{% static 'js/backbone/views/clues.js' %}"></script>
     <script src="{% static 'js/app.js' %}"></script>
 
 {% endblock extrajs %}
