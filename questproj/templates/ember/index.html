@@ -4,27 +4,63 @@
 {% block title %}Home (Ember.js){% endblock %}
 
 {% block extra-css %}
-  <link rel="stylesheet" href="{% static 'css/ember/normalize.css' %}">
-  <link rel="stylesheet" href="{% static 'css/ember/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ember/style.css' %}">
 {% endblock extra-css %}
 
 {% block content %}
+    <script type="text/x-handlebars" data-template-name="todos">
+    <section id="todoapp">
+      <header id="header">
+        <h1>todos</h1>
+        <input type="text" id="new-todo" placeholder="What needs to be done?" />
+      </header>
 
-    {% verbatim %}
-    <script type="text/x-handlebars">
-        <h4>Welcome to Ember.js</h4>
-        {{outlet}}
-    </script>
-
-    <script type="text/x-handlebars" id="index">
-        <ul>
-        {{#each item in model}}
-            <li>{{item}}</li>
-        {{/each}}
+      <section id="main">
+        <ul id="todo-list">
+          <li class="completed">
+            <input type="checkbox" class="toggle">
+            <label>Learn Ember.js</label><button class="destroy"></button>
+          </li>
+          <li>
+            <input type="checkbox" class="toggle">
+            <label>...</label><button class="destroy"></button>
+          </li>
+          <li>
+            <input type="checkbox" class="toggle">
+            <label>Profit!</label><button class="destroy"></button>
+          </li>
         </ul>
+
+        <input type="checkbox" id="toggle-all">
+      </section>
+
+      <footer id="footer">
+        <span id="todo-count">
+          <strong>2</strong> todos left
+        </span>
+        <ul id="filters">
+          <li>
+            <a href="all" class="selected">All</a>
+          </li>
+          <li>
+            <a href="active">Active</a>
+          </li>
+          <li>
+            <a href="completed">Completed</a>
+          </li>
+        </ul>
+
+        <button id="clear-completed">
+          Clear completed (1)
+        </button>
+      </footer>
+    </section>
+
+    <footer id="info">
+      <p>Double-click to edit a todo</p>
+    </footer>
     </script>
 
-    {% endverbatim %}
 
 {% endblock %}
 
@@ -32,8 +68,11 @@
 {% block extrajs %}
 
     <script src="{% static 'lib/handlebars.js' %}"></script>
-    <script src="{% static 'lib/ember.min.js' %}"></script>
+    <script src="{% static 'lib/ember.js' %}"></script>
+    <script src="{% static 'lib/ember-data.js' %}"></script>
 
-    <script src="{% static 'js/ember/app.js' %}"></script>
+    <script src="{% static 'js/ember/application.js' %}"></script>
+    <script src="{% static 'js/ember/router.js' %}"></script>
+    <script src="{% static 'js/ember/models/todo.js' %}"></script>
 
 {% endblock extrajs %}
