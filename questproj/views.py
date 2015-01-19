@@ -26,6 +26,10 @@ class EmberIndexView(TemplateView):
     template_name = "ember/index.html"
 
 
+class EmberTodoView(TemplateView):
+    template_name = "ember/todo-index.html"
+
+
 class BackboneIndexView(TemplateView):
     template_name = "backbone/index.html"
 
