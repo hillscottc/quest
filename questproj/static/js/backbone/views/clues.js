@@ -14,35 +14,6 @@ app.CluesView = Backbone.View.extend({
         //this.listenTo(Backbone, 'change:rights', this.rightsChange);
     },
 
-
-    //// MOVE THE guesclick to here?
-    //
-    //events: {
-    //    'click .guess-btn': 'guessClick'
-    //},
-    //guessClick: function(e) {
-    //    alert("ok" + $(e.currentTarget).className + e);
-    //},
-
-
-    //rightsChange: function() {
-    //  console.log("heard rights change")
-    //},
-
-    //events:{
-    //    'click #add':'addClue'
-    //},
-    //
-    //addClue: function( e ) {
-    //    e.preventDefault();
-    //    var formData = {};
-    //    $( '#addClue div' ).children( 'input' ).each( function( i, el ) {
-    //        if( $( el ).val() != '' ) { formData[ el.id ] = $( el ).val(); }
-    //        $( el ).val('');
-    //    });
-    //    this.collection.create( formData );
-    //},
-
     // render by rendering each item in the collection
     render: function() {
         this.collection.each(function( item ) {
