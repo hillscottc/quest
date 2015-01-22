@@ -8,46 +8,31 @@ app.ClueView = Backbone.View.extend({
 
     events: {
         'click .clue': 'clueClick',
-        'click .guess-btn': 'guessClick',
-        'click .tellme-btn': 'tellmeClick'
+        'click .tellme-btn': 'tellmeClick',
+        'keyup .guess-text' : 'guessChange'
     },
 
-    guessClick: function(e) {
-        var targ_el = $(e.currentTarget);
-        var guess_el = targ_el.siblings('.guess-text');
-        var results_el = targ_el.siblings('.results');
-        var stats_el = $('#stats');
+   // Live checking if guess is correct.
+   guessChange: function() {
+        var guess_el = this.$('.guess-text');
+        var results_el = this.$('.results');
 
         // If answer is correct
         if (guess_el.val().toLowerCase() == this.model.attributes['answer'].toLocaleLowerCase()) {
-            // If it isn't already showing as right, make it so.
-            if (results_el.text() != "Right!") {
-                // Write the message.
-                results_el.text("Right!");
-
-                // Increment the rights count.
-                var rights_el = stats_el.find('#rights');
-                var old_rights = parseInt(rights_el.text());
-                rights_el.text(old_rights + 1);
-            }
+            results_el.text("Right!");
         } else {
-            // Write the message.
-            results_el.text("Wrong!");
-
-            // Increment the wrongs count.
-            var wrongs_el = stats_el.find('#wrongs');
-            var old_wrongs = parseInt(wrongs_el.text());
-            wrongs_el.text(old_wrongs + 1);
+            results_el.text("");
         }
-
     },
 
+    // Give the answer.
     tellmeClick: function(e) {
-        var guess_el = $(e.currentTarget).siblings('.guess-text');
+        var guess_el = this.$('.guess-text');
         guess_el.val(this.model.attributes['answer']);
         e.preventDefault();
     },
 
+    // Highlight the current clue.
     clueClick: function(e) {
         var targ_el = $(e.currentTarget);
         var controls_el = $(e.currentTarget).siblings('.clue-controls');

@@ -8,7 +8,7 @@ app.UserView = Backbone.View.extend({
     initialize: function( initialUser ) {
         this.model = initialUser
         this.render();
-        //this.listenTo( this.collection, 'add', this.renderClue );
+        //this.listenTo( this.collection, 'add', this.renderItem );
         //this.listenTo( this.collection, 'reset', this.render );
         //this.listenTo(Backbone, 'change:rights', this.rightsChange);
     },
