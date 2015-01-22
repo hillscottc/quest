@@ -14,7 +14,7 @@
         // Write href code for each url in the list
         $(function() {
             var links_el = $('#home-links');
-            var urls = [{% url 'backbone-index' %},
+            var urls = [{% url 'index' %},
                         {% url 'ember-index' %},
                         {% url 'ember-todo' %}];
             for (var i=0; i < urls.length; i++) {

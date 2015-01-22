@@ -7,10 +7,13 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.HomeView.as_view(), name="home"),
-    url(r'^backbone/$', views.BackboneIndexView.as_view(), name="backbone-index"),
-    url(r'^ember/$', views.EmberIndexView.as_view(), name="ember-index"),
-    url(r'^ember-todo/$', views.EmberTodoView.as_view(), name="ember-todo"),
+    # url(r'^$', views.HomeView.as_view(), name="home"),
+
+    url(r'^$', views.BackboneIndexView.as_view(), name="index"),
+
+    # url(r'^backbone/$', views.BackboneIndexView.as_view(), name="backbone-index"),
+    # url(r'^ember/$', views.EmberIndexView.as_view(), name="ember-index"),
+    # url(r'^ember-todo/$', views.EmberTodoView.as_view(), name="ember-todo"),
 
     # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
     url(r'^', include('questapp.urls')),            # put questapp at /
