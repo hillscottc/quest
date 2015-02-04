@@ -5,7 +5,6 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserProfileForm, UserForm
-from cache_mgr import get_dbstats
 
 
 def base_context(request):
@@ -39,8 +38,7 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(AboutView, self).get_context_data(**kwargs)
-        dbstats = get_dbstats()
-        context.update({'clue_count': dbstats['clue_count']})
+        context.update({'clue_count': 'Not counted.'})
         return context
 
 
