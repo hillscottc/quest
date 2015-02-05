@@ -15,7 +15,7 @@
 #content
 {
 	clear: left;
-	padding: 20px;
+	padding: 10px;
 }
 
 #content h2
@@ -25,6 +25,7 @@
 	margin: 0 0 .5em;
 }
 
+
 .messages { border:1px solid #C8DCC2; margin:1em 0; padding: 1em}
 .messages ul .debug{ background: #EEFAEA; padding: 0.5em, 0 0.5em 0; list-style: none;}
 .messages ul .info{ background: #EEFAEA; padding: 0.5em, 0 0.5em 0; list-style: none;}
@@ -33,40 +34,50 @@
 .messages ul .error{ background: #FF3333; padding: 5px, 0 5px 0; list-style: none;}
 .messages ul li { background: none; padding-left: 5px; padding-top: 8px; padding-bottom: 8px;font-size: 1.2em; }
 
+/*.clue {*/
+    /*cursor: pointer;*/
+/*}*/
 
-.clue {padding-bottom: 30px;}
-.category {font-size: 120%;}
-
-.cat-list {
-    text-align: left;
-}
-.cat-list div {
-    padding-bottom: 10px;
+.answer {
+    font-size: 120%;
+    color: darkmagenta;
 }
 
-.take-answers ul
-{
-    list-style-type: none;
-    margin-left: 0;
-    padding-left: 1em;
-    text-indent: -1em;
+.clue-controls {
+    display: none;
 }
 
-.take-answers ul li
-{
-border-top: 1px solid #ddd;
-border-right: none;
-border-bottom: none;
-border-left: none;
-}
 
-.take-questions li
-{
-    border-style: none;
-}
+/*.cat-list {*/
+    /*text-align: left;*/
+/*}*/
+/*.cat-list div {*/
+    /*padding-bottom: 10px;*/
+/*}*/
 
-.take-question span
-{
-    font-size: large
-}
+/*.take-answers ul*/
+/*{*/
+    /*list-style-type: none;*/
+    /*margin-left: 0;*/
+    /*padding-left: 1em;*/
+    /*text-indent: -1em;*/
+/*}*/
+
+/*.take-answers ul li*/
+/*{*/
+/*border-top: 1px solid #ddd;*/
+/*border-right: none;*/
+/*border-bottom: none;*/
+/*border-left: none;*/
+/*}*/
+
+/*.take-questions li*/
+/*{*/
+    /*border-style: none;*/
+/*}*/
+
+/*.take-question span*/
+/*{*/
+    /*font-size: large*/
+/*}*/
 

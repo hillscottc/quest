@@ -1,24 +1,31 @@
 import logging
 from django.db import models
 from django.core.urlresolvers import reverse
-from .models_base import BaseModel
+from django.contrib.auth.models import User
 
 log = logging.getLogger(__name__)
 
 
-def get_relevant_counts():
-    return {'Game': Game.objects.count(),
-            'Clue': Clue.objects.count(),
-            'Category': Category.objects.count()}
+class BaseModelManager(models.Manager):
+
+    def update(self, **kwargs):
+        fieldnames = [field.name for field in self._meta.fields]
+        for attr, value in kwargs.iteritems():
+            if attr in fieldnames and hasattr(self, attr):
+                setattr(self, attr, value)
+        self.save()
 
 
-def get_empty_cats():
-    """Get Categories with no questions. Somewtimes they get through the parser.
-    Usually one would delete them, as a clenaup.
-    """
-    for cat in Category.objects.all():
-        if not cat.clue_set.exists():
-            yield cat
+class BaseModel(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True, editable=False)
+    last_accessed = models.DateTimeField(auto_now=True, editable=False)
+
+    objects = BaseModelManager()
+
+    class Meta:
+        abstract = True
+        ordering = ["-modified"]
 
 
 class Game(BaseModel):
@@ -26,33 +33,14 @@ class Game(BaseModel):
     gid = models.CharField(unique=True, max_length=8, help_text="(External) Game id.",
                            null=True, blank=True)
     title = models.CharField(max_length=250)
+    air_date = models.DateField(null=True, blank=True)
+    comments = models.CharField(max_length=250)
 
     class Meta:
         ordering = ["-modified"]
-        unique_together = ['gid', 'sid']
 
     def __unicode__(self):
-        return u"%s-%s" % (self.gid, self.sid)
-
-    def get_absolute_url(self):
-        return reverse('game-detail', kwargs={'pk': self.pk})
-
-
-class Category(BaseModel):
-    """A category in a game. Names unique per game, not globally unique.
-    Also contains info about column and round."""
-    game = models.ForeignKey(Game)
-    round_num = models.SmallIntegerField(default=0)
-    col_num = models.SmallIntegerField(default=0)
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        # unique_together = ['game', 'round_num', 'col_num']
-        # ordering = ['round_num', 'col_num']
-        ordering = ['name']
-
-    def __unicode__(self):
-        return self.name
+        return u"{}".format(self.gid)
 
     def get_absolute_url(self):
         return reverse('game-detail', kwargs={'pk': self.pk})
@@ -60,12 +48,12 @@ class Category(BaseModel):
 
 class Clue(BaseModel):
     game = models.ForeignKey(Game)
-    category = models.ForeignKey(Category)
-    question = models.CharField(max_length=255)
-    answer = models.CharField(max_length=255)
+    category = models.CharField(max_length=255)
+    question = models.CharField(max_length=355)
+    answer = models.CharField(max_length=355)
 
     class Meta:
-        unique_together = ['category', 'question']
+        unique_together = ['game', 'category', 'question']
         ordering = ['category', 'question']
 
     def get_absolute_url(self):
@@ -74,7 +62,20 @@ class Clue(BaseModel):
     def desc(self):
         return u"CAT:{} Q:{} A:{}".format(self.category, self.question, self.answer)
 
+    def get_json(self):
+        return {'category': self.category.name,
+                'question': self.question,
+                'answer': self.answer}
+
     def __unicode__(self):
         return u"Q:{} A:{}".format(self.question, self.answer)
 
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    rights = models.IntegerField(default=0)
+    wrongs = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.user.username
 

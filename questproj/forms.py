@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import UserProfile
+from questapp.models import UserProfile
 from django import forms
 
 
@@ -14,5 +14,4 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        # fields = ('website', 'picture')
-        fields = ('website',)
+        fields = ('rights', 'wrongs')

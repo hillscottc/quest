@@ -21,10 +21,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_nose',
     'django.contrib.humanize',  # http://stackoverflow.com/questions/346467/format-numbers-in-django-templates
-    # 'bootstrap3',
     'questapp',
-    'quizapp',
+    'tastypie'
 )
+
+# Default num of recs tastypie will return.
+API_LIMIT_PER_PAGE = 100
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -40,22 +42,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'questapp.context_processors.base_context',
 )
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-    }
-}
-
 ROOT_URLCONF = 'questproj.urls'
 WSGI_APPLICATION = 'questproj.wsgi.application'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJ_DIR, 'db.sqlite3'),
-    }
-}
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -66,19 +54,14 @@ USE_TZ = True
 
 TEMPLATE_DIRS = (
     os.path.join(PROJ_DIR, "templates"),
-    os.path.join('questapp', "templates"),
-    os.path.join('quizapp', "templates"),
+    # os.path.join('questapp', "templates"),
 )
 
-SITE_NAME = "Question Site"
+SITE_NAME = "QuestServer"
 
-QUIZ_SCRAPE_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'quizballs')
 JEAP_SRC_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'jeap')
 JEAP_ID_FILE = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'jeap_src_ids.txt')
 
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -86,7 +69,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Static asset configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # STATIC_ROOT = 'staticfiles'
-STATIC_ROOT= os.path.join(os.path.dirname(BASE_DIR),'staticfiles')
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(PROJ_DIR, "static"), )
@@ -99,12 +82,9 @@ LOGGING = {
     'formatters': {
         'verbose': {
             'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
+            'datefmt': "%d/%b/%Y %H:%M:%S"
         },
-        'simple': {
-            'format': '%(levelname)s [%(name)s:%(lineno)s] %(message)s'
-
-        },
+        'simple': {'format': '%(levelname)s [%(name)s:%(lineno)s] %(message)s'},
     },
     'filters': {},
     'handlers': {
@@ -117,40 +97,78 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
-        # 'quest_log': {
-        #     'level': 'DEBUG',
-        #     'class': 'logging.FileHandler',
-        #     'filename': os.path.join(LOGS_DIR, 'quest.log'),
-        #     'formatter': 'verbose'
-        # },
-        # 'django_log': {
-        #     'level': 'DEBUG',
-        #     'class': 'logging.FileHandler',
-        #     'filename': os.path.join(LOGS_DIR, 'django.log'),
-        #     'formatter': 'verbose'
-        # },
+        'quest_log': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGS_DIR, 'quest.log'),
+            'formatter': 'verbose'
+        },
+        'django_log': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGS_DIR, 'django.log'),
+            'formatter': 'verbose'
+        },
     },
     'loggers': {
         '': {
-            # 'handlers': ['console', 'quest_log'],
-            'handlers': ['console'],
+            'handlers': ['console', 'quest_log'],
             'propagate': True,
             'level': 'DEBUG',
         },
-        # 'django': {
-        #     'handlers': ['console', 'django_log'],
-        #     'propagate': True,
-        #     'level': 'DEBUG',
-        # },
-        # 'django.db.backends': {
-        #     'handlers': ['console', 'django_log'],
-        #     'propagate': True,
-        #     'level': 'INFO',
-        # },
-        # 'django.request': {
-        #     'handlers': ['console', 'quest_log'],
-        #     'level': 'ERROR',
-        #     'propagate': True,
-        # },
+        'django': {
+            'handlers': ['console', 'django_log'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'django.db.backends': {
+            'handlers': ['console', 'django_log'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['console', 'quest_log'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
     }
 }
+
+
+# The ON_HEROKU variable is defind heroku app env, with heroku:config.
+# It will only be true when running the app in Heroku.
+ON_HEROKU = 'ON_HEROKU' in os.environ
+
+if ON_HEROKU:
+    import dj_database_url
+    DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+
+    os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS'].replace(',', ';')
+    os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
+    os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
+    CACHES = {'default': {'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+                          'TIMEOUT': 500, 'BINARY': True,
+                          'OPTIONS': { 'tcp_nodelay': True }}}
+
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': True,
+        'formatters': {'simple': {'format': '%(levelname)s [%(name)s:%(lineno)s] %(message)s'}},
+        'filters': {},
+        'handlers': {
+            'null': {'level': 'DEBUG', 'class': 'logging.NullHandler'},
+            'console': {'level': 'INFO', 'class': 'logging.StreamHandler', 'formatter': 'simple'}
+        },
+        'loggers': {
+            '': {
+                'handlers': ['console'],
+                'propagate': True,
+                'level': 'DEBUG'}
+        }
+    }
+
+else:
+    DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                             'NAME': 'quest_db', 'USER': 'quest_acct', 'PASSWORD': '12345',
+                             'HOST': 'localhost', 'PORT': '5432'}}
+    CACHES = {'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'}}

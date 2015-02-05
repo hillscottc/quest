@@ -10,33 +10,25 @@
     <meta name="author" content="Scott Hill">
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-    {#    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" media="screen">#}
+    <link href="{% static 'lib/bootstrap/css/bootstrap.css' %}" rel="stylesheet" media="screen">
 
     <!-- Bootstrap theme -->
-    <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/bootstrap/css/bootstrap-theme.css' %}" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="{% static 'css/theme.css' %}" rel="stylesheet">
 
+    <!-- JQuery UI css -->
+    <link href="{% static 'lib/jquery-ui/jquery-ui.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/jquery-ui/jquery-ui.structure.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/jquery-ui/jquery-ui.theme.css' %}" rel="stylesheet">
+
     <!-- JQuery -->
-{#    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>#}
-    <script src="{% static 'js/jquery-1.11.1.js' %}"></script>
+    <script src="{% static 'lib/jquery.js' %}"></script>
 
+    <!-- JQuery UI js-->
+    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
 
-    <!-- Table sorting -->
-    <link href="{% static 'css/sorted_table.css' %}" rel="stylesheet">
-    <script src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
-    <script>
-        $(document).ready(function() {
-            $(function(){
-                $('.table-sorted').tablesorter();
-            });
-        });
-    </script>
-
-
-    <!-- My project common javascript -->
-    <script src="{% static 'js/questproj_common.js' %}"></script>
 
     <!-- My site default css -->
     <link rel="stylesheet" href="{% static "css/style.css" %}" />
@@ -50,29 +42,16 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Google Analytics Async Tracking -->
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        // This is Scott's test acct
-        _gaq.push(['_setAccount', 'UA-56755608-1']);
-        _gaq.push(['_trackPageview']);
-        (function () {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
+    {% block extra-css %}{% endblock extra-css %}
 
 </head>
+
 
 <body role="document">
 
     {% block nav-global %}{% endblock %}
 
-    <div class="container theme-showcase" role="main">
+    <div id="content" class="container theme-showcase" role="main">
 
         {% block messages %}{% endblock messages %}
 
@@ -81,8 +60,9 @@
     </div>
 
     <!-- Bootstrap styles and JQuery -->
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrap.js' %}"></script>
 
+    {% block extrajs %}{% endblock extrajs %}
 
 </body>
 </html>

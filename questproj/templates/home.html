@@ -1,20 +1,26 @@
 {% extends "base_site.html" %}
 
-{# http://stackoverflow.com/questions/346467/format-numbers-in-django-templates #}
-{% load humanize %}
 
 {% block content %}
 
-     <p style="font-style: italic">{{ SITE_NAME }} is a collection of Jeapordy clues.</p>
-
-    <div class="jumbotron">
-        <p><a href="{% url 'clues-index' %}">Clues</a></p>
-        <p><a href="{% url 'cats-index' %}">Categories</a></p>
-        <p><a href="{% url 'clue-search' %}">Search</a></p>
-    </div>
-
-    <div>
-    <p>Database contains {{ clue_count|intcomma }} clues in {{ cat_count|intcomma }} categories.</p>
-    </div>
+    <p>Links:</p>
+    <ul id="home-links"></ul>
 
 {% endblock %}
+
+{% block extrajs %}
+
+    <script type="text/javascript">
+        // Write href code for each url in the list
+        $(function() {
+            var links_el = $('#home-links');
+            var urls = [{% url 'index' %},
+                        {% url 'ember-index' %},
+                        {% url 'ember-todo' %}];
+            for (var i=0; i < urls.length; i++) {
+                links_el.append("<li><a href='" + urls[i] + "'>" + urls[i] + "</a></li>");
+            }
+        });
+    </script>
+
+{% endblock extrajs %}

@@ -1,24 +1,22 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.contrib import admin
 from questapp import views
+from tastypie.api import Api
+from questapp.api import (ClueResource, RandomCluesResource,
+                          UserResource, UserProfileResource)
 
 admin.autodiscover()
 
+v1_api = Api(api_name='v1')
+v1_api.register(ClueResource())
+v1_api.register(RandomCluesResource())
+v1_api.register(UserResource())
+v1_api.register(UserProfileResource())
+
+
 urlpatterns = patterns(
     '',
-
-    url(r'^$', views.HomeView.as_view(), name='questapp-home'),
-
-    ## Using a RandomView as a deafault for clue index,, instead of a plain list.
-    url(r'^clues/$', views.ClueRandomView.as_view(), name='clues-index'),
-
-    ## Using a RandomView as a deafault for cats index,, instead of a plain list.
-    url(r'^cats/$', views.CatRandomView.as_view(), name='cats-index'),
-
-    url(r'^clue/(?P<pk>[0-9]+)/$', views.ClueDetailView.as_view(), name='clue-detail'),
-
-    url(r'^clues/cat/(?P<cat_id>\d+)/$', views.CluesByCatView.as_view(), name='clues-by-cat'),
-
     url(r'^clues/search/$', views.ClueSearchView.as_view(), name='clue-search'),
-
+    url(r'^api/', include(v1_api.urls)),
 )
+

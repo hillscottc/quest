@@ -14,7 +14,7 @@ build/
 develop-eggs/
 dist/
 eggs/
-lib/
+#lib/
 lib64/
 parts/
 sdist/
@@ -53,3 +53,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+.idea/
+.idea/dataSources.xml
+
+

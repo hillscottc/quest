@@ -18,10 +18,34 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
+        context.update({'some_var': "some_value"})
+        return context
+
+
+class EmberIndexView(TemplateView):
+    template_name = "ember/index.html"
+
+
+class EmberTodoView(TemplateView):
+    template_name = "ember/todo-index.html"
+
+
+class BackboneIndexView(TemplateView):
+    template_name = "backbone/index.html"
+
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
         dbstats = get_dbstats()
         context.update({'clue_count': dbstats['clue_count']})
-        context.update({'cat_count': dbstats['cat_count']})
         return context
+
+
+class UserAccountView(TemplateView):
+    template_name = "registration/user_account.html"
 
 
 def register(request):

@@ -1,7 +1,7 @@
 from django.shortcuts import (HttpResponse, RequestContext, render,
                               render_to_response, HttpResponseRedirect)
 from django.core.urlresolvers import reverse
-from quizapp.forms import UserForm, UserProfileForm
+from questproj.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -73,7 +73,7 @@ def user_login(request):
             # Is the account active? It could have been disabled.
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('quiz_index'))
+                return HttpResponseRedirect(reverse('home'))
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your account is disabled.")

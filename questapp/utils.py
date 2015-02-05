@@ -1,10 +1,13 @@
 import os
 import logging
 import re
+import json
 from bs4 import BeautifulSoup
 import requests
 from django.conf import settings
 from questapp.parser import parse_game_html
+from django.core import serializers
+from questapp.models import Clue
 
 log = logging.getLogger(__name__)
 
@@ -13,7 +16,11 @@ TEST_GAME_ID = 4529
 TEST_SHOW_NUM = 153
 
 
-
+def write_json(clues):
+    jdata = [clue.get_json() for clue in clues]
+    # print json.dumps(jdata, indent=2)
+    with open("clues.json", "w") as out:
+        json.dump(jdata, out, indent=4)
 
 
 def get_fname(game_id):
@@ -48,8 +55,25 @@ def get_remote_html(game_id):
     return requests.get(url).text
 
 
+def get_game_ids(season_id_start=30, season_id_end=31):
+    """Yields game_ids by parsing source season pages.
+    """
+    url = 'http://www.j-archive.com/showseason.php?season='
+    ids = range(season_id_start, season_id_end)
+    for seas_id in ids:
+        season_url = url + str(seas_id + 1)
+        print 'Getting', season_url
+        soup = BeautifulSoup(requests.get(season_url).text)
+        for tag in soup.find_all('a'):
+            if 'game_id' in tag['href']:
+                match = re.search('\d+', tag['href'])
+                if match:
+                    yield match.group(0)
+
+
 def save_remote_games(*game_ids):
-    """Gets remote games and saves them to db. See SRC_GAME_IDS for a list.
+    """Gets remote games and saves them to db. See SRC_GAME_IDS for an existing big list.
+    Or pass in a new list from get_game_ids().
     """
     for game_id in game_ids:
         html = get_remote_html(game_id)
@@ -69,49 +93,34 @@ def read_local_html(game_id):
 
 
 def load_samples(num=None):
-
-    parse_errs = []
+    created = 0
+    clue_count = 0
+    err_count = 0
 
     # Get the ids out of space-delimmed jeap_src_ids.txt file.
-    src_game_ids = []
     with open(settings.JEAP_ID_FILE) as myfile:
         src_game_ids = myfile.read().split()
-
-    created = []
+    if num:
+        src_game_ids = src_game_ids[:int(float(num))]
 
     for i, game_id in enumerate(src_game_ids):
-        if num and i > num:
-            break
         html = read_local_html(game_id)
         if not html:
             continue
 
-        game, errors = parse_game_html(html, game_id)
-        created.append(game)
-        if errors:
-            parse_errs.append(errors)
+        game, clues, errors = parse_game_html(html, game_id)
+        created += 1
+        clue_count += len(clues)
+        err_count += len(errors)
+        # get a set of the names of the errors, for reference.
+        err_set = set([type(err).__name__ for err in errors])
 
-        err_count = 0 if not errors else len(errors)
-        # print "{}, game:{},  errors:{}".format(i, game, err_count)
-        log.debug("%s: %s" % (i, game))
+        log.info("{}: {}, clues={}, errs={}, {}".format(i, game, len(clues), len(errors), err_set))
 
-    log.info("Loaded %s J Games, %s parse_errs." % (len(created), len(parse_errs)))
+    log.info("Loaded Games={}, clues={}, errs={}".format(created, clue_count, err_count))
     return created
 
 
-def parse_seasons(count=1):
-    """Get game_ids from given number of seasons.
-    """
-    ids = range(count)
-    for seas_id in ids:
-        url = 'http://www.j-archive.com/showseason.php?season=' + str(seas_id + 1)
-        print 'Getting', url
-        soup = BeautifulSoup(requests.get(url).text)
-        for tag in soup.find_all('a'):
-            if 'game_id' in tag['href']:
-                match = re.search('\d+', tag['href'])
-                if match:
-                    # game_ids.append(match.group(0))
-                    yield match.group(0)
+
 
 

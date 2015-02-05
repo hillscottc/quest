@@ -1,0 +1,44 @@
+{% extends 'base_site.html' %}
+
+{% block title %}Home (Backbone.js){% endblock %}
+
+{% block content %}
+
+{#    <h4 style="font-style:italic;">Home (Backbone.js)</h4>#}
+
+    <div id="clues" class="list-group">
+    </div>
+
+    <script id="clueTemplate" type="text/template">
+        <div class="list-group-item">
+            <a href="#" class="clue list-group-item">
+                <h4 class="list-group-item-heading"><%= category %></h4>
+                <p class="list-group-item-text"><%= question %></p>
+                <p class="answer list-group-item-text"></p>
+            </a>
+            <div class="clue-controls">
+                <label>? <input class="guess-text" placeholder="Your guess..."/></label>
+                <span class="results list-group-item-text"></span>
+                &nbsp;
+                <button type="button" class="tellme-btn btn btn-xs btn-primary">tell me</button>
+            </div>
+        </div>
+    </script>
+
+{% endblock %}
+
+{% load staticfiles %}
+
+{% block extrajs %}
+    <!-- backbone, tastypie, underscore -->
+    <script src="{% static 'lib/underscore.js' %}"></script>
+    <script src="{% static 'lib/backbone.js' %}"></script>
+    <script src="{% static 'lib/backbone-tastypie.js' %}"></script>
+
+    <script src="{% static 'js/backbone/models/clue.js' %}"></script>
+    <script src="{% static 'js/backbone/collections/clues.js' %}"></script>
+    <script src="{% static 'js/backbone/views/clue.js' %}"></script>
+    <script src="{% static 'js/backbone/views/clues.js' %}"></script>
+    <script src="{% static 'js/backbone/app.js' %}"></script>
+
+{% endblock extrajs %}
