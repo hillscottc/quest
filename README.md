@@ -1,10 +1,16 @@
 
-This is a [Django](https://docs.djangoproject.com/) application for building and managing an archive of Jeapordy quiz show 'clues'. 
+A web application for accessing an archive of *[Jeopardy](http://www.jeopardy.com/)* 'clues'. 
 
-Uses BeautifulSoup to scrape clue data from an external site, and custom utilities parse the data into a [Postgresql](http://www.postgresql.org/) database.
+Component Technologies:
 
-[Tastypie](https://django-tastypie.readthedocs.org/) is used to create an api interface to the data, providing the backend for other applications.
+- [Django](https://docs.djangoproject.com/)
+- [Backbone.js](http://backbonejs.org/) 
+- [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) 
+- [PostgreSQL](http://www.postgresql.org/) 
+- [Tastypie](https://django-tastypie.readthedocs.org/) 
 
-The primary interest is in using Django's ORM and Admin to manage the Clues and the api -- backend stuff. 
+Resources:
 
-The client side is expected to be a Node/[Backbone.js](http://backbonejs.org/) app. 
+- [J! Archive](http://j-archive.com/)
+- [Using Django Tastypie And Backbone.js](http://blog.mathandpencil.com/using-django-tastypie-to-create-RESTful-APIs/)
+
