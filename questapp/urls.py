@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url, include
 from django.contrib import admin
-from questapp import views
 from tastypie.api import Api
 from questapp.api import (ClueResource, RandomCluesResource,
                           UserResource, UserProfileResource)
@@ -16,7 +15,6 @@ v1_api.register(UserProfileResource())
 
 urlpatterns = patterns(
     '',
-    url(r'^clues/search/$', views.ClueSearchView.as_view(), name='clue-search'),
     url(r'^api/', include(v1_api.urls)),
 )
 

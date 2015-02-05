@@ -2,7 +2,7 @@ var app = app || {};
 
 app.CluesView = Backbone.View.extend({
 
-    el: '#clues',
+    el: '#clues-view',
 
     initialize: function( initialClues ) {
         this.collection = new app.Clues( initialClues );
@@ -10,19 +10,37 @@ app.CluesView = Backbone.View.extend({
         this.render();
         this.listenTo( this.collection, 'add', this.renderItem );
         this.listenTo( this.collection, 'reset', this.render );
+        console.log("CluesView initialized.");
     },
 
-    // render by rendering each item in the collection
+    events: {
+        "click #searchBtn" : "search"
+    },
+
+    search: function(e) {
+        var letters = $("#searchText").val();
+        var items = this.collection.search(letters);
+
+        // Clear
+        $("#clues-list").html("");
+
+        // Render the result items
+        items.each(function(item){
+            this.renderItem( item );
+        }, this );
+
+    },
+
+    // Render each item in collection.
     render: function() {
-        this.collection.each(function( item ) {
+        this.collection.each(function(item) {
             this.renderItem( item );
         }, this );
     },
 
+    // Render an individual item
     renderItem: function( item ) {
-        var clueView = new app.ClueView({
-            model: item
-        });
-        this.$el.append( clueView.render().el );
+        var clueView = new app.ClueView( {model: item} );
+        $("#clues-list").append( clueView.render().el );
     }
 });

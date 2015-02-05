@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from .models import Clue, Game
 from django.db import DataError, transaction
 from django.db import IntegrityError
-from .exceptions import MetadataParseException, CategoryException, HrefException, ShortQuestionException
 import logging
 
 log = logging.getLogger(__name__)
@@ -198,3 +197,18 @@ def _parse_qa(div_tag):
 
     return question, answer
 
+
+class HrefException(Exception):
+    pass
+
+
+class MetadataParseException(Exception):
+    pass
+
+
+class ShortQuestionException(Exception):
+    pass
+
+
+class CategoryException(Exception):
+    pass
