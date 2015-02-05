@@ -4,7 +4,8 @@ from django.template import RequestContext
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserProfileForm, UserForm
+from questproj.forms import UserProfileForm, UserForm
+from questapp.models import Clue
 
 
 def base_context(request):
@@ -30,7 +31,7 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(AboutView, self).get_context_data(**kwargs)
-        context.update({'clue_count': 'Not counted.'})
+        context.update({'clue_count': Clue.objects.count()})
         return context
 
 
