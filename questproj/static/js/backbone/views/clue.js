@@ -9,16 +9,17 @@ app.ClueView = Backbone.View.extend({
     events: {
         'click .clue': 'clueClick',
         'click .tellme-btn': 'tellmeClick',
-        'keyup .guess-text' : 'guessChange'
+        'input .guess-text' : 'guessChange',
+        'propertychange .guess-text' : 'guessChange' // for IE
     },
 
-   // Live checking if guess is correct.
-   guessChange: function() {
-        var guess_el = this.$('.guess-text');
+    // Live checking if guess is correct.
+    guessChange: function() {
+        var guess = this.$('.guess-text').val().toLowerCase();
+        var answer = this.model.attributes['answer'].toLowerCase();
         var results_el = this.$('.results');
 
-        // If answer is correct
-        if (guess_el.val().toLowerCase() == this.model.attributes['answer'].toLocaleLowerCase()) {
+        if (guess == answer) {
             results_el.text("Right!");
         } else {
             results_el.text("");
@@ -28,7 +29,8 @@ app.ClueView = Backbone.View.extend({
     // Give the answer.
     tellmeClick: function(e) {
         var guess_el = this.$('.guess-text');
-        guess_el.val(this.model.attributes['answer']);
+        var answer = this.model.attributes['answer'];
+        guess_el.val(answer);
         e.preventDefault();
     },
 
@@ -39,10 +41,10 @@ app.ClueView = Backbone.View.extend({
 
         if (targ_el.hasClass("active")) {
             targ_el.removeClass("active");
-            controls_el.toggle(false)
+            controls_el.toggle(false);
         } else {
             targ_el.addClass("active");
-            controls_el.toggle(true)
+            controls_el.toggle(true);
         }
         e.preventDefault();
     },

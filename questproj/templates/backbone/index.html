@@ -6,7 +6,12 @@
 
 {#    <h4 style="font-style:italic;">Home (Backbone.js)</h4>#}
 
-    <div id="clues" class="list-group">
+    <div id="clues-view">
+        <div>
+            <button type="button" id="searchBtn">Search</button>
+            <input type="text" id="searchText" />
+        </div>
+        <div id="clues-list" class="list-group"></div>
     </div>
 
     <script id="clueTemplate" type="text/template">
