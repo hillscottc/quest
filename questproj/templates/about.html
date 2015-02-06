@@ -6,12 +6,21 @@
 
 {% block content %}
 
+    <h3>database</h3>
     <div>
-        <p>The database contains {{ clue_count|intcomma }} clues.</p>
+        <p>The database is a PostgreSQL database containing {{ clue_count|intcomma }} clues.</p>
     </div>
 
-    <p>API Samples:</p>
+    <h3>api</h3>
+    <p>A <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> api interface to the clues is rendered with
+        <a href="https://django-tastypie.readthedocs.org/">Tastypie</a> and
+        <a href="https://github.com/PaulUithol/backbone-tastypie/">Backbone-tastypie</a>,
+        with guidance from <a href="http://blog.mathandpencil.com/using-django-tastypie-to-create-RESTful-APIs/">this blog post</a>.
+    </p>
     <ul id="api-samples"></ul>
+
+    <h3>client</h3>
+    <p>The main index page is a <a href="http://en.wikipedia.org/wiki/Single-page_application">single-page application</a> written with <a href="http://backbonejs.org/">Backbone.js</a> javascript framework.</p>
 
 {% endblock %}
 
@@ -20,7 +29,6 @@
     <script type="text/javascript">
         // Write href code for each url in the list
         $(function() {
-            var links_el = $('#api-samples');
             var urls = [
                 '/api/v1/?format=json',
                 '/api/v1/clue?format=json',
@@ -32,7 +40,7 @@
                 '/api/v1/user_prof/1/?format=json',
                 '/api/v1/user_prof/?user__username=shill&format=json'];
             for (var i=0; i < urls.length; i++) {
-                links_el.append("<li><a href='" + urls[i] + "'>" + urls[i] + "</a></li>");
+                $('#api-samples').append("<li><a href='" + urls[i] + "'>" + urls[i] + "</a></li>");
             }
         });
     </script>
