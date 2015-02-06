@@ -9,24 +9,36 @@ app.ClueView = Backbone.View.extend({
     events: {
         'click .clue': 'clueClick',
         'click .tellme-btn': 'tellmeClick',
-        'input .guess-text' : 'guessChange',
-        'propertychange .guess-text' : 'guessChange' // for IE
+        'click .check-btn': 'checkClick'
     },
 
-    // Live checking if guess is correct.
-    guessChange: function() {
+    // Fuzzy matching of guess to answer.
+    fuzzyMatch: function(guess, answer) {
+        var is_match = false;
+        guess = guess.toLowerCase();
+        answer = answer.toLowerCase();
+
+        if (guess == answer) {
+            is_match = true;
+        }
+        return is_match;
+    },
+
+    // Check the guess, show results.
+    checkClick: function(e) {
         var guess = this.$('.guess-text').val().toLowerCase();
         var answer = this.model.attributes['answer'].toLowerCase();
         var results_el = this.$('.results');
 
-        if (guess == answer) {
+        if (this.fuzzyMatch(guess, answer)) {
             results_el.text("Right!");
         } else {
-            results_el.text("");
+            results_el.text("Nope.");
         }
+        e.preventDefault();
     },
 
-    // Give the answer.
+    // Show the answer.
     tellmeClick: function(e) {
         var guess_el = this.$('.guess-text');
         var answer = this.model.attributes['answer'];
@@ -45,6 +57,7 @@ app.ClueView = Backbone.View.extend({
         } else {
             targ_el.addClass("active");
             controls_el.toggle(true);
+            controls_el.find(".guess-text").focus();
         }
         e.preventDefault();
     },

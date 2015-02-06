@@ -13,15 +13,18 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="/admin/">Admin</a></li>
             </ul>
             <p class="navbar-text pull-right">
                 {% if user.is_authenticated %}
                     <a href="{% url 'user_account' %}">{{ user.username }}</a>
-                    [ <a href="{% url 'logout' %}">Logout</a> ]
+                    [ <a href="{% url 'logout' %}">logout</a>
+                    {% if user.username == 'shill' %}
+                         &nbsp;<a href="/admin/">admin</a>
+                    {% endif %}
+                    ]
                 {% else %}
-                   [ <a href="{% url 'register' %}">Register</a> &nbsp;
-                     <a href="{% url 'login' %}">Login</a> ]
+                   [ <a href="{% url 'register' %}">register</a> &nbsp;
+                     <a href="{% url 'login' %}">login</a> ]
                 {% endif %}
             </p>
 

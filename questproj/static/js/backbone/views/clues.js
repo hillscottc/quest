@@ -14,10 +14,12 @@ app.CluesView = Backbone.View.extend({
     },
 
     events: {
-        "click #searchBtn" : "search"
+        //"click #searchBtn" : "search",
+        'input #searchText' : 'search',
+        'propertychange #searchText' : 'search' // for IE
     },
 
-    search: function(e) {
+    search: function() {
         var letters = $("#searchText").val();
         var items = this.collection.search(letters);
 

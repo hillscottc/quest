@@ -47,6 +47,11 @@
     display: none;
 }
 
+.clues-list-controls {
+    font-size: 80%;
+    padding-bottom: 20px;
+}
+
 
 /*.cat-list {*/
     /*text-align: left;*/
