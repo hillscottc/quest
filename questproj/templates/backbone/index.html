@@ -4,8 +4,6 @@
 
 {% block content %}
 
-    {#    <h4 style="font-style:italic;">Home (Backbone.js)</h4>#}
-
     <div id="clues-view">
         <div class="clues-list-controls">
             <span>
@@ -17,6 +15,23 @@
             </span>
         </div>
         <div id="clues-list" class="list-group"></div>
+
+        <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Congratulations!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Modal Body</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+          </div>
+        </div>
+
     </div>
 
     <script id="clueTemplate" type="text/template">
@@ -34,6 +49,7 @@
             </div>
         </div>
     </script>
+
 
 {% endblock %}
 

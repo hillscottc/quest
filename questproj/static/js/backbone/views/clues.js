@@ -25,9 +25,26 @@ app.CluesView = Backbone.View.extend({
     },
 
     guessRight: function() {
-        var rights_el = this.$('#right-count');
+
+        // Increment the rights count
+        var rights_el = $('#right-count');
         var num = rights_el.html() ? parseInt(rights_el.html()) : 0;
-        rights_el.html(num + 1);
+        num++;
+        rights_el.html(num);
+
+        // Show a modal sometimes.
+        var modal_el = $('#basicModal');
+        var msg = "";
+        if (num == 1)
+            msg = "You have answered the first question in this group.";
+        else if (num % 5 == 0) {
+            msg = "You have answered " + num + " questions.";
+        }
+        if (msg != "") {
+            modal_el.find('.modal-body').html(msg);
+            modal_el.modal({"show": true});
+        }
+
     },
 
     guessWrong: function() {
