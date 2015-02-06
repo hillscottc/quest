@@ -9,6 +9,7 @@ urlpatterns = patterns(
     '',
     # url(r'^$', views.HomeView.as_view(), name="home"),
     url(r'^$', views.BackboneIndexView.as_view(), name="index"),
+    url(r'^$', views.BackboneIndexView.as_view(), name="home"),
 
     # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
     url(r'^', include('questapp.urls')),            # put questapp at /
