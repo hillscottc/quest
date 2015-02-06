@@ -12,6 +12,11 @@ app.ClueView = Backbone.View.extend({
         'click .check-btn': 'checkClick'
     },
 
+    initialize: function(options) {
+        this.model = options.model;
+        this.vent = options.vent;
+    },
+
     // Fuzzy matching of guess to answer.
     fuzzyMatch: function(guess, answer) {
         var is_match = false;
@@ -32,9 +37,12 @@ app.ClueView = Backbone.View.extend({
 
         if (this.fuzzyMatch(guess, answer)) {
             results_el.text("Right!");
+            this.vent.trigger("guessRight");
         } else {
             results_el.text("Nope.");
+            this.vent.trigger("guessWrong");
         }
+
         e.preventDefault();
     },
 

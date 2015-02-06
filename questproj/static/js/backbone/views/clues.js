@@ -4,19 +4,32 @@ app.CluesView = Backbone.View.extend({
 
     el: '#clues-view',
 
-    initialize: function( initialClues ) {
-        this.collection = new app.Clues( initialClues );
+    initialize: function(initialClues) {
+
+        // An event aggregator for the view.
+        this.vent = _.extend({}, Backbone.Events);
+
+        this.collection = new app.Clues(initialClues);
         this.collection.fetch({reset: true});
         this.render();
-        this.listenTo( this.collection, 'add', this.renderItem );
-        this.listenTo( this.collection, 'reset', this.render );
+        this.listenTo(this.collection, 'add', this.renderItem );
+        this.listenTo(this.collection, 'reset', this.render );
+        this.listenTo(this.vent, 'guessRight', this.guessRight);
+        this.listenTo(this.vent, 'guessWrong', this.guessWrong);
         console.log("CluesView initialized.");
     },
 
     events: {
-        //"click #searchBtn" : "search",
         'input #searchText' : 'search',
         'propertychange #searchText' : 'search' // for IE
+    },
+
+    guessRight: function() {
+        console.log("Your guess is right.")
+    },
+
+    guessWrong: function() {
+        console.log("Your guess wrong.")
     },
 
     search: function() {
@@ -42,7 +55,7 @@ app.CluesView = Backbone.View.extend({
 
     // Render an individual item
     renderItem: function( item ) {
-        var clueView = new app.ClueView( {model: item} );
+        var clueView = new app.ClueView({model: item, vent: this.vent});
         $("#clues-list").append( clueView.render().el );
     }
 });
