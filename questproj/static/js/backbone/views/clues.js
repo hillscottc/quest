@@ -25,11 +25,15 @@ app.CluesView = Backbone.View.extend({
     },
 
     guessRight: function() {
-        console.log("Your guess is right.")
+        var rights_el = this.$('#right-count');
+        var num = rights_el.html() ? parseInt(rights_el.html()) : 0;
+        rights_el.html(num + 1);
     },
 
     guessWrong: function() {
-        console.log("Your guess wrong.")
+        var wrongs_el = this.$('#wrong-count');
+        var num = wrongs_el.html() ? parseInt(wrongs_el.html()) : 0;
+        wrongs_el.html(num + 1);
     },
 
     search: function() {
