@@ -4,12 +4,17 @@
 
 {% block content %}
 
-{#    <h4 style="font-style:italic;">Home (Backbone.js)</h4>#}
+    {#    <h4 style="font-style:italic;">Home (Backbone.js)</h4>#}
 
     <div id="clues-view">
-        <div>
-            <button type="button" id="searchBtn">Search</button>
-            <input type="text" id="searchText" />
+        <div class="clues-list-controls">
+            <span>
+                <label>rights: <span id="rights"></span></label>&nbsp;
+                <label>wrongs: <span id="wrongs"></span></label>
+            </span>
+            <span class="pull-right">
+                <label>Search: <input type="text" id="searchText" /></label>
+            </span>
         </div>
         <div id="clues-list" class="list-group"></div>
     </div>
