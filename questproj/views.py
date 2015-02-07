@@ -6,11 +6,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from questproj.forms import UserProfileForm, UserForm
 from questapp.models import Clue
+from questproj.horoscope import horoscope
 
 
 def base_context(request):
     """The project's function-based home view needs this available in this way."""
     return {'SITE_NAME': settings.SITE_NAME}
+
+
+def horoscope_generate(request):
+    return HttpResponse(horoscope.generate())
 
 
 class HomeView(TemplateView):
