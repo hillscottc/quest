@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from questapp.models import Clue, UserProfile
-from questapp.cors_base import CORSModelResource
+from questapp.cors_base import CORSModelResource, CORSResource
 from tastypie import fields
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
 from tastypie.authorization import Authorization

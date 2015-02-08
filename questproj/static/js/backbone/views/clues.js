@@ -15,7 +15,6 @@ app.CluesView = Backbone.View.extend({
         this.listenTo(this.collection, 'add', this.renderItem );
         this.listenTo(this.collection, 'reset', this.render );
         this.listenTo(this.vent, 'guessRight', this.guessRight);
-        this.listenTo(this.vent, 'guessWrong', this.guessWrong);
         console.log("CluesView initialized.");
     },
 
@@ -28,29 +27,39 @@ app.CluesView = Backbone.View.extend({
 
         // Increment the rights count
         var rights_el = $('#right-count');
-        var num = rights_el.html() ? parseInt(rights_el.html()) : 0;
+
+        var num = 0;
+        if (rights_el.text()) {
+            num = parseInt(rights_el.text());
+        }
+
         num++;
         rights_el.html(num);
 
         // Show a modal sometimes.
-        var modal_el = $('#basicModal');
         var msg = "";
-        if (num == 1)
+        if (num == 1) {
             msg = "You have answered the first question in this group.";
-        else if (num % 5 == 0) {
+            this.getHoro();
+        } else if (num % 5 == 0) {
             msg = "You have answered " + num + " questions.";
         }
         if (msg != "") {
-            modal_el.find('.modal-body').html(msg);
+            var modal_el = $('#basicModal');
+            modal_el.find('.modal-body h3').html(msg);
             modal_el.modal({"show": true});
         }
 
     },
 
-    guessWrong: function() {
-        var wrongs_el = this.$('#wrong-count');
-        var num = wrongs_el.html() ? parseInt(wrongs_el.html()) : 0;
-        wrongs_el.html(num + 1);
+
+    getHoro: function() {
+        $.get("/horoscope", function(data, status){
+            var horo = data['horo'];
+            console.log("horo: " + horo + "\nStatus: " + status);
+            //return horo;
+            alert(horo);
+        });
     },
 
     search: function() {
