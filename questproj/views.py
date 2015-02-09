@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render_to_response, HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.template import RequestContext
@@ -14,7 +15,11 @@ def base_context(request):
     return {'SITE_NAME': settings.SITE_NAME}
 
 
-def horoscope_generate(request):
+def horo_gen(request):
+    # response_data = dict()
+    # response_data['horo'] = horoscope.generate()
+    # return HttpResponse(json.dumps(response_data),
+    #                     content_type="application/json")
     return HttpResponse(horoscope.generate())
 
 

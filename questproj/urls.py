@@ -17,7 +17,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about$', views.AboutView.as_view(), name="about"),
 
-    url(r'^horoscope$', views.horoscope_generate, name="horoscope"),
+    url(r'^horoscope$', views.horo_gen, name="horoscope"),
 
     url(r'^register/$', register, name='register'),
     url(r'^login/$', user_login, name='login'),

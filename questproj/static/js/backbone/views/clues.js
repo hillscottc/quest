@@ -15,7 +15,6 @@ app.CluesView = Backbone.View.extend({
         this.listenTo(this.collection, 'add', this.renderItem );
         this.listenTo(this.collection, 'reset', this.render );
         this.listenTo(this.vent, 'guessRight', this.guessRight);
-        this.listenTo(this.vent, 'guessWrong', this.guessWrong);
         console.log("CluesView initialized.");
     },
 
@@ -25,33 +24,47 @@ app.CluesView = Backbone.View.extend({
     },
 
     guessRight: function() {
-
         // Increment the rights count
+
+
+        console.log("heasrd guess right");
+
+
         var rights_el = $('#right-count');
-        var num = rights_el.html() ? parseInt(rights_el.html()) : 0;
+
+        var num = 0;
+        if (rights_el.text()) {
+            num = parseInt(rights_el.text());
+        }
+
         num++;
         rights_el.html(num);
 
         // Show a modal sometimes.
-        var modal_el = $('#basicModal');
-        var msg = "";
-        if (num == 1)
-            msg = "You have answered the first question in this group.";
-        else if (num % 5 == 0) {
-            msg = "You have answered " + num + " questions.";
-        }
-        if (msg != "") {
-            modal_el.find('.modal-body').html(msg);
+        if (num == 1) {
+            this.showModal("Congratulations!",
+                "You have answered the first question. You'll get an updated horoscope " +
+                "for every 3rd answer.");
+        } else if (num % 3 == 0) {
+            var modal_el = $('#basicModal');
+            modal_el.find('.modal-header h4').html("Your fortune is...");
+
+            // Ajax-load the modal body
+            $("#modal-body").load("/horoscope", function(responseTxt, statusTxt, xhr){
+                if(statusTxt == "error") console.log("Err: " + xhr.status + ": " + xhr.statusText);
+            });
             modal_el.modal({"show": true});
         }
-
     },
 
-    guessWrong: function() {
-        var wrongs_el = this.$('#wrong-count');
-        var num = wrongs_el.html() ? parseInt(wrongs_el.html()) : 0;
-        wrongs_el.html(num + 1);
+    showModal: function(header, body) {
+        var modal_el = $('#basicModal');
+        modal_el.find('.modal-header h4').html(header);
+        modal_el.find('.modal-body h3').html(body);
+        modal_el.modal({"show": true});
     },
+
+
 
     search: function() {
         var letters = $("#searchText").val();
