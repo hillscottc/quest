@@ -21,10 +21,6 @@ app.ClueView = Backbone.View.extend({
     // Fuzzy matching of guess to answer.
     fuzzyMatch: function(guess, answer) {
         if (guess == "") return false;
-
-        guess = guess.toLowerCase();
-        answer = answer.toLowerCase();
-
         if (answer == guess) return true;
 
         var guess_re = new RegExp(guess, "gi");
