@@ -27,7 +27,9 @@ app.ClueView = Backbone.View.extend({
 
         if (answer == guess) return true;
 
-        if (guess.length > 3 && answer.indexOf(guess) > -1) {
+        var guess_re = new RegExp(guess, "gi");
+
+        if (guess.length > 3 && guess_re.test(answer)) {
             return true;
         }
 
