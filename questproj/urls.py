@@ -11,6 +11,8 @@ urlpatterns = patterns(
     url(r'^$', views.BackboneIndexView.as_view(), name="index"),
     url(r'^$', views.BackboneIndexView.as_view(), name="home"),
 
+    url(r'^googlefd8980378f4a07d2.html$', views.google_verify),
+
     # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
     url(r'^', include('questapp.urls')),            # put questapp at /
 

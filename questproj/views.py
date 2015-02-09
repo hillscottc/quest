@@ -1,5 +1,5 @@
 import json
-from django.shortcuts import render_to_response, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.template import RequestContext
 from django.views.generic import TemplateView
@@ -22,6 +22,10 @@ def horo_gen(request):
     # return HttpResponse(json.dumps(response_data),
     #                     content_type="application/json")
     return HttpResponse(horoscope.generate())
+
+
+def google_verify(request):
+    return render(request, 'googlefd8980378f4a07d2.html')
 
 
 class HomeView(TemplateView):
