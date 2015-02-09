@@ -25,6 +25,11 @@ app.CluesView = Backbone.View.extend({
 
     guessRight: function() {
         // Increment the rights count
+
+
+        console.log("heasrd guess right");
+
+
         var rights_el = $('#right-count');
 
         var num = 0;
@@ -37,7 +42,9 @@ app.CluesView = Backbone.View.extend({
 
         // Show a modal sometimes.
         if (num == 1) {
-            this.showModal("Congratulations!", "You have answered the first question.");
+            this.showModal("Congratulations!",
+                "You have answered the first question. You'll get an updated horoscope " +
+                "for every 3rd answer.");
         } else if (num % 3 == 0) {
             var modal_el = $('#basicModal');
             modal_el.find('.modal-header h4').html("Your fortune is...");
@@ -57,15 +64,7 @@ app.CluesView = Backbone.View.extend({
         modal_el.modal({"show": true});
     },
 
-    //modalHoro: function(title, body) {
-    //    $.get("/horoscope", function(data, status){
-    //        var msg = data['horo'];
-    //        //console.log("horo: " + horo + "\nStatus: " + status);
-    //        modal_el.find('#modal-body h3').html(msg);
-    //        modal_el.find('#modal-header h4').html(title);
-    //        modal_el.modal({"show": true});
-    //    });
-    //},
+
 
     search: function() {
         var letters = $("#searchText").val();

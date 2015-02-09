@@ -9,7 +9,8 @@ app.ClueView = Backbone.View.extend({
     events: {
         'click .clue': 'clueClick',
         'click .tellme-btn': 'tellmeClick',
-        'click .check-btn': 'checkClick'
+        'input .guess-text' : 'guessChange',
+        'propertychange .guess-text' : 'guessChange' // for IE
     },
 
     initialize: function(options) {
@@ -29,8 +30,10 @@ app.ClueView = Backbone.View.extend({
         return is_match;
     },
 
-    // Check the guess, show results.
-    checkClick: function(e) {
+
+    // Live checking if guess is correct.
+    guessChange: function() {
+
         var guess = this.$('.guess-text').val().toLowerCase();
         var answer = this.model.attributes['answer'].toLowerCase();
         var results_el = this.$('.results');
@@ -39,11 +42,8 @@ app.ClueView = Backbone.View.extend({
             results_el.text("Right!");
             this.vent.trigger("guessRight");
         } else {
-            results_el.text("Nope.");
-            this.vent.trigger("guessWrong");
+            results_el.text("");
         }
-
-        e.preventDefault();
     },
 
     // Show the answer.
