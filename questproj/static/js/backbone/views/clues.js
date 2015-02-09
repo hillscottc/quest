@@ -24,7 +24,6 @@ app.CluesView = Backbone.View.extend({
     },
 
     guessRight: function() {
-
         // Increment the rights count
         var rights_el = $('#right-count');
 
@@ -37,30 +36,36 @@ app.CluesView = Backbone.View.extend({
         rights_el.html(num);
 
         // Show a modal sometimes.
-        var msg = "";
         if (num == 1) {
-            msg = "You have answered the first question in this group.";
-            this.getHoro();
-        } else if (num % 5 == 0) {
-            msg = "You have answered " + num + " questions.";
-        }
-        if (msg != "") {
+            this.showModal("Congratulations!", "You have answered the first question.");
+        } else if (num % 3 == 0) {
             var modal_el = $('#basicModal');
-            modal_el.find('.modal-body h3').html(msg);
+            modal_el.find('.modal-header h4').html("Your fortune is...");
+
+            // Ajax-load the modal body
+            $("#modal-body").load("/horoscope", function(responseTxt, statusTxt, xhr){
+                if(statusTxt == "error") console.log("Err: " + xhr.status + ": " + xhr.statusText);
+            });
             modal_el.modal({"show": true});
         }
-
     },
 
-
-    getHoro: function() {
-        $.get("/horoscope", function(data, status){
-            var horo = data['horo'];
-            console.log("horo: " + horo + "\nStatus: " + status);
-            //return horo;
-            alert(horo);
-        });
+    showModal: function(header, body) {
+        var modal_el = $('#basicModal');
+        modal_el.find('.modal-header h4').html(header);
+        modal_el.find('.modal-body h3').html(body);
+        modal_el.modal({"show": true});
     },
+
+    //modalHoro: function(title, body) {
+    //    $.get("/horoscope", function(data, status){
+    //        var msg = data['horo'];
+    //        //console.log("horo: " + horo + "\nStatus: " + status);
+    //        modal_el.find('#modal-body h3').html(msg);
+    //        modal_el.find('#modal-header h4').html(title);
+    //        modal_el.modal({"show": true});
+    //    });
+    //},
 
     search: function() {
         var letters = $("#searchText").val();

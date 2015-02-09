@@ -33,10 +33,9 @@
     <script type="text/javascript">
 
         $("#horo-btn").click(function(){
-            $.get("/horoscope", function(data, status){
-                var horo = data['horo'];
-                //console.log("horo: " + horo + "\nStatus: " + status);
-                $('#sample-horo').text(horo);
+            // Ajax-load the sample
+            $("#sample-horo").load("/horoscope", function(responseTxt, statusTxt, xhr){
+                if(statusTxt == "error") console.log("Err: " + xhr.status + ": " + xhr.statusText);
             });
         });
 

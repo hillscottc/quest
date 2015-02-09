@@ -16,10 +16,11 @@ def base_context(request):
 
 
 def horo_gen(request):
-    response_data = dict()
-    response_data['horo'] = horoscope.generate()
-    return HttpResponse(json.dumps(response_data),
-                        content_type="application/json")
+    # response_data = dict()
+    # response_data['horo'] = horoscope.generate()
+    # return HttpResponse(json.dumps(response_data),
+    #                     content_type="application/json")
+    return HttpResponse(horoscope.generate())
 
 
 class HomeView(TemplateView):
