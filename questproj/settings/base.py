@@ -164,3 +164,8 @@ else:
     DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2',
                              'NAME': 'quest_db', 'USER': 'quest_acct', 'PASSWORD': '12345',
                              'HOST': 'localhost', 'PORT': '5432'}}
+
+# Set this in env?
+# POSTMARK_API_TOKEN:            f1fdbb30-f0f1-42fd-8867-9d6a4f63cfd1
+# POSTMARK_INBOUND_ADDRESS:      120973a26fbdb071881774e05cb88f15@inbound.postmarkapp.com
+# POSTMARK_SMTP_SERVER:          smtp.postmarkapp.com
