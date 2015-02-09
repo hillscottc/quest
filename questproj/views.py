@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.conf import settings
 from questproj.forms import UserProfileForm, UserForm
 from questapp.models import Clue
 from questproj.horoscope import horoscope
@@ -34,6 +35,11 @@ class HomeView(TemplateView):
 
 class BackboneIndexView(TemplateView):
     template_name = "backbone/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(BackboneIndexView, self).get_context_data(**kwargs)
+        context.update({'api_limit': settings.API_LIMIT_PER_PAGE})
+        return context
 
 
 class AboutView(TemplateView):

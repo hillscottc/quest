@@ -26,10 +26,6 @@ app.CluesView = Backbone.View.extend({
     guessRight: function() {
         // Increment the rights count
 
-
-        console.log("heasrd guess right");
-
-
         var rights_el = $('#right-count');
 
         var num = 0;

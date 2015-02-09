@@ -20,26 +20,26 @@ app.ClueView = Backbone.View.extend({
 
     // Fuzzy matching of guess to answer.
     fuzzyMatch: function(guess, answer) {
-        var is_match = false;
-        guess = guess.toLowerCase();
-        answer = answer.toLowerCase();
+        if (guess == "") return false;
+        if (answer == guess) return true;
 
-        if (guess == answer) {
-            is_match = true;
+        var guess_re = new RegExp(guess, "gi");
+
+        if (guess.length > 3 && guess_re.test(answer)) {
+            return true;
         }
-        return is_match;
-    },
 
+    },
 
     // Live checking if guess is correct.
     guessChange: function() {
-
-        var guess = this.$('.guess-text').val().toLowerCase();
-        var answer = this.model.attributes['answer'].toLowerCase();
+        var answer = this.model.attributes['answer'];
         var results_el = this.$('.results');
+        var guess_el = this.$('.guess-text');
 
-        if (this.fuzzyMatch(guess, answer)) {
+        if (this.fuzzyMatch(guess_el.val(), answer)) {
             results_el.text("Right!");
+            guess_el.val(answer);
             this.vent.trigger("guessRight");
         } else {
             results_el.text("");
