@@ -4,7 +4,7 @@ from questapp.cors_base import CORSModelResource, CORSResource
 from tastypie import fields
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
 from tastypie.authorization import Authorization
-# Note: API_LIMIT_PER_PAGE is set in settings/base.py
+from django.conf import settings
 
 
 class ClueResource(CORSModelResource):
@@ -18,7 +18,7 @@ class ClueResource(CORSModelResource):
 class RandomCluesResource(CORSModelResource):
 
     class Meta:
-        queryset = Clue.objects.all().order_by('?')[:100]
+        queryset = Clue.objects.all().order_by('?')[:settings.API_LIMIT_PER_PAGE]
         resource_name = 'random_clues'
 
 

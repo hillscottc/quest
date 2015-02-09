@@ -26,7 +26,7 @@ INSTALLED_APPS = (
 )
 
 # Default num of recs tastypie will return.
-API_LIMIT_PER_PAGE = 500
+API_LIMIT_PER_PAGE = 1000
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
