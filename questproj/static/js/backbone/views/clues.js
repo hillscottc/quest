@@ -5,15 +5,13 @@ app.CluesView = Backbone.View.extend({
     el: '#clues-view',
 
     initialize: function(initialClues) {
-
-        // An event aggregator for the view.
-        this.vent = _.extend({}, Backbone.Events);
-        this.rights_count = 0;
         this.collection = new app.Clues(initialClues);
         this.collection.fetch({reset: true});
+        this.vent = _.extend({}, Backbone.Events);   // Event aggregator
+        this.rights_count = 0;
         this.render();
-        this.listenTo(this.collection, 'add', this.renderItem );
-        this.listenTo(this.collection, 'reset', this.render );
+        this.listenTo(this.collection, 'add', this.renderItem);
+        this.listenTo(this.collection, 'reset', this.render);
         this.listenTo(this.vent, 'guessRight', this.guessRight);
         console.log("CluesView initialized.");
     },
