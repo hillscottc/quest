@@ -1,19 +1,12 @@
-import json
 from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.template import RequestContext
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.conf import settings
 from questproj.forms import UserProfileForm, UserForm
 from questapp.models import Clue
 from questproj.horoscope import horoscope
-
-
-def base_context(request):
-    """The project's function-based home view needs this available in this way."""
-    return {'SITE_NAME': settings.SITE_NAME}
 
 
 def horo_gen(request):
@@ -33,7 +26,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context.update({'some_var': "some_value"})
+        context.update({'clue_source_name': settings.CLUE_SOURCE_NAME})
         return context
 
 
@@ -149,6 +142,6 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 
-# @login_required
-# def user_account(request):
-#     return render(request, 'registration/user_account.html', {})
+    # @login_required
+    # def user_account(request):
+    #     return render(request, 'registration/user_account.html', {})
