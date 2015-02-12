@@ -19,8 +19,15 @@ app.CluesView = Backbone.View.extend({
     },
 
     events: {
+        'click #nostra-btn' : 'showHoro',
         'input #searchText' : 'search',
         'propertychange #searchText' : 'search' // for IE
+    },
+
+    showHoro: function() {
+        $("#nostra-txt").load("/horoscope", function(responseTxt, statusTxt, xhr){
+            if(statusTxt == "error") console.log("Err: " + xhr.status + ": " + xhr.statusText);
+        });
     },
 
     guessRight: function() {

@@ -4,20 +4,27 @@
 
 {% block content %}
 
-    <div>
-        Displaying {{ api_limit }} random game show clues. (Refresh for a new set.)
-        Answer three questions correctly to get a prediction.
-    </div>
-
     <div id="clues-view">
+        <div style="margin-bottom: 10px">
+            <table>
+                <tr>
+                    <td valign="top"><button id="nostra-btn" type="button" class="btn btn-default">Nostradamus</button></td>
+                    <td valign="top" style="padding-left:10px"> <span id="nostra-txt"></span></td>
+                </tr>
+            </table>
+        </div>
+
+
         <div class="clues-list-controls">
-            <span></span>
-            &nbsp;
+            <span> Displaying {{ api_limit }} random game show clues. (Refresh for a new set.)</span>
+
             <span class="pull-right">
-                <label>Search: <input type="text" id="searchText" /></label>
+                <input type="text" id="searchText" placeholder="search" />
             </span>
         </div>
         <div id="clues-list" class="list-group"></div>
+
+
 
         <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
             <div class="modal-dialog">
@@ -30,9 +37,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
 
     </div>
