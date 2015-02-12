@@ -8,7 +8,7 @@ app.CluesView = Backbone.View.extend({
 
         // An event aggregator for the view.
         this.vent = _.extend({}, Backbone.Events);
-
+        this.rights_count = 0;
         this.collection = new app.Clues(initialClues);
         this.collection.fetch({reset: true});
         this.render();
@@ -24,24 +24,15 @@ app.CluesView = Backbone.View.extend({
     },
 
     guessRight: function() {
-        // Increment the rights count
-
-        var rights_el = $('#right-count');
-
-        var num = 0;
-        if (rights_el.text()) {
-            num = parseInt(rights_el.text());
-        }
-
-        num++;
-        rights_el.html(num);
+        this.rights_count++;
+        console.log("Right:", this.rights_count)
 
         // Show a modal sometimes.
-        if (num == 1) {
+        if (this.rights_count == 1) {
             this.showModal("Congratulations!",
                 "You have answered the first question. You'll get an updated horoscope " +
                 "for every 3rd answer.");
-        } else if (num % 3 == 0) {
+        } else if (this.rights_count % 3 == 0) {
             var modal_el = $('#basicModal');
             modal_el.find('.modal-header h4').html("Your fortune is...");
 
