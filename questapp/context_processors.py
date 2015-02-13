@@ -6,4 +6,5 @@ def base_context(request):
     making it available in all requests."""
     return {
         'SITE_NAME': settings.SITE_NAME,
+        'CLUE_SOURCE_NAME:': settings.CLUE_SOURCE_NAME
     }

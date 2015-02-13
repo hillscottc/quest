@@ -26,7 +26,7 @@ INSTALLED_APPS = (
 )
 
 # Default num of recs tastypie will return.
-API_LIMIT_PER_PAGE = 1000
+API_LIMIT_PER_PAGE = 500
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -57,7 +57,8 @@ TEMPLATE_DIRS = (
     # os.path.join('questapp', "templates"),
 )
 
-SITE_NAME = "QuestServer"
+SITE_NAME = "QuestSite"
+CLUE_SOURCE_NAME = "Jeopardy clues"
 
 JEAP_SRC_DIR = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'jeap')
 JEAP_ID_FILE = os.path.join(os.path.dirname(PROJ_DIR), 'html_data_sources', 'jeap_src_ids.txt')

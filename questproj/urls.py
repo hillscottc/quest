@@ -7,9 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    # url(r'^$', views.HomeView.as_view(), name="home"),
-    url(r'^$', views.BackboneIndexView.as_view(), name="index"),
-    url(r'^$', views.BackboneIndexView.as_view(), name="home"),
+    url(r'^$', views.HomeView.as_view(), name="home"),
+    url(r'^clues/$', views.BackboneIndexView.as_view(), name="index"),
 
     url(r'^googlefd8980378f4a07d2.html$', views.google_verify),
 
