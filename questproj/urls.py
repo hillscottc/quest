@@ -7,18 +7,16 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.HomeView.as_view(), name="home"),
-    url(r'^clues/$', views.BackboneIndexView.as_view(), name="index"),
-
     url(r'^googlefd8980378f4a07d2.html$', views.google_verify),
+
+    # url(r'^$', views.HomeView.as_view(), name="home"),
+    url(r'^$', views.BackboneIndexView.as_view(), name="home"),
 
     # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
     url(r'^', include('questapp.urls')),            # put questapp at /
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about$', views.AboutView.as_view(), name="about"),
-
-    url(r'^horoscope$', views.horo_gen, name="horoscope"),
 
     url(r'^register/$', register, name='register'),
     url(r'^login/$', user_login, name='login'),

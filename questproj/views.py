@@ -6,15 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from questproj.forms import UserProfileForm, UserForm
 from questapp.models import Clue
-from questproj.horoscope import horoscope
-
-
-def horo_gen(request):
-    # response_data = dict()
-    # response_data['horo'] = horoscope.generate()
-    # return HttpResponse(json.dumps(response_data),
-    #                     content_type="application/json")
-    return HttpResponse(horoscope.generate())
 
 
 def google_verify(request):
