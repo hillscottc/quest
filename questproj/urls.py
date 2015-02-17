@@ -9,7 +9,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.HomeView.as_view(), name="home"),
     url(r'^clues/$', views.BackboneIndexView.as_view(), name="index"),
-    url(r'^nostra$', views.HomeNostraView.as_view(), name="home-nostra"),
+
 
     url(r'^googlefd8980378f4a07d2.html$', views.google_verify),
 
@@ -18,6 +18,8 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about$', views.AboutView.as_view(), name="about"),
+
+    url(r'^nostra/', include('nostrapp.urls')),
 
     url(r'^horoscope$', views.horo_gen, name="horoscope"),
 
