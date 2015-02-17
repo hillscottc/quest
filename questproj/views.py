@@ -21,6 +21,10 @@ def google_verify(request):
     return render(request, 'googlefd8980378f4a07d2.html')
 
 
+class HomeNostraView(TemplateView):
+    template_name = "home-nostra.html"
+
+
 class HomeView(TemplateView):
     template_name = "home.html"
 
