@@ -18,10 +18,6 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about$', views.AboutView.as_view(), name="about"),
 
-    # url(r'^nostra/', include('nostrapp.urls')),
-
-    url(r'^horoscope$', views.horo_gen, name="horoscope"),
-
     url(r'^register/$', register, name='register'),
     url(r'^login/$', user_login, name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
