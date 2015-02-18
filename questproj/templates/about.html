@@ -6,10 +6,15 @@
 
 {% block content %}
 
+    Developed by <a href="http://google.com/+scotthillisme">Scott C. Hill</a>.
+
     <h3>database</h3>
     <div>
         <p>The database is a PostgreSQL database containing {{ clue_count|intcomma }} clues.</p>
     </div>
+
+    <h3>client</h3>
+    <p>The main index page is a <a href="http://en.wikipedia.org/wiki/Single-page_application">single-page application</a> written with <a href="http://backbonejs.org/">Backbone.js</a> javascript framework.</p>
 
     <h3>api</h3>
     <p>A <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> api interface to the clues is rendered with
@@ -18,8 +23,6 @@
     </p>
     <ul id="api-samples"></ul>
 
-    <h3>client</h3>
-    <p>The main index page is a <a href="http://en.wikipedia.org/wiki/Single-page_application">single-page application</a> written with <a href="http://backbonejs.org/">Backbone.js</a> javascript framework.</p>
 
 {% endblock %}
 
