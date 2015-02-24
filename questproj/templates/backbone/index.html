@@ -3,16 +3,42 @@
 {% block title %}Clues Index{% endblock %}
 
 {% block content %}
+    <div class="jumbotron" id="site-intro">
+        <a class="close" id="site-intro-close">&times;</a>
+        <h3>
+            <em>{{ SITE_NAME }}</em> is a collection of quiz-show-style questions designed to challange and entertain.
+        </h3>
+        <br/>
+        <p>Sample:</p>
+        <div class="list-group-item">
+                <h4 class="list-group-item-heading">
+                    AT THE PLAYGROUND &nbsp;&nbsp;&nbsp;
+                    <span class="help-text">&lt;&lt; The topic/category/hint for this question.</span>
+                </h4>
+                <p class="list-group-item-text">
+                    It's the most common name for the structure called a teeter-totter &nbsp;&nbsp;&nbsp;
+                    <span class="help-text">&lt;&lt; The actual question.</span>
+                </p>
+                <p class="answer list-group-item-text"></p>
+            <div>
+                <label>? <input placeholder="seesaw" /></label>
+                &nbsp;&nbsp;&nbsp;
+                <span class="help-text">&lt;&lt; Type your answer here.</span>
+            </div>
+        </div>
+
+    </div>
+
 
     <div id="clues-view">
-{#        <div style="margin-bottom: 10px">#}
-{#            <table>#}
-{#                <tr>#}
-{#                    <td valign="top"><button id="nostra-btn" type="button" class="btn btn-default">Nostradamus</button></td>#}
-{#                    <td valign="top" style="padding-left:10px"> <span id="nostra-txt"></span></td>#}
-{#                </tr>#}
-{#            </table>#}
-{#        </div>#}
+        {#        <div style="margin-bottom: 10px">#}
+        {#            <table>#}
+        {#                <tr>#}
+        {#                    <td valign="top"><button id="nostra-btn" type="button" class="btn btn-default">Nostradamus</button></td>#}
+        {#                    <td valign="top" style="padding-left:10px"> <span id="nostra-txt"></span></td>#}
+        {#                </tr>#}
+        {#            </table>#}
+        {#        </div>#}
 
 
         <div class="clues-list-controls">
@@ -26,21 +52,21 @@
 
 
 
-{#        <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">#}
-{#            <div class="modal-dialog">#}
-{#                <div class="modal-content">#}
-{#                    <div class="modal-header">#}
-{#                        <h4 class="modal-title"></h4>#}
-{#                    </div>#}
-{#                    <div class="modal-body" id="modal-body">#}
-{#                        <h3>Modal Body</h3>#}
-{#                    </div>#}
-{#                    <div class="modal-footer">#}
-{#                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
+        {#        <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">#}
+        {#            <div class="modal-dialog">#}
+        {#                <div class="modal-content">#}
+        {#                    <div class="modal-header">#}
+        {#                        <h4 class="modal-title"></h4>#}
+        {#                    </div>#}
+        {#                    <div class="modal-body" id="modal-body">#}
+        {#                        <h3>Modal Body</h3>#}
+        {#                    </div>#}
+        {#                    <div class="modal-footer">#}
+        {#                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
 
     </div>
 
@@ -76,4 +102,9 @@
     <script src="{% static 'js/backbone/views/clues.js' %}"></script>
     <script src="{% static 'js/backbone/app.js' %}"></script>
 
+    <script type="text/javascript">
+        $("#site-intro-close").click(function(){
+            $("#site-intro").hide();
+        });
+    </script>
 {% endblock extrajs %}
