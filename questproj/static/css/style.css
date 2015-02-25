@@ -45,6 +45,8 @@
 
 .clue-controls {
     display: none;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 .clues-list-controls {
