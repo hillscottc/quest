@@ -41,12 +41,12 @@ class UnitTest(TestCase):
 
 
 # @skip('Skip the load all tests.')
-class TestLoad(TestCase):
-    def test_load_samples(self):
-        """Load some jeapordy html game files."""
-        num_files = None
-        load_samples(num_files)
-        # self.assertEqual(Game.objects.count(), num_files)
+# class TestLoad(TestCase):
+#     def test_load_samples(self):
+#         """Load some jeapordy html game files."""
+#         num_files = None
+#         load_samples(num_files)
+#         # self.assertEqual(Game.objects.count(), num_files)
 
 
 
