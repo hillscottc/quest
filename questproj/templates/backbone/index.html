@@ -3,31 +3,30 @@
 {% block title %}Clues Index{% endblock %}
 
 {% block content %}
-    <div class="jumbotron" id="site-intro">
-        <a class="close" id="site-intro-close">&times;</a>
-        <h3>
-            <em>{{ SITE_NAME }}</em> is a collection of quiz-show-style questions designed to challange and entertain.
-        </h3>
-        <br/>
-        <p>Sample:</p>
-        <div class="list-group-item">
-                <h4 class="list-group-item-heading">
-                    AT THE PLAYGROUND &nbsp;&nbsp;&nbsp;
-                    <span class="help-text">&lt;&lt; The topic/category/hint for this question.</span>
-                </h4>
-                <p class="list-group-item-text">
-                    It's the most common name for the structure called a teeter-totter &nbsp;&nbsp;&nbsp;
-                    <span class="help-text">&lt;&lt; The actual question.</span>
-                </p>
-                <p class="answer list-group-item-text"></p>
-            <div>
-                <input placeholder="seesaw" />
-                &nbsp;&nbsp;&nbsp;
-                <span class="help-text">&lt;&lt; Type your answer here.</span>
-            </div>
-        </div>
-
-    </div>
+{#    <div class="jumbotron" id="site-intro">#}
+{#        <a class="close" id="site-intro-close">&times;</a>#}
+{#        <h3>#}
+{#            <em>{{ SITE_NAME }}</em> is a collection of quiz-show-style questions designed to challange and entertain.#}
+{#        </h3>#}
+{#        <br/>#}
+{#        <p>Sample:</p>#}
+{#        <div class="list-group-item">#}
+{#                <h4 class="list-group-item-heading">#}
+{#                    AT THE PLAYGROUND &nbsp;&nbsp;&nbsp;#}
+{#                    <span class="help-text">&lt;&lt; The topic/category/hint for this question.</span>#}
+{#                </h4>#}
+{#                <p class="list-group-item-text">#}
+{#                    It's the most common name for the structure called a teeter-totter &nbsp;&nbsp;&nbsp;#}
+{#                    <span class="help-text">&lt;&lt; The actual question.</span>#}
+{#                </p>#}
+{#                <p class="answer list-group-item-text"></p>#}
+{#            <div>#}
+{#                <input placeholder="seesaw" />#}
+{#                &nbsp;&nbsp;&nbsp;#}
+{#                <span class="help-text">&lt;&lt; Type your answer here.</span>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
 
     <div id="clues-view">
@@ -92,15 +91,17 @@
 
 {% block extrajs %}
     <!-- backbone, tastypie, underscore -->
-    <script src="{% static 'lib/underscore.js' %}"></script>
-    <script src="{% static 'lib/backbone.js' %}"></script>
-    <script src="{% static 'lib/backbone-tastypie.js' %}"></script>
+{#    <script src="{% static 'lib/underscore.js' %}"></script>#}
+{#    <script src="{% static 'lib/backbone.js' %}"></script>#}
+{#    <script src="{% static 'js/backbone/models/clue.js' %}"></script>#}
+{#    <script src="{% static 'js/backbone/collections/clues.js' %}"></script>#}
+{#    <script src="{% static 'js/backbone/views/clue.js' %}"></script>#}
+{#    <script src="{% static 'js/backbone/views/clues.js' %}"></script>#}
+{#    <script src="{% static 'js/backbone/app.js' %}"></script>#}
 
-    <script src="{% static 'js/backbone/models/clue.js' %}"></script>
-    <script src="{% static 'js/backbone/collections/clues.js' %}"></script>
-    <script src="{% static 'js/backbone/views/clue.js' %}"></script>
-    <script src="{% static 'js/backbone/views/clues.js' %}"></script>
-    <script src="{% static 'js/backbone/app.js' %}"></script>
+    <script src="{% static 'js/backbone/bundle.js' %}"></script>
+
+{#    <script src="{% static 'lib/backbone-tastypie.js' %}"></script>#}
 
     <script type="text/javascript">
         $("#site-intro-close").click(function(){

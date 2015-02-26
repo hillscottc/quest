@@ -1,3 +1,5 @@
+var Backbone = require("backbone");
+
 var app = app || {};
 
 app.Clues = Backbone.Collection.extend({
@@ -16,3 +18,6 @@ app.Clues = Backbone.Collection.extend({
     }
 
 });
+
+
+module.exports = app.Clues;

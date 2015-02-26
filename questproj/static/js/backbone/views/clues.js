@@ -1,3 +1,7 @@
+var Backbone = require("backbone");
+var _ = require('underscore');
+var Clues = require('../collections/clues.js');
+
 var app = app || {};
 
 app.CluesView = Backbone.View.extend({
@@ -5,7 +9,7 @@ app.CluesView = Backbone.View.extend({
     el: '#clues-view',
 
     initialize: function(initialClues) {
-        this.collection = new app.Clues(initialClues);
+        this.collection = new Clues(initialClues);
         this.collection.fetch({reset: true});
         this.vent = _.extend({}, Backbone.Events);   // Event aggregator
         this.rights_count = 0;
@@ -85,3 +89,5 @@ app.CluesView = Backbone.View.extend({
         $("#clues-list").append( clueView.render().el );
     }
 });
+
+module.exports = app.CluesView;

@@ -17,4 +17,14 @@ Resources:
 
 Install:
 
+    npm install
+    
+Rebuild the browser.js by using the build command in the package.json. It calls browserify.
+    
+    npm run build    
+    
+    
+
+
+
     
