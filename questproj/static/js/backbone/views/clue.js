@@ -1,9 +1,8 @@
 var Backbone = require("backbone");
 var _ = require('underscore');
 
-var app = app || {};
 
-app.ClueView = Backbone.View.extend({
+var ClueView = Backbone.View.extend({
     tagName: 'div',
     className: 'clueContainer',
 
@@ -79,7 +78,7 @@ app.ClueView = Backbone.View.extend({
     }
 });
 
-module.exports = app.ClueView;
+module.exports = ClueView;
 
 
 

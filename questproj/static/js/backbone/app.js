@@ -8,8 +8,6 @@ require('./collections/clues.js');
 require('./views/clue.js');
 var CluesView = require('./views/clues.js');
 
-var app = app || {};
-
 $(function() {
 
     //app.vent = _.extend({}, Backbone.Events);

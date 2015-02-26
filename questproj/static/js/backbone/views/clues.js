@@ -1,10 +1,9 @@
 var Backbone = require("backbone");
 var _ = require('underscore');
-var Clues = require('../collections/clues.js');
+var Clues = require('../collections/clues');
+var ClueView = require('./clue');
 
-var app = app || {};
-
-app.CluesView = Backbone.View.extend({
+var CluesView = Backbone.View.extend({
 
     el: '#clues-view',
 
@@ -85,9 +84,9 @@ app.CluesView = Backbone.View.extend({
 
     // Render an individual item
     renderItem: function( item ) {
-        var clueView = new app.ClueView({model: item, vent: this.vent});
+        var clueView = new ClueView({model: item, vent: this.vent});
         $("#clues-list").append( clueView.render().el );
     }
 });
 
-module.exports = app.CluesView;
+module.exports = CluesView;

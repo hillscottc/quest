@@ -1,10 +1,10 @@
 var Backbone = require("backbone");
+var Clue = require('../models/clue.js');
 
-var app = app || {};
 
-app.Clues = Backbone.Collection.extend({
+var Clues = Backbone.Collection.extend({
 
-    model: app.Clue,
+    model: Clue,
 
     url: '/api/v1/random_clues/',
 
@@ -20,4 +20,4 @@ app.Clues = Backbone.Collection.extend({
 });
 
 
-module.exports = app.Clues;
+module.exports = Clues;
