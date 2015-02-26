@@ -21,11 +21,11 @@ class HomeView(TemplateView):
         return context
 
 
-class BackboneIndexView(TemplateView):
-    template_name = "backbone/index.html"
+class IndexView(TemplateView):
+    template_name = "index.html"
 
     def get_context_data(self, **kwargs):
-        context = super(BackboneIndexView, self).get_context_data(**kwargs)
+        context = super(IndexView, self).get_context_data(**kwargs)
         context.update({'api_limit': settings.API_LIMIT_PER_PAGE})
         return context
 

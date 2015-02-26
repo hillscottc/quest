@@ -5,8 +5,8 @@
   "main": "questproj/static/js/backbone/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify questproj/static/js/backbone/app.js -o questproj/static/js/backbone/bundle.js",
-    "watch": "watchify questproj/static/js/backbone/app.js -o questproj/static/js/backbone/bundle.js --debug --verbose"
+    "build": "browserify questproj/static/js/app.js -o questproj/static/js/bundle.js",
+    "watch": "watchify questproj/static/js/app.js -o questproj/static/js/bundle.js --debug --verbose"
   },
   "repository": {
     "type": "git",

@@ -12359,7 +12359,7 @@ arguments[4][2][0].apply(exports,arguments)
 var Backbone = require("backbone");
 var $ = require('jquery');
 Backbone.$ = $;
-require('../../lib/backbone-tastypie');
+require('../lib/backbone-tastypie');
 
 require('./models/clue');
 require('./collections/clues');
@@ -12376,7 +12376,7 @@ $(function() {
 });
 
 
-},{"../../lib/backbone-tastypie":10,"./collections/clues":6,"./models/clue":7,"./views/clue":8,"./views/clues":9,"backbone":1,"jquery":3}],6:[function(require,module,exports){
+},{"../lib/backbone-tastypie":10,"./collections/clues":6,"./models/clue":7,"./views/clue":8,"./views/clues":9,"backbone":1,"jquery":3}],6:[function(require,module,exports){
 var Backbone = require("backbone");
 var _ = require('underscore');
 var Clue = require('../models/clue');

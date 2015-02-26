@@ -1,7 +1,7 @@
 var Backbone = require("backbone");
 var $ = require('jquery');
 Backbone.$ = $;
-require('../../lib/backbone-tastypie');
+require('../lib/backbone-tastypie');
 
 require('./models/clue');
 require('./collections/clues');
