@@ -6,23 +6,22 @@
 
 {% block content %}
 
-    Developed by <a href="http://google.com/+scotthillisme">Scott C. Hill</a>.
-
-    <h3>database</h3>
-    <div>
-        <p>The database is a PostgreSQL database containing {{ clue_count|intcomma }} clues.</p>
-    </div>
-
-    <h3>client</h3>
-    <p>The main index page is a <a href="http://en.wikipedia.org/wiki/Single-page_application">single-page application</a> written with <a href="http://backbonejs.org/">Backbone.js</a> javascript framework.</p>
-
-    <h3>api</h3>
+    <h2>developed by</h2>
+    <p><a href="http://google.com/+scotthillisme">Scott C. Hill</a></p>
+    <br/>
+    <h2>technical details</h2>
+    <p><a href="https://docs.djangoproject.com/">Django</a> and <a href="https://django-tastypie.readthedocs.org/">Tastypie</a> are used to serve the Clue data.</p>
+    <p>The database is <a href="http://www.postgresql.org/">PostgreSQL</a>.</p>
+    <p>Raw clue data gathered and parsed with <a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>.</p>
+    <p>Uses modularized Javascript components via <a href="http://node.js.org">Node.js</a>, built with <a href="http://browserify.org/">Browserify</a>.</p>
+    <p>The Javascript app framework is <a href="http://backbonejs.org/">Backbone.js</a></p>
+    <br/>
+    <h2>api</h2>
     <p>A <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> api interface to the clues is rendered with
         <a href="https://django-tastypie.readthedocs.org/">Tastypie</a> and
         <a href="https://github.com/PaulUithol/backbone-tastypie/">Backbone-tastypie</a>.
     </p>
     <ul id="api-samples"></ul>
-
 
 {% endblock %}
 

@@ -1,0 +1,45 @@
+{% extends 'base_site.html' %}
+
+{% block title %}Clues Index{% endblock %}
+
+{% block content %}
+
+    {# Too ugly atm #}
+    {# {% include "widgets/sample-clue.html" %} #}
+
+    <div id="clues-view">
+        <div class="clues-list-controls">
+            <span> Displaying {{ api_limit }} random game show clues. (Refresh for a new set.)</span>
+
+            <span class="pull-right">
+                <input type="text" id="searchText" placeholder="search" />
+            </span>
+        </div>
+        <div id="clues-list" class="list-group"></div>
+
+    </div>
+
+    <script id="clueTemplate" type="text/template">
+        <div class="list-group-item">
+            <a href="#" class="clue list-group-item">
+                <h4 class="list-group-item-heading"><%= category %></h4>
+                <p class="list-group-item-text"><%= question %></p>
+                <p class="answer list-group-item-text"></p>
+            </a>
+            <div class="clue-controls">
+                <input class="guess-text" placeholder="answer..."/>
+                <span class="results list-group-item-text"></span>&nbsp;
+                <button type="button" class="tellme-btn btn btn-xs btn-primary">tell me</button>
+            </div>
+        </div>
+    </script>
+
+
+{% endblock %}
+
+{% load staticfiles %}
+{% block extrajs %}
+
+    <script src="{% static 'js/bundle.js' %}"></script>
+
+{% endblock extrajs %}
