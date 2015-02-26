@@ -88,24 +88,14 @@
 {% endblock %}
 
 {% load staticfiles %}
-
 {% block extrajs %}
-    <!-- backbone, tastypie, underscore -->
-{#    <script src="{% static 'lib/underscore.js' %}"></script>#}
-{#    <script src="{% static 'lib/backbone.js' %}"></script>#}
-{#    <script src="{% static 'js/backbone/models/clue.js' %}"></script>#}
-{#    <script src="{% static 'js/backbone/collections/clues.js' %}"></script>#}
-{#    <script src="{% static 'js/backbone/views/clue.js' %}"></script>#}
-{#    <script src="{% static 'js/backbone/views/clues.js' %}"></script>#}
-{#    <script src="{% static 'js/backbone/app.js' %}"></script>#}
 
     <script src="{% static 'js/backbone/bundle.js' %}"></script>
-
-{#    <script src="{% static 'lib/backbone-tastypie.js' %}"></script>#}
 
     <script type="text/javascript">
         $("#site-intro-close").click(function(){
             $("#site-intro").hide();
         });
     </script>
+
 {% endblock extrajs %}

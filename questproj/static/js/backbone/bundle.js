@@ -12378,6 +12378,7 @@ $(function() {
 
 },{"../../lib/backbone-tastypie":10,"./collections/clues":6,"./models/clue":7,"./views/clue":8,"./views/clues":9,"backbone":1,"jquery":3}],6:[function(require,module,exports){
 var Backbone = require("backbone");
+var _ = require('underscore');
 var Clue = require('../models/clue');
 
 
@@ -12400,7 +12401,7 @@ var Clues = Backbone.Collection.extend({
 
 
 module.exports = Clues;
-},{"../models/clue":7,"backbone":1}],7:[function(require,module,exports){
+},{"../models/clue":7,"backbone":1,"underscore":4}],7:[function(require,module,exports){
 var Backbone = require("backbone");
 
 
