@@ -3,10 +3,10 @@ var $ = require('jquery');
 Backbone.$ = $;
 require('../../lib/backbone-tastypie');
 
-require('./models/clue.js');
-require('./collections/clues.js');
-require('./views/clue.js');
-var CluesView = require('./views/clues.js');
+require('./models/clue');
+require('./collections/clues');
+require('./views/clue');
+var CluesView = require('./views/clues');
 
 $(function() {
 

@@ -1,5 +1,5 @@
 var Backbone = require("backbone");
-var Clue = require('../models/clue.js');
+var Clue = require('../models/clue');
 
 
 var Clues = Backbone.Collection.extend({
