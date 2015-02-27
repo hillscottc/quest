@@ -8,6 +8,12 @@
     {# {% include "widgets/sample-clue.html" %} #}
 
     <div id="clues-view">
+
+        <div style="margin-bottom: 10px">
+            <div>Answered: <span id="answer-count"></span>
+            </div>
+        </div>
+
         <div class="clues-list-controls">
             <span> Displaying {{ api_limit }} random game show clues. (Refresh for a new set.)</span>
 
