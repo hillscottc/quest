@@ -25,12 +25,6 @@ var CluesView = Backbone.View.extend({
         'propertychange #searchText' : 'search' // for IE
     },
 
-    //showHoro: function() {
-    //    $("#nostra-txt").load("/horoscope", function(responseTxt, statusTxt, xhr){
-    //        if(statusTxt == "error") console.log("Err: " + xhr.status + ": " + xhr.statusText);
-    //    });
-    //},
-
     guessRight: function() {
         this.rights_count++;
         console.log("Right:", this.rights_count);
@@ -51,15 +45,6 @@ var CluesView = Backbone.View.extend({
         //    modal_el.modal({"show": true});
         //}
     },
-
-    //showModal: function(header, body) {
-    //    var modal_el = $('#basicModal');
-    //    modal_el.find('.modal-header h4').html(header);
-    //    modal_el.find('.modal-body h3').html(body);
-    //    modal_el.modal({"show": true});
-    //},
-
-
 
     search: function() {
         var letters = $("#searchText").val();
