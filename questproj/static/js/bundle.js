@@ -12473,6 +12473,10 @@ var ClueView = Backbone.View.extend({
         if (this.fuzzyMatch(guess_el.val(), answer)) {
             results_el.text("Right!");
             guess_el.val(answer);
+
+            // Disable further edit
+            guess_el.prop("readonly", true);
+
             this.vent.trigger("guessRight");
         } else {
             results_el.text("");
@@ -12484,6 +12488,11 @@ var ClueView = Backbone.View.extend({
         var guess_el = this.$('.guess-text');
         var answer = this.model.attributes['answer'];
         guess_el.val(answer);
+
+        // For debugging, allow this
+        // Disable further edit
+        //guess_el.prop("readonly", true);
+
         e.preventDefault();
     },
 
@@ -12537,30 +12546,13 @@ var CluesView = Backbone.View.extend({
     },
 
     events: {
-        //'click #nostra-btn' : 'showHoro',
         'input #searchText' : 'search',
         'propertychange #searchText' : 'search' // for IE
     },
 
     guessRight: function() {
         this.rights_count++;
-        console.log("Right:", this.rights_count);
-
-        //// Show a modal sometimes.
-        //if (this.rights_count == 1) {
-        //    this.showModal("Congratulations!",
-        //        "You have answered the first question. You'll get an updated horoscope " +
-        //        "for every 3rd answer.");
-        //} else if (this.rights_count % 3 == 0) {
-        //    var modal_el = $('#basicModal');
-        //    modal_el.find('.modal-header h4').html("Your fortune is...");
-        //
-        //    // Ajax-load the modal body
-        //    $("#modal-body").load("/horoscope", function(responseTxt, statusTxt, xhr){
-        //        if(statusTxt == "error") console.log("Err: " + xhr.status + ": " + xhr.statusText);
-        //    });
-        //    modal_el.modal({"show": true});
-        //}
+        $("#answer-count").text(this.rights_count);
     },
 
     search: function() {

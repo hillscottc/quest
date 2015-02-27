@@ -20,30 +20,13 @@ var CluesView = Backbone.View.extend({
     },
 
     events: {
-        //'click #nostra-btn' : 'showHoro',
         'input #searchText' : 'search',
         'propertychange #searchText' : 'search' // for IE
     },
 
     guessRight: function() {
         this.rights_count++;
-        console.log("Right:", this.rights_count);
-
-        //// Show a modal sometimes.
-        //if (this.rights_count == 1) {
-        //    this.showModal("Congratulations!",
-        //        "You have answered the first question. You'll get an updated horoscope " +
-        //        "for every 3rd answer.");
-        //} else if (this.rights_count % 3 == 0) {
-        //    var modal_el = $('#basicModal');
-        //    modal_el.find('.modal-header h4').html("Your fortune is...");
-        //
-        //    // Ajax-load the modal body
-        //    $("#modal-body").load("/horoscope", function(responseTxt, statusTxt, xhr){
-        //        if(statusTxt == "error") console.log("Err: " + xhr.status + ": " + xhr.statusText);
-        //    });
-        //    modal_el.modal({"show": true});
-        //}
+        $("#answer-count").text(this.rights_count);
     },
 
     search: function() {

@@ -42,6 +42,10 @@ var ClueView = Backbone.View.extend({
         if (this.fuzzyMatch(guess_el.val(), answer)) {
             results_el.text("Right!");
             guess_el.val(answer);
+
+            // Disable further edit
+            guess_el.prop("readonly", true);
+
             this.vent.trigger("guessRight");
         } else {
             results_el.text("");
@@ -53,6 +57,11 @@ var ClueView = Backbone.View.extend({
         var guess_el = this.$('.guess-text');
         var answer = this.model.attributes['answer'];
         guess_el.val(answer);
+
+        // For debugging, allow this
+        // Disable further edit
+        //guess_el.prop("readonly", true);
+
         e.preventDefault();
     },
 
