@@ -21,6 +21,10 @@ class HomeView(TemplateView):
         return context
 
 
+class AdminPageView(TemplateView):
+    template_name = "admin-page.html"
+
+
 class IndexView(TemplateView):
     template_name = "index.html"
 
