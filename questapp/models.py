@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -73,9 +74,18 @@ class Clue(BaseModel):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    rights = models.IntegerField(default=0)
-    wrongs = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.user.username
 
+
+class UserLog(models.Model):
+    """Trying not to use foreign keys in a log class.
+    """
+    created = models.DateTimeField(auto_now_add=True, default=datetime.now)
+    userid = models.IntegerField(default=0)
+    questionid = models.IntegerField(default=0)
+    correct = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return u"{}, {}, {}".format(self.created, self.userid, self.questionid)

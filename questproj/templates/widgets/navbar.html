@@ -19,7 +19,7 @@
                     <a href="{% url 'user_account' %}">{{ user.username }}</a>
                     [ <a href="{% url 'logout' %}">logout</a>
                     {% if user.username == 'shill' %}
-                         &nbsp;<a href="/admin/">admin</a>
+                         &nbsp;<a href="{% url 'admin-page' %}">admin</a>
                     {% endif %}
                     ]
                 {% else %}

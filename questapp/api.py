@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from questapp.models import Clue, UserProfile
+from questapp.models import Clue, UserProfile, UserLog
 from questapp.cors_base import CORSModelResource, CORSResource
 from tastypie import fields
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
@@ -43,4 +43,15 @@ class UserProfileResource(CORSModelResource):
         authorization = Authorization()
         filtering = {
             'user': ALL_WITH_RELATIONS,
+        }
+
+
+class UserLogResource(CORSModelResource):
+
+    class Meta:
+        queryset = UserLog.objects.all()
+        resource_name = 'user_log'
+        filtering = {
+            'userid': ALL,
+            'created': ALL
         }

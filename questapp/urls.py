@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url, include
 from django.contrib import admin
 from tastypie.api import Api
 from questapp.api import (ClueResource, RandomCluesResource,
-                          UserResource, UserProfileResource)
+                          UserResource, UserProfileResource, UserLogResource)
 
 admin.autodiscover()
 
@@ -11,6 +11,7 @@ v1_api.register(ClueResource())
 v1_api.register(RandomCluesResource())
 v1_api.register(UserResource())
 v1_api.register(UserProfileResource())
+v1_api.register(UserLogResource())
 
 
 urlpatterns = patterns(
