@@ -1,16 +1,21 @@
-from django.core.management.base import NoArgsCommand
+import json
+from django.core.management.base import BaseCommand
 from questapp.models import Clue
-from django.core import serializers
-
-OUTFILE = 'clues.json'
 
 
-class Command(NoArgsCommand):
-    help = 'Parese and load all the html files.'
+class Command(BaseCommand):
+    args = '<outfile>'
+    help = 'Writes a json format dump file of the Clues.'
 
-    def handle_noargs(self, **options):
-        json_serializer = serializers.get_serializer("json")()
-        with open(OUTFILE, "w") as out:
-            json_serializer.serialize(Clue.objects.all()[:10],
-                                      fields=('question', 'category', 'answer'),
-                                      stream=out)
+    def handle(self, *args, **options):
+        if not args:
+            raise ValueError("Output file arg not specified.")
+        outfile = args[0]
+
+        clue_qs = Clue.objects.all()
+        clue_data = [{'question': clue.question, 'category': clue.category, 'answer': clue.answer}
+                     for clue in clue_qs]
+
+        with open(outfile, 'w') as out:
+            json.dump(clue_data, out)
+
