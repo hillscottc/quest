@@ -11,9 +11,9 @@ A web application for accessing an archive of questions.
 - The Javascript app framework is [Backbone.js](http://backbonejs.org/)
 
 
-#Some usage
+#Load the database
 
-    $ django-admin dump_clues questproj/fixtures/clues.json
+    $ django-admin load_clues questproj/fixtures/clues.json
 
 
 #Installation
