@@ -10,6 +10,12 @@ A web application for accessing an archive of questions.
 - Uses modularized Javascript components via [Node.js](http://node.js.org), built with [Browserify](http://browserify.org/). 
 - The Javascript app framework is [Backbone.js](http://backbonejs.org/)
 
+
+#Load the database
+
+    $ django-admin load_clues questproj/fixtures/clues.json
+
+
 #Installation
 
     npm install

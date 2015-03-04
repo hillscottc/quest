@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from questapp.utils import load_samples
+# from questapp.utils import load_samples
 
 
 class Command(BaseCommand):
@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         num = args[0] if args else None
-        load_samples(num)
+        # load_samples(num)
 
 # class Command(NoArgsCommand):
 #     help = 'Parese and load all the html files.'

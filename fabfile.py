@@ -5,7 +5,7 @@ import os
 
 from fabric.api import local, sudo, env, task, abort
 from fabric.contrib.console import confirm
-from questapp.utils import load_samples
+# from questapp.utils import load_samples
 from django.conf import settings
 
 env.hosts = ['localhost', ]
