@@ -1,14 +1,16 @@
-var Backbone = require("backbone");
-var _ = require('underscore');
-var Clues = require('../collections/clues');
-var ClueView = require('./clue');
+//var Backbone = require("backbone");
+//var _ = require('underscore');
+//var Clues = require('../collections/clues');
+//var ClueView = require('./clue');
 
-var CluesView = Backbone.View.extend({
+var app = app || {};
+
+app.CluesView = Backbone.View.extend({
 
     el: '#clues-view',
 
     initialize: function(initialClues) {
-        this.collection = new Clues(initialClues);
+        this.collection = new app.Clues(initialClues);
         this.collection.fetch({reset: true});
         this.vent = _.extend({}, Backbone.Events);   // Event aggregator
         this.rights_count = 0;
@@ -52,9 +54,9 @@ var CluesView = Backbone.View.extend({
 
     // Render an individual item
     renderItem: function( item ) {
-        var clueView = new ClueView({model: item, vent: this.vent});
+        var clueView = new app.ClueView({model: item, vent: this.vent});
         $("#clues-list").append( clueView.render().el );
     }
 });
 
-module.exports = CluesView;
+//module.exports = app.CluesView;

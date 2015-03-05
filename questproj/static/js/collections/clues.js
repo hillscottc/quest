@@ -1,11 +1,12 @@
-var Backbone = require("backbone");
-var _ = require('underscore');
-var Clue = require('../models/clue');
+//var Backbone = require("backbone");
+//var _ = require('underscore');
+//var Clue = require('../models/clue');
 
+var app = app || {};
 
-var Clues = Backbone.Collection.extend({
+app.Clues = Backbone.Collection.extend({
 
-    model: Clue,
+    model: app.Clue,
 
     url: '/api/v1/random_clues/',
 
@@ -21,4 +22,4 @@ var Clues = Backbone.Collection.extend({
 });
 
 
-module.exports = Clues;
+//module.exports = app.Clues;
