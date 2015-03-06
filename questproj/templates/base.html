@@ -9,33 +9,25 @@
     <meta name="description" content="Quiz Site">
     <meta name="author" content="Scott Hill">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'lib/bootstrap/css/bootstrap.css' %}" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap-theme.css' %}">
 
-    <!-- Bootstrap theme -->
-    <link href="{% static 'lib/bootstrap/css/bootstrap-theme.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/theme.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.structure.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.theme.css' %}">
 
-    <!-- JQuery UI css -->
-    <link href="{% static 'lib/jquery-ui/jquery-ui.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/jquery-ui/jquery-ui.structure.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/jquery-ui/jquery-ui.theme.css' %}" rel="stylesheet">
-
-    <!-- JQuery -->
     <script src="{% static 'lib/jquery.js' %}"></script>
-
-    <!-- JQuery UI js-->
     <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
 
     <!-- Google Analytics-->
     <script src="{% static 'js/tracking.js' %}"></script>
 
-    <!-- My site default css -->
-    <link rel="stylesheet" href="{% static "css/style.css" %}" />
-
-    <title>{% block title %}{% endblock %}</title>
+    <title>
+        {% block title %}{% endblock %}
+    </title>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,11 +55,9 @@
 
 
 <div id="footer" style="font-size:x-small;margin:20px">
-        The Jeopardy! game show and all elements thereof, including but not limited to copyright and trademark thereto, are the property of Jeopardy Productions, Inc. and are protected under law. This website is not affiliated with, sponsored by, or operated by Jeopardy Productions, Inc.<br/>
         Copyright (C) {% now "Y" %}  {{ SITE_NAME }}
     </div>
 
-    <!-- Bootstrap styles and JQuery -->
     <script src="{% static 'lib/bootstrap/js/bootstrap.js' %}"></script>
 
     {% block extrajs %}{% endblock extrajs %}
