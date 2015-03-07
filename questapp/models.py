@@ -20,7 +20,7 @@ class BaseModelManager(models.Manager):
 class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, editable=False)
-    last_accessed = models.DateTimeField(auto_now=True, editable=False)
+    # last_accessed = models.DateTimeField(auto_now=True, editable=False)
 
     objects = BaseModelManager()
 
@@ -69,3 +69,9 @@ class UserLog(models.Model):
 
     def __unicode__(self):
         return u"{}, {}, {}".format(self.created, self.userid, self.questionid)
+
+
+class DbStore(models.Model):
+    dbkey = models.CharField(max_length=255)
+    dbval = models.CharField(max_length=255)
+
