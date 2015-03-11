@@ -1,6 +1,8 @@
 from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.template import RequestContext
+from django.http import HttpResponseForbidden
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -23,6 +25,16 @@ class HomeView(TemplateView):
 
 class AdminPageView(TemplateView):
     template_name = "admin-page.html"
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return HttpResponseForbidden()
+
+        # Look up the author we're interested in.
+        self.object = self.get_object()
+        # Actually record interest somehow here!
+
+        return HttpResponseRedirect(reverse('home'))
 
 
 class IndexView(TemplateView):

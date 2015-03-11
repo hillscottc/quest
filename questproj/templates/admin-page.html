@@ -19,6 +19,12 @@
 
 {% block extrajs %}
 
+{#  I do an old-school import of jquery here, just so I can use it to write quick scripts. #}
+{#  Hacky.Could the bundled jquery could be used instead?  But its just an admin page anyway. #}
+    {% load staticfiles %}
+    <script src="{% static 'lib/jquery.js' %}"></script>
+
+
     <script type="text/javascript">
 
         // Write href code for each url in the list
