@@ -1,7 +1,7 @@
+var Backbone = require("backbone");
 
-var app = app || {};
 
-app.Clue = Backbone.Model.extend({
+Clue = Backbone.Model.extend({
 
     defaults: {
         question: 'Some question.',
@@ -18,3 +18,4 @@ app.Clue = Backbone.Model.extend({
 
 });
 
+module.exports = Clue;

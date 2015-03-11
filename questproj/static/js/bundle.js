@@ -12364,6 +12364,8 @@ require('./collections/clues');
 require('./views/clue');
 var CluesView = require('./views/clues');
 
+
+
 $(function() {
 
     //app.vent = _.extend({}, Backbone.Events);
@@ -12372,15 +12374,13 @@ $(function() {
     new CluesView();
 
 });
-
-
 },{"../lib/backbone-tastypie":9,"./collections/clues":5,"./models/clue":6,"./views/clue":7,"./views/clues":8,"backbone":1,"jquery":2}],5:[function(require,module,exports){
 var Backbone = require("backbone");
 var _ = require('underscore');
 var Clue = require('../models/clue');
 
 
-var Clues = Backbone.Collection.extend({
+Clues = Backbone.Collection.extend({
 
     model: Clue,
 
@@ -12403,7 +12403,7 @@ module.exports = Clues;
 var Backbone = require("backbone");
 
 
-var Clue = Backbone.Model.extend({
+Clue = Backbone.Model.extend({
 
     defaults: {
         question: 'Some question.',
@@ -12418,20 +12418,17 @@ var Clue = Backbone.Model.extend({
     	return '/api/v1/clue/';
 	}
 
-//    , parse: function( response ) {
-//	    response.id = response._id;
-//	    return response;
-//	}
-
 });
 
 module.exports = Clue;
 },{"backbone":1}],7:[function(require,module,exports){
 var Backbone = require("backbone");
+var $ = require('jquery');
 var _ = require('underscore');
 
 
-var ClueView = Backbone.View.extend({
+
+ClueView = Backbone.View.extend({
     tagName: 'div',
     className: 'clueContainer',
 
@@ -12521,13 +12518,15 @@ module.exports = ClueView;
 
 
 
-},{"backbone":1,"underscore":3}],8:[function(require,module,exports){
+},{"backbone":1,"jquery":2,"underscore":3}],8:[function(require,module,exports){
 var Backbone = require("backbone");
+var $ = require('jquery');
 var _ = require('underscore');
 var Clues = require('../collections/clues');
 var ClueView = require('./clue');
 
-var CluesView = Backbone.View.extend({
+
+CluesView = Backbone.View.extend({
 
     el: '#clues-view',
 
@@ -12583,8 +12582,7 @@ var CluesView = Backbone.View.extend({
 
 module.exports = CluesView;
 
-},{"../collections/clues":5,"./clue":7,"backbone":1,"underscore":3}],9:[function(require,module,exports){
-var Backbone = require("backbone");
+},{"../collections/clues":5,"./clue":7,"backbone":1,"jquery":2,"underscore":3}],9:[function(require,module,exports){
 
 /**
  * Backbone-tastypie.js 0.2.0
