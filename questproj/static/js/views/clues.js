@@ -1,7 +1,3 @@
-//var Backbone = require("backbone");
-//var _ = require('underscore');
-//var Clues = require('../collections/clues');
-//var ClueView = require('./clue');
 
 var app = app || {};
 
@@ -59,4 +55,3 @@ app.CluesView = Backbone.View.extend({
     }
 });
 
-//module.exports = app.CluesView;

@@ -1,4 +1,3 @@
-//var Backbone = require("backbone");
 
 var app = app || {};
 
@@ -17,11 +16,5 @@ app.Clue = Backbone.Model.extend({
     	return '/api/v1/clue/';
 	}
 
-//    , parse: function( response ) {
-//	    response.id = response._id;
-//	    return response;
-//	}
-
 });
 
-//module.exports = app.Clue;
