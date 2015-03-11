@@ -1,8 +1,10 @@
 var Backbone = require("backbone");
+var $ = require('jquery');
 var _ = require('underscore');
 
 
-var ClueView = Backbone.View.extend({
+
+ClueView = Backbone.View.extend({
     tagName: 'div',
     className: 'clueContainer',
 

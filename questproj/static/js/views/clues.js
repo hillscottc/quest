@@ -1,9 +1,11 @@
 var Backbone = require("backbone");
+var $ = require('jquery');
 var _ = require('underscore');
 var Clues = require('../collections/clues');
 var ClueView = require('./clue');
 
-var CluesView = Backbone.View.extend({
+
+CluesView = Backbone.View.extend({
 
     el: '#clues-view',
 

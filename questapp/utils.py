@@ -1,5 +1,5 @@
 import json
-from questapp.models import Clue
+from questapp.models import Clue, DbStore
 
 
 def load_clues(infile):
@@ -9,3 +9,9 @@ def load_clues(infile):
             clue = Clue(**clue_data)
             clue.save()
     print "Clue count: {:,}".format(Clue.objects.count())
+
+
+def dbstore_get(dbkey):
+    return DbStore.objects.get(dbkey=dbkey).dbval
+
+

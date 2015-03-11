@@ -1,4 +1,3 @@
-var Backbone = require("backbone");
 
 /**
  * Backbone-tastypie.js 0.2.0
