@@ -13,11 +13,6 @@ A web application for accessing an archive of questions.
 
 ## Installation
 
-    npm install
-    
-Rebuild the browser.js by using the build command in the package.json. It calls browserify.
-    
-    npm run build    
     
 ## Load the database
 The database is loaded from a local json file at `questproj/fixtures/clues.json`, 
