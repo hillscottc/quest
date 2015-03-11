@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.structure.css' %}">
     <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.theme.css' %}">
 
-    <script src="{% static 'lib/jquery.js' %}"></script>
-    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
+{#    <script src="{% static 'lib/jquery.js' %}"></script>#}
+{#    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>#}
 
     <!-- Google Analytics-->
     <script src="{% static 'js/tracking.js' %}"></script>
@@ -58,7 +58,8 @@
         Copyright (C) {% now "Y" %}  {{ SITE_NAME }}
     </div>
 
-    <script src="{% static 'lib/bootstrap/js/bootstrap.js' %}"></script>
+{#    <script src="{% static 'lib/bootstrap/js/bootstrap.js' %}"></script>#}
+    <script src="{% static 'js/bundle.js' %}"></script>
 
     {% block extrajs %}{% endblock extrajs %}
 

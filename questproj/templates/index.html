@@ -43,19 +43,3 @@
 
 {% endblock %}
 
-{% load staticfiles %}
-{% block extrajs %}
-
-    <script src="{% static 'lib/underscore.js' %}"></script>
-    <script src="{% static 'lib/backbone.js' %}"></script>
-    <script src="{% static 'lib/backbone-tastypie.js' %}"></script>
-
-    <script src="{% static 'js/models/clue.js' %}"></script>
-    <script src="{% static 'js/collections/clues.js' %}"></script>
-    <script src="{% static 'js/views/clue.js' %}"></script>
-    <script src="{% static 'js/views/clues.js' %}"></script>
-    <script src="{% static 'js/app.js' %}"></script>
-    <script src="{% static 'js/tracking.js' %}"></script>
-
-
-{% endblock extrajs %}
