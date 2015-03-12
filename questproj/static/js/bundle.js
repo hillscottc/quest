@@ -12471,7 +12471,7 @@ ClueView = Backbone.View.extend({
             // Disable further edit
             guess_el.prop("readonly", true);
 
-            this.vent.trigger("guessRight");
+            this.vent.trigger("guessRight", this);
         } else {
             results_el.text("");
         }
@@ -12546,7 +12546,9 @@ CluesView = Backbone.View.extend({
         'propertychange #searchText' : 'search' // for IE
     },
 
-    guessRight: function() {
+    guessRight: function(targ) {
+        var questionid = targ.model['attributes']['id'];
+        console.log(questionid);
         this.rights_count++;
         $("#answer-count").text(this.rights_count);
     },

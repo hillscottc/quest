@@ -26,7 +26,9 @@ CluesView = Backbone.View.extend({
         'propertychange #searchText' : 'search' // for IE
     },
 
-    guessRight: function() {
+    guessRight: function(targ) {
+        var questionid = targ.model['attributes']['id'];
+        console.log(questionid);
         this.rights_count++;
         $("#answer-count").text(this.rights_count);
     },
