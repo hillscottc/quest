@@ -10,7 +10,8 @@
     <p><a href="/admin/">Django Admin</a></p>
     <h2>App Settings</h2>
     <div>
-        <form action="{% url 'admin-page' %}" method="post">
+        <form
+        ="{% url 'admin-page' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <em>This is unused atm.</em>
