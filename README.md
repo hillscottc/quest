@@ -24,3 +24,6 @@ The database is loaded from a local json file at `questproj/fixtures/clues.json`
 provided by [srcmunge](https://github.com/hillscottc/srcmunge.git).
 
     $ django-admin load_clues questproj/fixtures/clues.json
+
+# TODO
+- protect, or even hide the api?
