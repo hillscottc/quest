@@ -1,5 +1,5 @@
 {% extends "base_site.html" %}
-
+{% load staticfiles %}
 {% load humanize %}
 
 {% block title %}Admin Page{% endblock %}
@@ -8,12 +8,12 @@
 
     <h2>Model Admin</h2>
     <p><a href="/admin/">Django Admin</a></p>
-
     <h2>App Settings</h2>
     <div>
-        <form action="/your-name/" method="post">
+        <form action="{% url 'admin-page' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
+            <em>This is unused atm.</em>
             <input type="submit" value="Submit" />
         </form>
     </div>
@@ -32,7 +32,7 @@
 
 {#  I do an old-school import of jquery here, just so I can use it to write quick scripts. #}
 {#  Hacky.Could the bundled jquery could be used instead?  But its just an admin page anyway. #}
-    {% load staticfiles %}
+
     <script src="{% static 'lib/jquery.js' %}"></script>
 
 

@@ -1,14 +1,15 @@
 from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.template import RequestContext
-from django.http import HttpResponseForbidden
 from django.views.generic import TemplateView, View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django import forms
 from questproj.forms import UserProfileForm, UserForm
 from questapp.models import Clue
+from questapp.utils import dbstore_get
 
 
 def google_verify(request):
@@ -18,30 +19,37 @@ def google_verify(request):
 class HomeView(TemplateView):
     template_name = "home.html"
 
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        context.update({'clue_source_name': settings.CLUE_SOURCE_NAME})
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(HomeView, self).get_context_data(**kwargs)
+    #     context.update({'clue_source_name': settings.CLUE_SOURCE_NAME})
+    #     return context
 
 
 class AdminPageForm(forms.Form):
-    api_limit = forms.IntegerField(min_value=10, max_value=500)
+    clue_source_name = forms.CharField(max_length=12)
 
 
 class AdminPageFormView(View):
     form_class = AdminPageForm
-    initial = {'api_limit': settings.API_LIMIT_PER_PAGE}
     template_name = 'admin-page.html'
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.initial)
+        try:
+            clue_source_name = dbstore_get('clue_source_name')
+        except ObjectDoesNotExist:
+            clue_source_name = "Jeopardy Clues"
+
+        initial = {'clue_source_name': clue_source_name}
+
+        form = self.form_class(initial=initial)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
             # <process form cleaned data>
-            return HttpResponseRedirect('/success/')
+            # return HttpResponseRedirect('/success/')
+            pass
 
         return render(request, self.template_name, {'form': form})
 
@@ -155,9 +163,9 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('home'))
 
 
-    # @login_required
-    # def user_account(request):
-    #     return render(request, 'registration/user_account.html', {})
+# @login_required
+# def user_account(request):
+#     return render(request, 'registration/user_account.html', {})
