@@ -51,7 +51,8 @@ class UserLogResource(CORSModelResource):
     class Meta:
         queryset = UserLog.objects.all()
         resource_name = 'user_log'
+        authorization = Authorization()
         filtering = {
             'userid': ALL,
-            'created': ALL
+            'questionid': ALL
         }

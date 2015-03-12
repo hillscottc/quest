@@ -25,6 +25,9 @@
         <a href="https://github.com/PaulUithol/backbone-tastypie/">Backbone-tastypie</a>.
     </p>
     <ul id="api-samples"></ul>
+    <p>
+        <button id="testPostLog">Test POST to UserLog</button>
+    </p>
 
 {% endblock %}
 
@@ -55,6 +58,18 @@
             for (var i=0; i < urls.length; i++) {
                 $('#api-samples').append("<li><a href='" + urls[i] + "'>" + urls[i] + "</a></li>");
             }
+        });
+
+        $( "#testPostLog" ).click(function() {
+            var data = JSON.stringify({"userid": 1, "questionid": 2});
+            $.ajax({
+              url: '/api/v1/user_log/',
+              type: 'POST',
+              contentType: 'application/json',
+              data: data,
+              dataType: 'json',
+              processData: false
+            })
         });
 
     </script>
