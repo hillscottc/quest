@@ -1,23 +1,44 @@
 {% extends "base_site.html" %}
-
+{% load staticfiles %}
 {% load humanize %}
 
 {% block title %}Admin Page{% endblock %}
 
 {% block content %}
 
+    <h2>Model Admin</h2>
     <p><a href="/admin/">Django Admin</a></p>
+    <h2>App Settings</h2>
+    <div>
+        <form
+        ="{% url 'admin-page' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <em>This is unused atm.</em>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+    <br/>
 
-    <h2>api</h2>
+    <h2>API</h2>
     <p>A <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> api interface to the clues is rendered with
         <a href="https://django-tastypie.readthedocs.org/">Tastypie</a> and
         <a href="https://github.com/PaulUithol/backbone-tastypie/">Backbone-tastypie</a>.
     </p>
     <ul id="api-samples"></ul>
+    <p>
+        <button id="testPostLog">Test POST to UserLog</button>
+    </p>
 
 {% endblock %}
 
 {% block extrajs %}
+
+{#  I do an old-school import of jquery here, just so I can use it to write quick scripts. #}
+{#  Hacky.Could the bundled jquery could be used instead?  But its just an admin page anyway. #}
+
+    <script src="{% static 'lib/jquery.js' %}"></script>
+
 
     <script type="text/javascript">
 
@@ -38,6 +59,18 @@
             for (var i=0; i < urls.length; i++) {
                 $('#api-samples').append("<li><a href='" + urls[i] + "'>" + urls[i] + "</a></li>");
             }
+        });
+
+        $( "#testPostLog" ).click(function() {
+            var data = JSON.stringify({"userid": 1, "questionid": 2});
+            $.ajax({
+              url: '/api/v1/user_log/',
+              type: 'POST',
+              contentType: 'application/json',
+              data: data,
+              dataType: 'json',
+              processData: false
+            })
         });
 
     </script>

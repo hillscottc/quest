@@ -12362,9 +12362,8 @@ require('../lib/backbone-tastypie');
 require('./models/clue');
 require('./collections/clues');
 require('./views/clue');
+
 var CluesView = require('./views/clues');
-
-
 
 $(function() {
 
@@ -12472,7 +12471,7 @@ ClueView = Backbone.View.extend({
             // Disable further edit
             guess_el.prop("readonly", true);
 
-            this.vent.trigger("guessRight");
+            this.vent.trigger("guessRight", this);
         } else {
             results_el.text("");
         }
@@ -12547,9 +12546,31 @@ CluesView = Backbone.View.extend({
         'propertychange #searchText' : 'search' // for IE
     },
 
-    guessRight: function() {
+    guessRight: function(targ) {
+        var questionid = targ.model['attributes']['id'];
+        this.postUserLog(questionid);
         this.rights_count++;
         $("#answer-count").text(this.rights_count);
+    },
+
+    postUserLog: function(questionid){
+        var data = JSON.stringify({
+            "userid": 999,
+            "questionid": questionid
+        });
+        var request = $.ajax({
+            url: '/api/v1/user_log/',
+            type: 'POST',
+            contentType: 'application/json',
+            data: data,
+            dataType: 'html',
+            processData: false});
+
+        request.done(function() {
+            if (request['statusText'] == 'CREATED') {
+                console.log("Posted UserLog record with " + data);
+            }
+        });
     },
 
     search: function() {

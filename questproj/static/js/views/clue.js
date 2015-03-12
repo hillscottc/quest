@@ -48,7 +48,7 @@ ClueView = Backbone.View.extend({
             // Disable further edit
             guess_el.prop("readonly", true);
 
-            this.vent.trigger("guessRight");
+            this.vent.trigger("guessRight", this);
         } else {
             results_el.text("");
         }

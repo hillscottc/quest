@@ -1,6 +1,7 @@
 import json
+from django.conf import  settings
 from questapp.models import Clue, DbStore
-
+from django.core.exceptions import ObjectDoesNotExist
 
 def load_clues(infile):
     with open(infile) as json_file:
@@ -13,5 +14,12 @@ def load_clues(infile):
 
 def dbstore_get(dbkey):
     return DbStore.objects.get(dbkey=dbkey).dbval
+
+
+def get_clue_source_name():
+    try:
+        return dbstore_get('clue_source_name')
+    except ObjectDoesNotExist:
+        return "Clues"
 
 

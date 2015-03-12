@@ -15,7 +15,7 @@ urlpatterns = patterns(
     # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
     url(r'^', include('questapp.urls')),            # put questapp at /
 
-    url(r'^admin-page/', views.AdminPageView.as_view(), name="admin-page"),
+    url(r'^admin-page/', views.AdminPageFormView.as_view(), name="admin-page"),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about$', views.AboutView.as_view(), name="about"),
