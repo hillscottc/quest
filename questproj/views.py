@@ -3,9 +3,10 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.template import RequestContext
 from django.http import HttpResponseForbidden
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django import forms
 from questproj.forms import UserProfileForm, UserForm
 from questapp.models import Clue
 
@@ -23,18 +24,26 @@ class HomeView(TemplateView):
         return context
 
 
-class AdminPageView(TemplateView):
-    template_name = "admin-page.html"
+class AdminPageForm(forms.Form):
+    api_limit = forms.IntegerField(min_value=10, max_value=500)
+
+
+class AdminPageFormView(View):
+    form_class = AdminPageForm
+    initial = {'api_limit': settings.API_LIMIT_PER_PAGE}
+    template_name = 'admin-page.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
-            return HttpResponseForbidden()
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            # <process form cleaned data>
+            return HttpResponseRedirect('/success/')
 
-        # Look up the author we're interested in.
-        self.object = self.get_object()
-        # Actually record interest somehow here!
-
-        return HttpResponseRedirect(reverse('home'))
+        return render(request, self.template_name, {'form': form})
 
 
 class IndexView(TemplateView):
