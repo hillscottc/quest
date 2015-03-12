@@ -1,2 +1,4 @@
 # TODO
-[ ] protect, or even hide the api?
+- [ ] protect and/or hide the api
+- [ ] save userlog events
+
