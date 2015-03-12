@@ -12362,9 +12362,8 @@ require('../lib/backbone-tastypie');
 require('./models/clue');
 require('./collections/clues');
 require('./views/clue');
+
 var CluesView = require('./views/clues');
-
-
 
 $(function() {
 
