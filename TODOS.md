@@ -1,3 +1,3 @@
 - [ ] protect and/or hide the api
 - [ ] save userlog events
-
+- [ ] do some npm tests
