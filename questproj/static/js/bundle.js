@@ -12359,9 +12359,9 @@ var $ = require('jquery');
 Backbone.$ = $;
 require('../lib/backbone-tastypie');
 
-require('./models/clue');
-require('./collections/clues');
-require('./views/clue');
+//require('./models/clue');
+//require('./collections/clues');
+//require('./views/clue');
 
 var CluesView = require('./views/clues');
 
@@ -12384,7 +12384,7 @@ $(document).on({
         $('body').removeClass("loading");
      }
 });
-},{"../lib/backbone-tastypie":9,"./collections/clues":5,"./models/clue":6,"./views/clue":7,"./views/clues":8,"backbone":1,"jquery":2}],5:[function(require,module,exports){
+},{"../lib/backbone-tastypie":9,"./views/clues":8,"backbone":1,"jquery":2}],5:[function(require,module,exports){
 var Backbone = require("backbone");
 var _ = require('underscore');
 var Clue = require('../models/clue');
