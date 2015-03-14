@@ -86,36 +86,28 @@ body {
     color: #669991;
 }
 
-/*.cat-list {*/
-    /*text-align: left;*/
-/*}*/
-/*.cat-list div {*/
-    /*padding-bottom: 10px;*/
-/*}*/
 
-/*.take-answers ul*/
-/*{*/
-    /*list-style-type: none;*/
-    /*margin-left: 0;*/
-    /*padding-left: 1em;*/
-    /*text-indent: -1em;*/
-/*}*/
 
-/*.take-answers ul li*/
-/*{*/
-/*border-top: 1px solid #ddd;*/
-/*border-right: none;*/
-/*border-bottom: none;*/
-/*border-left: none;*/
-/*}*/
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+                url('../img/spinner.gif')
+                50% 50%
+                no-repeat;
+}
 
-/*.take-questions li*/
-/*{*/
-    /*border-style: none;*/
-/*}*/
+/* For the modal, turn the scrollbar off. */
+body.loading {
+    overflow: hidden;
+}
 
-/*.take-question span*/
-/*{*/
-    /*font-size: large*/
-/*}*/
-
+/* Show the modal */
+body.loading .modal {
+    display: block;
+}
