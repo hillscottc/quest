@@ -12373,6 +12373,17 @@ $(function() {
     new CluesView();
 
 });
+
+$(document).on({
+    ajaxStart: function() {
+        console.log("start loading");
+        $('body').addClass("loading");
+    },
+     ajaxStop: function() {
+        console.log("stop loading");
+        $('body').removeClass("loading");
+     }
+});
 },{"../lib/backbone-tastypie":9,"./collections/clues":5,"./models/clue":6,"./views/clue":7,"./views/clues":8,"backbone":1,"jquery":2}],5:[function(require,module,exports){
 var Backbone = require("backbone");
 var _ = require('underscore');

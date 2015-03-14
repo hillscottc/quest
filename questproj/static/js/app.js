@@ -17,3 +17,14 @@ $(function() {
     new CluesView();
 
 });
+
+$(document).on({
+    ajaxStart: function() {
+        console.log("start loading");
+        $('body').addClass("loading");
+    },
+     ajaxStop: function() {
+        console.log("stop loading");
+        $('body').removeClass("loading");
+     }
+});
