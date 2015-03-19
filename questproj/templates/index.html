@@ -5,8 +5,15 @@
 
 {% block content %}
 
-    {# Too ugly atm #}
-    {# {% include "widgets/sample-clue.html" %} #}
+
+    <div id="userView"></div>
+
+    <script id="userTemplate" type="text/template">
+        <div>the id is
+            <%= id %>
+        </div>
+    </script>
+
 
     <div id="clues-view">
 

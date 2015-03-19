@@ -28,16 +28,15 @@ CluesView = Backbone.View.extend({
 
     guessRight: function(targ) {
         var questionid = targ.model['attributes']['id'];
-        this.postUserLog(questionid);
+
+        this.postUserLog(JSON.stringify({"userid": 999,
+                                         "questionid": questionid}));
+
         this.rights_count++;
         $("#answer-count").text(this.rights_count);
     },
 
-    postUserLog: function(questionid){
-        var data = JSON.stringify({
-            "userid": 999,
-            "questionid": questionid
-        });
+    postUserLog: function(data){
         var request = $.ajax({
             url: '/api/v1/user_log/',
             type: 'POST',
@@ -47,9 +46,7 @@ CluesView = Backbone.View.extend({
             processData: false});
 
         request.done(function() {
-            if (request['statusText'] == 'CREATED') {
-                console.log("Posted UserLog record with " + data);
-            }
+            console.log("Posted " + data + ", received " + request['statusText']);
         });
     },
 
