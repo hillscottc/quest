@@ -19,6 +19,8 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about$', views.AboutView.as_view(), name="about"),
+    url(r'^test$', views.TestView.as_view(), name="test"),
+
 
     url(r'^register/$', register, name='register'),
     url(r'^login/$', user_login, name='login'),
