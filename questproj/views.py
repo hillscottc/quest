@@ -72,8 +72,8 @@ class AboutView(TemplateView):
         return context
 
 
-class TestView(TemplateView):
-    template_name = "test.html"
+class TestMariView(TemplateView):
+    template_name = "test-mari.html"
 
 
 class UserAccountView(TemplateView):

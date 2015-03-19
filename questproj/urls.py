@@ -19,7 +19,7 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about$', views.AboutView.as_view(), name="about"),
-    url(r'^test$', views.TestView.as_view(), name="test"),
+    url(r'^test-mari$', views.TestMariView.as_view(), name="test-mari"),
 
 
     url(r'^register/$', register, name='register'),
