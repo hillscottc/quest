@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="clues-list-controls">
+        <div id="clues-list-controls">
             <span> Displaying {{ api_limit }} random game show clues. (Refresh for a new set.)</span>
 
             <span class="pull-right">
@@ -48,7 +48,7 @@
 
 {% endblock %}
 
+
 {% block extrajs %}
     <script src="{% static 'js/bundle.js' %}"></script>
 {% endblock extrajs %}
-
