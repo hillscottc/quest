@@ -1,4 +1,5 @@
 {% extends 'base_site.html' %}
+{% load staticfiles %}
 
 {% block title %}Clues Index{% endblock %}
 
@@ -46,4 +47,8 @@
 
 
 {% endblock %}
+
+{% block extrajs %}
+    <script src="{% static 'js/bundle.js' %}"></script>
+{% endblock extrajs %}
 
