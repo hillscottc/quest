@@ -4,11 +4,11 @@ var Backbone = require("backbone");
 UserProfile = Backbone.Model.extend({
 
     defaults: {
-        id: 1,
+        id: 0,
         user: {
             date_joined: "",
             last_login: "",
-            username: "",
+            username: "joeuser",
             email: "joe@anon.com",
             first_name: "Joe",
             last_name: "Schmo"

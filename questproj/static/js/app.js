@@ -11,11 +11,17 @@ var UserView = require('./views/user');
 
 
 $(function() {
-    new CluesView();
 
+    // TODO: Dont specify a default, get logged in user.
     var user_profile = new UserProfile({id: 1});
 
-    new UserView({model: user_profile});
+    // Must wait for the fetch to complete before passing it on.
+    user_profile.fetch().then(function(){
+        new UserView({model: user_profile});
+    });
+
+    new CluesView();
+
 });
 
 

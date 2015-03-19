@@ -12367,11 +12367,17 @@ var UserView = require('./views/user');
 
 
 $(function() {
-    new CluesView();
 
+    // TODO: Dont specify a default, get logged in user.
     var user_profile = new UserProfile({id: 1});
 
-    new UserView({model: user_profile});
+    // Must wait for the fetch to complete before passing it on.
+    user_profile.fetch().then(function(){
+        new UserView({model: user_profile});
+    });
+
+    new CluesView();
+
 });
 
 
@@ -12433,11 +12439,11 @@ var Backbone = require("backbone");
 UserProfile = Backbone.Model.extend({
 
     defaults: {
-        id: 1,
+        id: 0,
         user: {
             date_joined: "",
             last_login: "",
-            username: "",
+            username: "joeuser",
             email: "joe@anon.com",
             first_name: "Joe",
             last_name: "Schmo"
@@ -12647,9 +12653,7 @@ UserView = Backbone.View.extend({
 
     initialize: function(options) {
         this.model = options.model;
-        this.model.fetch();
         this.render();
-        console.log("Userview init " + JSON.stringify(this.model));
     },
 
     render: function() {

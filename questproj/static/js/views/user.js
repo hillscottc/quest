@@ -10,9 +10,7 @@ UserView = Backbone.View.extend({
 
     initialize: function(options) {
         this.model = options.model;
-        this.model.fetch();
         this.render();
-        console.log("Userview init " + JSON.stringify(this.model));
     },
 
     render: function() {
