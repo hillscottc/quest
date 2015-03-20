@@ -5,19 +5,21 @@
 
 {% block content %}
 
-
-
-    <div id="profile">
+    <div id="counts" class="pull-right">
         <table>
             <thead>
-                <tr><th></th><th>Today</th><th>All</th></tr>
+                <tr><th>Answered by</th><th>Today</th><th>All</th></tr>
             </thead>
             <tbody>
-                <tr><td>You</td><td>{{user_today}}</td><td>{{user_alltime}}</td></tr>
+                {% if user.is_authenticated %}
+                    <tr><td>You</td><td>{{user_today}}</td><td>{{user_alltime}}</td></tr>
+                {% endif %}
                 <tr><td>Everyone</td><td>{{ everyone_today }}</td><td>{{ everyone_alltime }}</td></tr>
             </tbody>
         </table>
     </div>
+    <br clear="all">
+    <br/>
 
 
     {#  A view for UserProfile stuff. Not used atm. #}
@@ -37,13 +39,13 @@
         {% endif %}
 
 
-        <div style="margin-bottom: 10px">
-            <div>Answered: <span id="answer-count"></span>
-            </div>
-        </div>
+{#        <div style="margin-bottom: 10px">#}
+{#            <div>Answered: <span id="answer-count"></span>#}
+{#            </div>#}
+{#        </div>#}
 
         <div id="clues-list-controls">
-            <span> Displaying {{ api_limit }} random game show clues. (Refresh for a new set.)</span>
+            <span> Displaying {{ api_limit }} random game show clues. (Refresh for more.)</span>
 
             <span class="pull-right">
                 <input type="text" id="searchText" placeholder="search" />
