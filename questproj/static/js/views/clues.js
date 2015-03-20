@@ -29,7 +29,9 @@ CluesView = Backbone.View.extend({
     guessRight: function(targ) {
         var questionid = targ.model['attributes']['id'];
 
-        this.postUserLog(JSON.stringify({"userid": 999,
+        console.log("u:" + $("#userid").val());
+
+        this.postUserLog(JSON.stringify({"userid": $("#userid").val(),
                                          "questionid": questionid}));
 
         this.rights_count++;

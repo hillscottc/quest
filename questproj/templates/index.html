@@ -6,6 +6,20 @@
 {% block content %}
 
 
+
+    <div id="profile">
+        <table>
+            <thead>
+                <tr><th></th><th>Today</th><th>All</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>You</td><td>{{user_today}}</td><td>{{user_alltime}}</td></tr>
+                <tr><td>Everyone</td><td>{{ everyone_today }}</td><td>{{ everyone_alltime }}</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+
     <div id="userView"></div>
 
     <script id="userTemplate" type="text/template">
@@ -18,6 +32,13 @@
 
 
     <div id="clues-view">
+
+        {% if user.is_authenticated %}
+            <input id="userid" type="hidden" value="{{ user.id }}">
+        {% else %}
+            <input id="userid" type="hidden" value="">
+        {% endif %}
+
 
         <div style="margin-bottom: 10px">
             <div>Answered: <span id="answer-count"></span>

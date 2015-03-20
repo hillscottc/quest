@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,12 +9,39 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django import forms
 from questproj.forms import UserProfileForm, UserForm
-from questapp.models import Clue
+from questapp.models import Clue, UserLog
 from questapp.utils import dbstore_get
 
 
 def google_verify(request):
     return render(request, 'googlefd8980378f4a07d2.html')
+
+
+def get_counts(user):
+    counts = {}
+    if user.username:
+        counts['user_today'] = UserLog.objects.filter(created__gte=date.today(),
+                                                      userid=user.id).count()
+        counts['user_alltime'] = UserLog.objects.filter(userid=user.id).count()
+    else:
+        counts['user_today'] = '-'
+        counts['user_alltime'] = '-'
+
+    counts['everyone_today'] = UserLog.objects.filter(created__gte=date.today()).count()
+    counts['everyone_alltime'] = UserLog.objects.count()
+    return counts
+
+
+class IndexView(TemplateView):
+    template_name = "index.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, get_counts(request.user))
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context.update({'api_limit': settings.API_LIMIT_PER_PAGE})
+        return context
 
 
 class HomeView(TemplateView):
@@ -52,15 +80,6 @@ class AdminPageFormView(View):
             pass
 
         return render(request, self.template_name, {'form': form})
-
-
-class IndexView(TemplateView):
-    template_name = "index.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context.update({'api_limit': settings.API_LIMIT_PER_PAGE})
-        return context
 
 
 class AboutView(TemplateView):
