@@ -22,7 +22,7 @@ body {
 #content
 {
 	clear: left;
-	padding: 10px;
+	padding: 0px 10px 10px 10px;
 }
 
 #content h2
@@ -57,9 +57,10 @@ body {
 }
 
 #clues-list-controls {
-    /*font-size: 80%;*/
+    font-size: 80%;
     padding-bottom: 20px;
 }
+
 
 
 .close {
@@ -111,3 +112,15 @@ body.loading {
 body.loading .modal {
     display: block;
 }
+
+#counts table tbody tr td {
+    padding: 0px 15px 0px 0px;
+}
+
+#counts table thead tr th {
+    font-size: x-small;
+    padding: 0px 5px 0px 0px;
+}
+
+
+

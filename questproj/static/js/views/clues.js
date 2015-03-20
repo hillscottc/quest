@@ -34,8 +34,9 @@ CluesView = Backbone.View.extend({
         this.postUserLog(JSON.stringify({"userid": $("#userid").val(),
                                          "questionid": questionid}));
 
-        this.rights_count++;
-        $("#answer-count").text(this.rights_count);
+        // This works, but is being deprecated for the newer counts table
+        //this.rights_count++;
+        //$("#answer-count").text(this.rights_count);
     },
 
     postUserLog: function(data){
