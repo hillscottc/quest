@@ -12361,8 +12361,23 @@ require('../lib/backbone-tastypie');
 
 var CluesView = require('./views/clues');
 
+var UserProfile = require('./models/user_profile');
+var UserView = require('./views/user');
+
+
+
 $(function() {
+
+    // TODO: Dont specify a default, get logged in user.
+    var user_profile = new UserProfile({id: 1});
+
+    // Must wait for the fetch to complete before passing it on.
+    user_profile.fetch().then(function(){
+        new UserView({model: user_profile});
+    });
+
     new CluesView();
+
 });
 
 
@@ -12370,7 +12385,7 @@ $(document).on({
     ajaxStart: function() { $('body').addClass("loading"); },
     ajaxStop: function() { $('body').removeClass("loading"); }
 });
-},{"../lib/backbone-tastypie":9,"./views/clues":8,"backbone":1,"jquery":2}],5:[function(require,module,exports){
+},{"../lib/backbone-tastypie":11,"./models/user_profile":7,"./views/clues":9,"./views/user":10,"backbone":1,"jquery":2}],5:[function(require,module,exports){
 var Backbone = require("backbone");
 var _ = require('underscore');
 var Clue = require('../models/clue');
@@ -12418,6 +12433,34 @@ Clue = Backbone.Model.extend({
 
 module.exports = Clue;
 },{"backbone":1}],7:[function(require,module,exports){
+var Backbone = require("backbone");
+
+
+UserProfile = Backbone.Model.extend({
+
+    defaults: {
+        id: 0,
+        user: {
+            date_joined: "",
+            last_login: "",
+            username: "joeuser",
+            email: "joe@anon.com",
+            first_name: "Joe",
+            last_name: "Schmo"
+        }
+    },
+
+	initialize: function() {
+	},
+
+	urlRoot : function(){
+    	return '/api/v1/user_prof/';
+	}
+
+});
+
+module.exports = UserProfile;
+},{"backbone":1}],8:[function(require,module,exports){
 var Backbone = require("backbone");
 var $ = require('jquery');
 var _ = require('underscore');
@@ -12514,7 +12557,7 @@ module.exports = ClueView;
 
 
 
-},{"backbone":1,"jquery":2,"underscore":3}],8:[function(require,module,exports){
+},{"backbone":1,"jquery":2,"underscore":3}],9:[function(require,module,exports){
 var Backbone = require("backbone");
 var $ = require('jquery');
 var _ = require('underscore');
@@ -12545,16 +12588,17 @@ CluesView = Backbone.View.extend({
 
     guessRight: function(targ) {
         var questionid = targ.model['attributes']['id'];
-        this.postUserLog(questionid);
+
+        console.log("u:" + $("#userid").val());
+
+        this.postUserLog(JSON.stringify({"userid": $("#userid").val(),
+                                         "questionid": questionid}));
+
         this.rights_count++;
         $("#answer-count").text(this.rights_count);
     },
 
-    postUserLog: function(questionid){
-        var data = JSON.stringify({
-            "userid": 999,
-            "questionid": questionid
-        });
+    postUserLog: function(data){
         var request = $.ajax({
             url: '/api/v1/user_log/',
             type: 'POST',
@@ -12564,9 +12608,7 @@ CluesView = Backbone.View.extend({
             processData: false});
 
         request.done(function() {
-            if (request['statusText'] == 'CREATED') {
-                console.log("Posted UserLog record with " + data);
-            }
+            console.log("Posted " + data + ", received " + request['statusText']);
         });
     },
 
@@ -12600,7 +12642,34 @@ CluesView = Backbone.View.extend({
 
 module.exports = CluesView;
 
-},{"../collections/clues":5,"./clue":7,"backbone":1,"jquery":2,"underscore":3}],9:[function(require,module,exports){
+},{"../collections/clues":5,"./clue":8,"backbone":1,"jquery":2,"underscore":3}],10:[function(require,module,exports){
+var Backbone = require("backbone");
+var $ = require('jquery');
+var _ = require('underscore');
+
+UserView = Backbone.View.extend({
+
+    el: '#userView',
+
+    template: _.template( $('#userTemplate').html() ),
+
+    initialize: function(options) {
+        this.model = options.model;
+        this.render();
+    },
+
+    render: function() {
+        this.$el.html( this.template( this.model.attributes ) );
+        return this;
+    }
+});
+
+module.exports = UserView;
+
+
+
+
+},{"backbone":1,"jquery":2,"underscore":3}],11:[function(require,module,exports){
 
 /**
  * Backbone-tastypie.js 0.2.0
