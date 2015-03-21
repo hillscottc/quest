@@ -12360,16 +12360,12 @@ Backbone.$ = $;
 require('../lib/backbone-tastypie');
 
 var CluesView = require('./views/clues');
-
 var UserProfile = require('./models/user_profile');
-var UserView = require('./views/user');
-
-
+//var UserView = require('./views/user');
 
 $(function() {
 
     new CluesView();
-
 
     //// Dont specify a default, get logged in user.
     //var user_profile = new UserProfile({id: 1});
@@ -12378,15 +12374,14 @@ $(function() {
     //    new UserView({model: user_profile});
     //});
 
-
 });
 
-
-$(document).on({
-    ajaxStart: function() { $('body').addClass("loading"); },
-    ajaxStop: function() { $('body').removeClass("loading"); }
-});
-},{"../lib/backbone-tastypie":11,"./models/user_profile":7,"./views/clues":9,"./views/user":10,"backbone":1,"jquery":2}],5:[function(require,module,exports){
+// This turns on a spinner for all ajax requests
+//$(document).on({
+//    ajaxStart: function() { $('body').addClass("loading"); },
+//    ajaxStop: function() { $('body').removeClass("loading"); }
+//});
+},{"../lib/backbone-tastypie":10,"./models/user_profile":7,"./views/clues":9,"backbone":1,"jquery":2}],5:[function(require,module,exports){
 var Backbone = require("backbone");
 var _ = require('underscore');
 var Clue = require('../models/clue');
@@ -12647,33 +12642,6 @@ CluesView = Backbone.View.extend({
 module.exports = CluesView;
 
 },{"../collections/clues":5,"./clue":8,"backbone":1,"jquery":2,"underscore":3}],10:[function(require,module,exports){
-var Backbone = require("backbone");
-var $ = require('jquery');
-var _ = require('underscore');
-
-UserView = Backbone.View.extend({
-
-    el: '#userView',
-
-    template: _.template( $('#userTemplate').html() ),
-
-    initialize: function(options) {
-        this.model = options.model;
-        this.render();
-    },
-
-    render: function() {
-        this.$el.html( this.template( this.model.attributes ) );
-        return this;
-    }
-});
-
-module.exports = UserView;
-
-
-
-
-},{"backbone":1,"jquery":2,"underscore":3}],11:[function(require,module,exports){
 
 /**
  * Backbone-tastypie.js 0.2.0
