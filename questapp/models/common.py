@@ -49,3 +49,6 @@ class UserLog(models.Model):
 class DbStore(models.Model):
     dbkey = models.CharField(max_length=255)
     dbval = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return u"{} : {}".format(self.dbkey, self.dbval)

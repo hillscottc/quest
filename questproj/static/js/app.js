@@ -4,16 +4,12 @@ Backbone.$ = $;
 require('../lib/backbone-tastypie');
 
 var CluesView = require('./views/clues');
-
 var UserProfile = require('./models/user_profile');
-var UserView = require('./views/user');
-
-
+//var UserView = require('./views/user');
 
 $(function() {
 
     new CluesView();
-
 
     //// Dont specify a default, get logged in user.
     //var user_profile = new UserProfile({id: 1});
@@ -22,11 +18,10 @@ $(function() {
     //    new UserView({model: user_profile});
     //});
 
-
 });
 
-
-$(document).on({
-    ajaxStart: function() { $('body').addClass("loading"); },
-    ajaxStop: function() { $('body').removeClass("loading"); }
-});
+// This turns on a spinner for all ajax requests
+//$(document).on({
+//    ajaxStart: function() { $('body').addClass("loading"); },
+//    ajaxStop: function() { $('body').removeClass("loading"); }
+//});

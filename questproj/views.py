@@ -32,13 +32,16 @@ def get_counts(user):
     return counts
 
 
+
 class IndexView(TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context.update({'api_limit': settings.API_LIMIT_PER_PAGE})
-        context.update(get_counts(self.request.user))
+        context.update({'api_limit': settings.API_LIMIT_PER_PAGE,
+                        'answer_tracking': dbstore_get('answer_tracking', False)})
+        if dbstore_get('answer_tracking', True):
+            context.update(get_counts(self.request.user))
         return context
 
 
@@ -52,7 +55,8 @@ class HomeView(TemplateView):
 
 
 class AdminPageForm(forms.Form):
-    clue_source_name = forms.CharField(max_length=12)
+    clue_source_name = forms.CharField(max_length=12, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    answer_tracking = forms.BooleanField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
 
 class AdminPageFormView(View):
@@ -60,13 +64,8 @@ class AdminPageFormView(View):
     template_name = 'admin-page.html'
 
     def get(self, request, *args, **kwargs):
-        try:
-            clue_source_name = dbstore_get('clue_source_name')
-        except ObjectDoesNotExist:
-            clue_source_name = "Jeopardy Clues"
-
-        initial = {'clue_source_name': clue_source_name}
-
+        initial = {'clue_source_name': dbstore_get('clue_source_name', "Jeopardy Clues"),
+                   'answer_tracking': dbstore_get('answer_tracking', True)}
         form = self.form_class(initial=initial)
         return render(request, self.template_name, {'form': form})
 
