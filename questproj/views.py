@@ -32,6 +32,7 @@ def get_counts(user):
     return counts
 
 
+
 class IndexView(TemplateView):
     template_name = "index.html"
 
@@ -54,8 +55,8 @@ class HomeView(TemplateView):
 
 
 class AdminPageForm(forms.Form):
-    clue_source_name = forms.CharField(max_length=12)
-    answer_tracking = forms.BooleanField()
+    clue_source_name = forms.CharField(max_length=12, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    answer_tracking = forms.BooleanField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
 
 class AdminPageFormView(View):
