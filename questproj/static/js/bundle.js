@@ -12588,15 +12588,18 @@ CluesView = Backbone.View.extend({
     },
 
     guessRight: function(targ) {
-        var questionid = targ.model['attributes']['id'];
+        var answer_tracking = $("#answer_tracking").val();
+        console.log("answer tracking " + answer_tracking);
 
-        console.log("u:" + $("#userid").val());
-
-        this.postUserLog(JSON.stringify({"userid": $("#userid").val(),
-                                         "questionid": questionid}));
-
-        this.rights_count++;
-        $("#answer-count").text(this.rights_count);
+        if (answer_tracking == 'True') {
+            var questionid = targ.model['attributes']['id'];
+            console.log("u:" + $("#userid").val());
+            this.postUserLog(JSON.stringify({"userid": $("#userid").val(),
+                                             "questionid": questionid}));
+            // This works, but is being deprecated for the newer counts table
+            //this.rights_count++;
+            //$("#answer-count").text(this.rights_count);
+        }
     },
 
     postUserLog: function(data){

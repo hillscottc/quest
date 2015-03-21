@@ -5,21 +5,23 @@
 
 {% block content %}
 
-    <div id="counts" class="pull-right">
-        <table>
-            <thead>
-                <tr><th>Answered by</th><th>Today</th><th>All</th></tr>
-            </thead>
-            <tbody>
-                {% if user.is_authenticated %}
-                    <tr><td>You</td><td>{{user_today}}</td><td>{{user_alltime}}</td></tr>
-                {% endif %}
-                <tr><td>Everyone</td><td>{{ everyone_today }}</td><td>{{ everyone_alltime }}</td></tr>
-            </tbody>
-        </table>
-    </div>
-    <br clear="all">
-    <br/>
+    {% if answer_tracking == 'True' %}
+        <div id="counts" class="pull-right">
+            <table>
+                <thead>
+                    <tr><th>Answered by</th><th>Today</th><th>All</th></tr>
+                </thead>
+                <tbody>
+                    {% if user.is_authenticated %}
+                        <tr><td>You</td><td>{{user_today}}</td><td>{{user_alltime}}</td></tr>
+                    {% endif %}
+                    <tr><td>Everyone</td><td>{{ everyone_today }}</td><td>{{ everyone_alltime }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <br clear="all">
+        <br/>
+    {% endif %}
 
 
     {#  A view for UserProfile stuff. Not used atm. #}
@@ -32,11 +34,10 @@
 
     <div id="clues-view">
 
-        {% if user.is_authenticated %}
-            <input id="userid" type="hidden" value="{{ user.id }}">
-        {% else %}
-            <input id="userid" type="hidden" value="">
-        {% endif %}
+        <input id="userid" type="hidden"
+            value="{% if user.is_authenticated %}{{ user.id }}{% endif %}">
+
+        <input id="answer_tracking" type="hidden" value="{{ answer_tracking }}">
 
 
 {#        <div style="margin-bottom: 10px">#}
