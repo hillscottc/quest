@@ -15,6 +15,8 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
+    'registration',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -22,11 +24,12 @@ INSTALLED_APPS = (
     'django_nose',
     'django.contrib.humanize',  # http://stackoverflow.com/questions/346467/format-numbers-in-django-templates
     'questapp',
-    'tastypie'
+    'tastypie',
 )
 
-# Default num of recs tastypie will return.
-API_LIMIT_PER_PAGE = 500
+API_LIMIT_PER_PAGE = 500     # Default num of recs tastypie will return.
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window;
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
