@@ -186,6 +186,7 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('home'))
 
 
+
 # @login_required
 # def user_account(request):
 #     return render(request, 'registration/user_account.html', {})
