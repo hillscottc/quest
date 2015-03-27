@@ -4,6 +4,8 @@ PROJ_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '99%rg_8lh6wyegbj$f+0l%_+j%!_rggp#iveieaz%#b0i@ix8c'
 
+SITE_ID = 1
+
 ## Djangp TestCases force DEBUG=False, ignoring the settings file.
 ## Can override with @override_settings(DEBUG=True). To see django.db logging, for example.
 DEBUG = True

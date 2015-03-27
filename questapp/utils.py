@@ -12,14 +12,11 @@ def load_clues(infile):
     print "Clue count: {:,}".format(Clue.objects.count())
 
 
-def dbstore_get(dbkey, default=None):
+def dbstore_get(dbkey, default):
     try:
         return DbStore.objects.get(dbkey=dbkey).dbval
     except ObjectDoesNotExist:
-        if not default:
-            raise
-        else:
-            return default
+        return default
 
 
 def get_clue_source_name():

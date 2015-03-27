@@ -18,11 +18,18 @@ A web application for accessing an archive of questions.
 Rebuild the browser.js by using the build command in the package.json. It calls browserify.
     
     npm run build    
+
+        
+## Init and load the database
+In psql...
+
+    drop database quest_db;
+    create database quest_db WITH OWNER quest_acct ENCODING 'UTF8';
     
-## Load the database
+   
 The database is loaded from a local json file at `questproj/fixtures/clues.json`, 
 provided by [srcmunge](https://github.com/hillscottc/srcmunge.git).
 
-    $ django-admin load_clues questproj/fixtures/clues.json
+    django-admin load_clues questproj/fixtures/clues.json
 
 
