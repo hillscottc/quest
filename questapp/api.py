@@ -13,6 +13,9 @@ class ClueResource(CORSModelResource):
         queryset = Clue.objects.all()
         resource_name = 'clue'
         excludes = ['game', 'created', 'modified', 'last_accessed']
+        filtering = {
+            'category': ALL,
+        }
 
 
 class RandomCluesResource(CORSModelResource):
