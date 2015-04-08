@@ -26,7 +26,6 @@ INSTALLED_APPS = (
     'django_nose',
     'django.contrib.humanize',  # http://stackoverflow.com/questions/346467/format-numbers-in-django-templates
     'questapp',
-    'tastypie',
 )
 
 API_LIMIT_PER_PAGE = 500     # Default num of recs tastypie will return.
