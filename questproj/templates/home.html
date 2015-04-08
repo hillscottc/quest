@@ -4,14 +4,19 @@
 
 {% block content %}
     <h2>{{ SITE_NAME }}</h2>
-<br/>
+    <br/>
     <p>
         <b>{{ SITE_NAME }}</b> is a curated archive of {{ clue_source_name }}, selected to
         provide specific insights into the visitor's profile.
     <p>
-<br/>
+    <br/>
 
-    {% include "cats.html" %}
+    <a href="{% url 'clues' %}">clues</a>
+    <a href="{% url 'clues-by-cat' 'ASIA' %}">clues by cat</a>
+
+    {% for cat in cats %}
+        {{ cat }}
+    {% endfor %}
 
 {% endblock %}
 
