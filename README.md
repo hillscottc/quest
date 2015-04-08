@@ -1,5 +1,5 @@
 # About
-A web application for accessing an archive of questions. 
+A web application for accessing an archive of questions with backbone and node
 
 # Technical Components
 - [Django](https://docs.djangoproject.com/) and [Tastypie](https://django-tastypie.readthedocs.org/) are used to serve the Clue data. 
@@ -9,6 +9,11 @@ A web application for accessing an archive of questions.
 
 
 # Tech notes
+
+
+## Compile and run
+
+    npm run build && django-admin runserver
 
 
 ## Installation
