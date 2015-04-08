@@ -11,11 +11,8 @@
     <p>
     <br/>
 
-    <a href="{% url 'clues' %}">clues</a>
-    <a href="{% url 'clues-by-cat' 'ASIA' %}">clues by cat</a>
-
     {% for cat in cats %}
-        {{ cat }}
+        <a href="{% url 'clues-by-cat' cat %}">{{ cat }}</a> <br/>
     {% endfor %}
 
 {% endblock %}
