@@ -19,12 +19,11 @@ urlpatterns = patterns(
     '',
     url(r'^api/', include(v1_api.urls)),
 
+    url(r'^$', views.HomeView.as_view(), name="home"),
+
     url(r'^clues/$', views.CluesView.as_view(), name="clues"),
 
     url(r'^clues/cat/(?P<cat>.+)$', views.CluesView.as_view(), name="clues-by-cat"),
-
-    # (r'^user/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
-    # 'django.contrib.auth.views.password_reset_confirm', {'post_reset_redirect': '/user/password/done/'}),
 
 )
 

@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from questapp.views import HomeView
 
 import questproj.views as views
 
@@ -9,7 +10,7 @@ urlpatterns = patterns(
     '',
     url(r'^googlefd8980378f4a07d2.html$', views.google_verify),
 
-    url(r'^$', views.HomeView.as_view(), name="home"),
+    # url(r'^$', HomeView.as_view(), name="home"),
 
     # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
     url(r'^', include('questapp.urls')),            # put questapp at /

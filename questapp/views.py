@@ -39,3 +39,16 @@ class CluesView(TemplateView):
         if dbstore_get('answer_tracking', True):
             context.update(get_counts(self.request.user))
         return context
+
+
+class HomeView(TemplateView):
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+
+        # a fake list of cats
+        cats = ['TREES', 'ASIA', 'CURRENT EVENTS']
+
+        context.update({'cats': cats})
+        return context

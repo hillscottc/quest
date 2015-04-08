@@ -5,6 +5,7 @@ from django.views.generic import TemplateView, View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django import forms
+
 from questproj.forms import UserProfileForm, UserForm
 from questapp.models import Clue
 from questapp.utils import dbstore_get
@@ -12,19 +13,6 @@ from questapp.utils import dbstore_get
 
 def google_verify(request):
     return render(request, 'googlefd8980378f4a07d2.html')
-
-
-class HomeView(TemplateView):
-    template_name = "home.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-
-        # a fake list of cats
-        cats = ['TREES', 'ASIA', 'CURRENT EVENTS']
-
-        context.update({'cats': cats})
-        return context
 
 
 class AdminPageForm(forms.Form):
