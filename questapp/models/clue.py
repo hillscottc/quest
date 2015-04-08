@@ -25,6 +25,12 @@ class Clue(BaseModel):
                 'question': self.question,
                 'answer': self.answer}
 
+    @staticmethod
+    def get_random_cats(num=20):
+        """Get random list of categories."""
+        cats = [c.category for c in Clue.objects.all().order_by('?')[:num]]
+        return cats
+
     def __unicode__(self):
         return u"Q:{} A:{}".format(self.question, self.answer)
 

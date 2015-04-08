@@ -12357,7 +12357,7 @@ return jQuery;
 var Backbone = require("backbone");
 var $ = require('jquery');
 Backbone.$ = $;
-require('../lib/backbone-tastypie');
+require('../../lib/backbone-tastypie');
 
 var CluesView = require('./views/clues');
 var UserProfile = require('./models/user_profile');

@@ -59,7 +59,7 @@ USE_TZ = True
 
 TEMPLATE_DIRS = (
     os.path.join(PROJ_DIR, "templates"),
-    os.path.join(os.path.dirname(PROJ_DIR), 'nostrapp', "templates"),
+    os.path.join(os.path.dirname(PROJ_DIR), 'questapp', "templates"),
 )
 
 SITE_NAME = "QuestSite"
