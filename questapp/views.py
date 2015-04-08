@@ -26,18 +26,18 @@ class CluesView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(CluesView, self).get_context_data(**kwargs)
 
-        clues = None
         cat = self.kwargs.get('cat')
+        context.update({'cat': self.kwargs.get('cat')})
 
         if cat:
-            clues = Clue.objects.filter(category=self.kwargs.get('cat'))
+            context.update({'clues': Clue.objects.filter(category=self.kwargs.get('cat'))})
 
         context.update({'api_limit': settings.API_LIMIT_PER_PAGE,
-                        'clues': clues,
-                        'cat': cat,
                         'answer_tracking': dbstore_get('answer_tracking', False)})
+
         if dbstore_get('answer_tracking', True):
             context.update(get_counts(self.request.user))
+
         return context
 
 
@@ -46,9 +46,5 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-
-        # a fake list of cats
-        cats = ['TREES', 'ASIA', 'CURRENT EVENTS']
-
-        context.update({'cats': cats})
+        context.update({'cats': Clue.get_random_cats(20)})
         return context
