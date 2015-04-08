@@ -42,14 +42,9 @@ function fuzzyMatch(guess, answer) {
 
 
 $(".guess-text").on('input', function() {
-
-    //console.log("check");
-    var answer = $('.hidden-answer').val();
-    var results_el = $('.results');
-    var guess_el = $('.guess-text');
-
-    //console.log(answer);
-    //console.log("guessed -- " + guess_el.val());
+    var answer = $(this).siblings('.hidden-answer').val();
+    var results_el = $(this).siblings('.results');
+    var guess_el = $(this);
 
     if (fuzzyMatch(guess_el.val(), answer)) {
         results_el.text("Right!");
