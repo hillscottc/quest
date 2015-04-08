@@ -58,7 +58,9 @@
         Copyright (C) {% now "Y" %}  {{ SITE_NAME }}
     </div>
 
-    {% block extrajs %}{% endblock extrajs %}
+    {% block extrajs %}
+        <script src="{% static 'lib/jquery.js' %}"></script>
+    {% endblock extrajs %}
 
 </body>
 </html>

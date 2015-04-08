@@ -32,12 +32,12 @@ def get_counts(user):
     return counts
 
 
-
 class IndexView(TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
+
         context.update({'api_limit': settings.API_LIMIT_PER_PAGE,
                         'answer_tracking': dbstore_get('answer_tracking', False)})
         if dbstore_get('answer_tracking', True):
@@ -48,10 +48,14 @@ class IndexView(TemplateView):
 class HomeView(TemplateView):
     template_name = "home.html"
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(HomeView, self).get_context_data(**kwargs)
-    #     context.update({'clue_source_name': settings.CLUE_SOURCE_NAME})
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+
+        # a fake list of cats
+        cats = ['TREES', 'ASIA', 'CURRENT EVENTS']
+
+        context.update({'cats': cats})
+        return context
 
 
 class AdminPageForm(forms.Form):
