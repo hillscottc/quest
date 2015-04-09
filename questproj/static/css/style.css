@@ -122,5 +122,11 @@ body.loading .modal {
     padding: 0px 5px 0px 0px;
 }
 
+.cats-pick a {
+    padding: 15px;
+    margin: 5px;
+    text-align: center ;
+}
+
 
 

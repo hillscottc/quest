@@ -1,0 +1,19 @@
+{% extends "base_site.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div style="text-align: center">
+        <h3>select a category</h3>
+        <p>or <a href="{% url 'home' %}">reload</a> some new ones</p>
+    </div>
+    <br/>
+    <div class="btn-group cats-pick" role="group" aria-label="Categories">
+        {% for cat in cats %}
+            <a class="btn btn-default" href="{% url 'clues-by-cat' cat %}" role="button">{{ cat }}</a>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}
+
