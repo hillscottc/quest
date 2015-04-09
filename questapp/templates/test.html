@@ -4,11 +4,66 @@
 
 {% block content %}
 
+    <button id="test-btn" type="button" class="btn btn-default">Test</button>
+
 
 {% endblock %}
 
 
 {% block extrajs %}
     {{ block.super }}
+
+    <script>
+
+    var csrftoken = Cookies.get('csrftoken');
+{#    console.log(csrftoken);#}
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+
+    function postUserLog(data){
+        var request = $.ajax({
+            url: '/userlog/post',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data),
+            dataType: 'text',
+            success: function(result) {
+                console.log("Posted " + data + ", received " + request['statusText']);
+            }
+        });
+
+{#        request.done(function() {#}
+{#            console.log("Posted " + data + ", received " + request['statusText']);#}
+{#        });#}
+    }
+
+
+
+    $("#test-btn").click(function(e) {
+{#        var targ_el = $(e.currentTarget);#}
+{#        var controls_el = $(e.currentTarget).siblings('.clue-controls');#}
+
+{#        alert(csrftoken);#}
+
+        var data = {'ok': 'ok'};
+        postUserLog(data);
+
+        e.preventDefault();
+    });
+
+
+    </script>
+
 {% endblock extrajs %}
 

@@ -1,8 +1,10 @@
 from datetime import date
+import json
 from django.conf import settings
 from django.views.generic import TemplateView
 from questapp.utils import dbstore_get
 from questapp.models import UserLog, Clue
+from django.http import HttpResponse
 
 
 def get_counts(user):
@@ -43,6 +45,14 @@ class CluesView(TemplateView):
 
 class TestView(TemplateView):
     template_name = "test.html"
+
+
+def userlog_post(request):
+    if request.is_ajax():
+        if request.method == 'POST':
+            json_data = json.loads(request.body)
+            print json_data
+    return HttpResponse("OK")
 
 
 class HomeView(TemplateView):

@@ -59,8 +59,12 @@
 {#    </div>#}
 
     {% block extrajs %}
+
         <script src="{% static 'lib/jquery.js' %}"></script>
+
+        <!-- https://github.com/js-cookie/js-cookie -->
         <script src="{% static 'lib/js.cookie.js' %}"></script>
+
     {% endblock extrajs %}
 
 </body>
