@@ -11,6 +11,8 @@ urlpatterns = patterns(
 
     url(r'^clues/$', views.CluesView.as_view(), name="clues"),
 
+    url(r'^test$', views.TestView.as_view(), name="test"),
+
     url(r'^clues/cat/(?P<cat>.+)$', views.CluesView.as_view(), name="clues-by-cat"),
 
 )

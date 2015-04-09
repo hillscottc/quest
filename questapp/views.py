@@ -41,6 +41,10 @@ class CluesView(TemplateView):
         return context
 
 
+class TestView(TemplateView):
+    template_name = "test.html"
+
+
 class HomeView(TemplateView):
     template_name = "home.html"
 
