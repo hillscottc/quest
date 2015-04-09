@@ -16,14 +16,15 @@
 
     <script>
         function postUserLog(data){
+            var json_data =  JSON.stringify(data);
             var request = $.ajax({
                 url: '/userlog/post',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data),
+                data: json_data,
                 dataType: 'text',
                 success: function(result) {
-                    console.log("Posted " + data + ", received " + request['statusText']);
+                    console.log("Posted " + json_data + ", received " + request['statusText']);
                 }
             });
         }
