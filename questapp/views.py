@@ -51,7 +51,8 @@ def userlog_post(request):
     if request.is_ajax():
         if request.method == 'POST':
             json_data = json.loads(request.body)
-            print json_data
+            ul = UserLog.objects.create(**json_data)
+            print 'created:', ul
     return HttpResponse("OK")
 
 

@@ -5,6 +5,9 @@
 
 {% block content %}
 
+    <input id="hidden-userid" type="hidden"
+        value="{% if user.is_authenticated %}{{ user.id }} {% else %} 0 {% endif %}">
+
     {% if answer_tracking == 'True' %}
         <div id="counts" class="pull-right">
             <table>
@@ -13,7 +16,9 @@
                 </thead>
                 <tbody>
                     {% if user.is_authenticated %}
-                        <tr><td>You</td><td>{{user_today}}</td><td>{{user_alltime}}</td></tr>
+                        <tr><td>You</td>
+                            <td id="count-user-today">{{user_today}}</td>
+                            <td id="count-user-all">{{user_alltime}}</td></tr>
                     {% endif %}
                     <tr><td>Everyone</td><td>{{ everyone_today }}</td><td>{{ everyone_alltime }}</td></tr>
                 </tbody>
@@ -34,8 +39,7 @@
 
     <div id="clues-view">
 
-        <input id="userid" type="hidden"
-            value="{% if user.is_authenticated %}{{ user.id }}{% endif %}">
+
 
         <input id="answer_tracking" type="hidden" value="{{ answer_tracking }}">
 
@@ -66,6 +70,7 @@
                 </a>
                 <div class="clue-controls">
                     <input class="hidden-answer" type="hidden" value="{{ clue.answer }}">
+                    <input class="hidden-questionid" type="hidden" value="{{ clue.pk }}">
                     <input class="guess-text" placeholder="answer..."/>
                     <span class="results list-group-item-text"></span>&nbsp;
                     <button type="button" class="tellme-btn btn btn-xs btn-primary">tell me</button>

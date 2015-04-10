@@ -17,20 +17,21 @@
     <script>
         function postUserLog(data){
             var json_data =  JSON.stringify(data);
+            var url = '/userlog/post';
             var request = $.ajax({
-                url: '/userlog/post',
+                url: url,
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: json_data,
                 dataType: 'text',
                 success: function(result) {
-                    console.log("Posted " + json_data + ", received " + request['statusText']);
+                    console.log("Posted " + json_data + ", to " + url + ", got " + request['statusText']);
                 }
             });
         }
 
         $("#test-btn").click(function(e) {
-            var data = {'ok': 'ok'};
+            var data = {'userid': '1', 'questionid': '1'};
             postUserLog(data);
             e.preventDefault();
         });

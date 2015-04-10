@@ -1,4 +1,32 @@
 
+// Ajax-post a data dictionary.
+function ajaxPost(url, data){
+    var json_data =  JSON.stringify(data);
+    var request = $.ajax({
+        url: url,
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        data: json_data,
+        dataType: 'text',
+        success: function(result) {
+            console.log("Posted " + json_data + ", to " + url + ", got " + request['statusText']);
+        }
+    });
+}
+
+// True if args match, according to rules.
+function fuzzyMatch(guess, answer) {
+    if (guess == "") return false;
+    if (answer == guess) return true;
+
+    var guess_re = new RegExp(guess, "gi");
+
+    if (guess.length > 3 && guess_re.test(answer)) {
+        return true;
+    }
+}
+
+
 $(".clue").click(function(e) {
     var targ_el = $(e.currentTarget);
     var controls_el = $(e.currentTarget).siblings('.clue-controls');
@@ -28,33 +56,35 @@ $(".tellme-btn").click(function(e) {
 });
 
 
-function fuzzyMatch(guess, answer) {
-    if (guess == "") return false;
-    if (answer == guess) return true;
-
-    var guess_re = new RegExp(guess, "gi");
-
-    if (guess.length > 3 && guess_re.test(answer)) {
-        return true;
-    }
-
-}
-
-
 $(".guess-text").on('input', function() {
     var answer = $(this).siblings('.hidden-answer').val();
+    var questionid = $(this).siblings('.hidden-questionid').val();
+    var userid = $('#hidden-userid').val();
     var results_el = $(this).siblings('.results');
-    var guess_el = $(this);
 
-    if (fuzzyMatch(guess_el.val(), answer)) {
+    if (fuzzyMatch($(this).val(), answer)) {
         results_el.text("Right!");
-        guess_el.val(answer);
+        $(this).val(answer);
+
+        // Post to the log
+        var data = {'userid': userid, 'questionid': questionid};
+        ajaxPost('/userlog/post', data);
+
+        // Update user counts display
+        var count_el = $('#count-user-today');
+        var count = count_el.text();
+        count_el.text(++count);
+
+        count_el = $('#count-user-all');
+        count = count_el.text();
+        count_el.text(++count);
 
         // Disable further edit
-        guess_el.prop("readonly", true);
+        $(this).prop("readonly", true);
 
-        //this.vent.trigger("guessRight", this);
     } else {
         results_el.text("");
     }
 });
+
+
