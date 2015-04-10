@@ -70,11 +70,12 @@ $(".guess-text").on('input', function() {
         var data = {'userid': userid, 'questionid': questionid};
         ajaxPost('/userlog/post', data);
 
-        // Update user counts display
+        // Update user today display
         var count_el = $('#count-user-today');
         var count = count_el.text();
         count_el.text(++count);
 
+        // Update user all display
         count_el = $('#count-user-all');
         count = count_el.text();
         count_el.text(++count);
