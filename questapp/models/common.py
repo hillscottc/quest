@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 log = logging.getLogger(__name__)
@@ -41,6 +42,9 @@ class UserLog(models.Model):
     userid = models.IntegerField(default=0)
     questionid = models.IntegerField(default=0)
     correct = models.BooleanField(default=True)
+
+    def get_absolute_url(self):
+        return reverse('userlog-detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return u"{}, {}, {}".format(self.created, self.userid, self.questionid)

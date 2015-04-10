@@ -1,0 +1,42 @@
+{% extends "base_site.html" %}
+
+{% block title %}Test{% endblock %}
+
+{% block content %}
+
+    <button id="test-btn" type="button" class="btn btn-default">Test</button>
+
+
+{% endblock %}
+
+
+{% block extrajs %}
+
+    {{ block.super }}
+
+    <script>
+        function postUserLog(data){
+            var json_data =  JSON.stringify(data);
+            var url = '/userlog/post';
+            var request = $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: json_data,
+                dataType: 'text',
+                success: function(result) {
+                    console.log("Posted " + json_data + ", to " + url + ", got " + request['statusText']);
+                }
+            });
+        }
+
+        $("#test-btn").click(function(e) {
+            var data = {'userid': '1', 'questionid': '1'};
+            postUserLog(data);
+            e.preventDefault();
+        });
+
+    </script>
+
+{% endblock extrajs %}
+

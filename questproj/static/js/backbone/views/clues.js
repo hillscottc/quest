@@ -45,8 +45,8 @@ CluesView = Backbone.View.extend({
         var request = $.ajax({
             url: '/api/v1/user_log/',
             type: 'POST',
-            contentType: 'application/json',
-            data: data,
+            contentType: 'application/json; charset=utf-8',
+            data: {'ok': 'ok'},
             dataType: 'html',
             processData: false});
 

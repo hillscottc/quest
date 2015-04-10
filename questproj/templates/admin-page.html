@@ -17,6 +17,7 @@
         </div>
     <br/>
 
+
 {#    <h2>API</h2>#}
 {#    <p>A <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> api interface to the clues is rendered with#}
 {#        <a href="https://django-tastypie.readthedocs.org/">Tastypie</a> and#}
@@ -35,6 +36,49 @@
 {#  Hacky.Could the bundled jquery could be used instead?  But its just an admin page anyway. #}
 
     <script src="{% static 'lib/jquery.js' %}"></script>
+
+   <script type="text/javascript">
+        $(function() {
+            var data = JSON.stringify({'questionid': '1', 'userid': '99'});
+            var request = $.ajax({
+                url: '/userlog/post/',
+                type: 'POST',
+                contentType: 'application/json',
+                data: data,
+                dataType: 'text'
+            });
+        });
+   </script>
+
+
+
+
+{#    <script type="text/javascript">#}
+{#        function getCookie(name) {#}
+{#            var cookieValue = null;#}
+{#            if (document.cookie && document.cookie != '') {#}
+{#                var cookies = document.cookie.split(';');#}
+{#                for (var i = 0; i < cookies.length; i++) {#}
+{#                    var cookie = jQuery.trim(cookies[i]);#}
+{#                    // Does this cookie string begin with the name we want?#}
+{#                    if (cookie.substring(0, name.length + 1) == (name + '=')) {#}
+{#                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));#}
+{#                        break;#}
+{#                    }#}
+{#                }#}
+{#            }#}
+{#            return cookieValue;#}
+{#        }#}
+{#        var csrftoken = getCookie('csrftoken');#}
+{##}
+{#        $(function () {#}
+{#            $.ajaxSetup({#}
+{#                headers: { "X-CSRFToken": getCookie("csrftoken") }#}
+{#            });#}
+{#        });#}
+{##}
+{#    </script>#}
+
 
 
 {#    <script type="text/javascript">#}
