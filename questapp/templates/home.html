@@ -3,6 +3,9 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
+    {% include "widgets/userlog.html" %}
+
     <div style="text-align: center">
         <h3>select a category</h3>
         <p>or <a href="{% url 'home' %}">reload</a> some new ones</p>
