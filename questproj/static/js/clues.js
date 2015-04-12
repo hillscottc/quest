@@ -48,9 +48,14 @@ $(".tellme-btn").click(function(e) {
     var answer = $(e.currentTarget).siblings('.hidden-answer').val();
     guess_el.val(answer);
 
-    // For debugging, allow this
-    // Disable further edit
-    //guess_el.prop("readonly", true);
+    // Disable further edit.
+    guess_el.prop("readonly", true);
+
+    // Only can click it once. Disable it.
+    $(e.currentTarget).prop("disabled", true);
+
+    // And disable the guess button
+    $(e.currentTarget).siblings('.guess-btn').prop("disabled", true);
 
     e.preventDefault();
 });
