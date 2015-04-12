@@ -29,8 +29,6 @@ INSTALLED_APPS = (
 )
 
 API_LIMIT_PER_PAGE = 500     # Default num of recs tastypie will return.
-ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window;
-
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -164,6 +162,15 @@ else:
     DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2',
                              'NAME': 'quest_db', 'USER': 'quest_acct', 'PASSWORD': '12345',
                              'HOST': 'localhost', 'PORT': '5432'}}
+
+
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 14
+REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+LOGIN_REDIRECT_URL = '/'  # The page you want users to arrive at after they successful log in
+LOGIN_URL = '/accounts/login/'  # Where users go if not logged in and try to access a page requiring auth
+
+
 
 # Set this in env?
 # POSTMARK_API_TOKEN:            f1fdbb30-f0f1-42fd-8867-9d6a4f63cfd1
