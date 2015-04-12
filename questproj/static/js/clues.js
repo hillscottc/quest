@@ -60,91 +60,70 @@ $(".tellme-btn").click(function(e) {
     e.preventDefault();
 });
 
-// Check guess click if not in practice mode.
-$(".guess-btn").click(function(e) {
-    var answer = $(this).siblings('.hidden-answer').val();
-    var questionid = $(this).siblings('.hidden-questionid').val();
-    var userid = $('#hidden-userid').val();
-    var results_el = $(this).siblings('.results');
-    var guess_el = $(this).siblings('.guess-text');
 
-    if (fuzzyMatch(guess_el.val(), answer)) {
+function checkGuess(clue_el) {
+    //var answer = $(this).siblings('.hidden-answer').val();
+    var answer = clue_el.find('.hidden-answer').val();
+    var questionid = clue_el.find('.hidden-questionid').val();
+    var userid = $('#hidden-userid').val();
+    var results_el = clue_el.find('.results');
+    var guess_el = clue_el.find('.guess-text');
+
+   if (fuzzyMatch(guess_el.val(), answer)) {
         results_el.text("Right!");
         guess_el.val(answer);
 
-        // Post to the log
-        ajaxPost('/userlog/post',
-                 {'userid': userid, 'questionid': questionid, 'correct': true});
+       if($('#scoring-mode').is(':checked')) {
+           // Post to the log
+           ajaxPost('/userlog/post',
+               {'userid': userid, 'questionid': questionid, 'correct': true});
 
-        // Update user today display
-        var count_el = $('#count-user-today-right');
-        var count = count_el.text();
-        count_el.text(++count);
+           // Update user today display
+           var count_el = $('#count-user-today-right');
+           var count = count_el.text();
+           count_el.text(++count);
 
-        // Update user all display
-        count_el = $('#count-user-all-right');
-        count = count_el.text();
-        count_el.text(++count);
+           // Update user all display
+           count_el = $('#count-user-all-right');
+           count = count_el.text();
+           count_el.text(++count);
+       }
 
         // Disable further edit
         guess_el.prop("readonly", true);
 
     } else {
-        // Post to the log
-        ajaxPost('/userlog/post',
-                 {'userid': userid, 'questionid': questionid, 'correct': false});
+       if($('#scoring-mode').is(':checked')) {
+           // Post to the log
+           ajaxPost('/userlog/post',
+               {'userid': userid, 'questionid': questionid, 'correct': false});
 
-        // Update user today display
-        var count_el = $('#count-user-today-wrong');
-        var count = count_el.text();
-        count_el.text(++count);
+           // Update user today display
+           var count_el = $('#count-user-today-wrong');
+           var count = count_el.text();
+           count_el.text(++count);
 
-        // Update user all display
-        count_el = $('#count-user-all-wrong');
-        count = count_el.text();
-        count_el.text(++count);
+           // Update user all display
+           count_el = $('#count-user-all-wrong');
+           count = count_el.text();
+           count_el.text(++count);
 
-        results_el.text("Sorry, no.");
+           results_el.text("Sorry, no.");
+       }
     }
 
+}
+
+// Check guess click if in tracking mode.
+$(".guess-btn").click(function(e) {
+    checkGuess($(e.target).parent());
     e.preventDefault();
 });
 
 // Live checking if not scoring.
 $(".guess-text").on('input', function() {
-
-    if($('#scoring-mode').is(':checked')) {
-        return;
-    }
-
-    var answer = $(this).siblings('.hidden-answer').val();
-    var questionid = $(this).siblings('.hidden-questionid').val();
-    var userid = $('#hidden-userid').val();
-    var results_el = $(this).siblings('.results');
-
-    if (fuzzyMatch($(this).val(), answer)) {
-        results_el.text("Right!");
-        $(this).val(answer);
-
-        // Post to the log
-        var data = {'userid': userid, 'questionid': questionid};
-        ajaxPost('/userlog/post', data);
-
-        // Update user today display
-        var count_el = $('#count-user-today-right');
-        var count = count_el.text();
-        count_el.text(++count);
-
-        // Update user all display
-        count_el = $('#count-user-all-right');
-        count = count_el.text();
-        count_el.text(++count);
-
-        // Disable further edit
-        $(this).prop("readonly", true);
-
-    } else {
-        results_el.text("");
+    if($('#scoring-mode').is(':checked') == false) {
+        checkGuess($(this).parent());
     }
 });
 
