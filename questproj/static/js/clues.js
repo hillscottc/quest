@@ -73,8 +73,8 @@ $(".guess-btn").click(function(e) {
         guess_el.val(answer);
 
         // Post to the log
-        var data = {'userid': userid, 'questionid': questionid};
-        ajaxPost('/userlog/post', data);
+        ajaxPost('/userlog/post',
+                 {'userid': userid, 'questionid': questionid, 'correct': true});
 
         // Update user today display
         var count_el = $('#count-user-today');
@@ -90,6 +90,10 @@ $(".guess-btn").click(function(e) {
         guess_el.prop("readonly", true);
 
     } else {
+        // Post to the log
+        ajaxPost('/userlog/post',
+                 {'userid': userid, 'questionid': questionid, 'correct': false});
+
         results_el.text("Sorry, no.");
     }
 
