@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base_site.html" %}
 
-<a href="{% url 'login' %}">login</a>
+{% block title %}Registration Complete{% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+    <h1>Registration Complete</h1>
+    <p>You are now registered.</p>
+    <a href="{% url 'auth_login' %}">login</a>
+
+{% endblock %}
