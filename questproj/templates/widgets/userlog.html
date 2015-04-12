@@ -5,15 +5,25 @@
     <div id="counts" class="pull-right">
         <table>
             <thead>
-                <tr><th>Answered by</th><th>Today</th><th>All</th></tr>
+                <tr><th></th><th colspan="2">Today</th><th colspan="2">All-Time</th></tr>
+                <tr><th>Answered by</th><th>Right</th><th>Wrong</th><th>Right</th><th>Wrong</th></tr>
             </thead>
             <tbody>
                 {% if user.is_authenticated %}
                     <tr><td>You</td>
-                        <td id="count-user-today">{{user_today}}</td>
-                        <td id="count-user-all">{{user_alltime}}</td></tr>
+                        <td id="count-user-today-right">{{user_today_right}}</td>
+                        <td id="count-user-today-wrong">{{user_today_wrong}}</td>
+                        <td id="count-user-all-right">{{user_alltime_right}}</td>
+                        <td id="count-user-all-wrong">{{user_alltime_wrong}}</td>
+                    </tr>
                 {% endif %}
-                <tr><td>Everyone</td><td>{{ everyone_today }}</td><td>{{ everyone_alltime }}</td></tr>
+                <tr>
+                    <td>Everyone</td>
+                    <td>{{ everyone_today_right }}</td>
+                    <td>{{ everyone_today_wrong }}</td>
+                    <td>{{ everyone_alltime_right }}</td>
+                    <td>{{ everyone_alltime_wrong }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
