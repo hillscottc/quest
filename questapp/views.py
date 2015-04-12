@@ -10,15 +10,34 @@ from django.http import HttpResponse
 def get_counts(user):
     counts = {}
     if user.username:
-        counts['user_today'] = UserLog.objects.filter(created__gte=date.today(),
-                                                      userid=user.id).count()
-        counts['user_alltime'] = UserLog.objects.filter(userid=user.id).count()
+        counts['user_today_right'] = UserLog.objects.filter(
+            created__gte=date.today(),
+            correct=True,
+            userid=user.id).count()
+        counts['user_today_wrong'] = UserLog.objects.filter(
+            created__gte=date.today(),
+            correct=False,
+            userid=user.id).count()
+        counts['user_alltime_right'] = UserLog.objects.filter(
+            correct=True,
+            userid=user.id).count()
+        counts['user_alltime_wrong'] = UserLog.objects.filter(
+            correct=False,
+            userid=user.id).count()
     else:
-        counts['user_today'] = '-'
-        counts['user_alltime'] = '-'
+        counts['user_today_right'] = '-'
+        counts['user_today_wrong'] = '-'
+        counts['user_alltime_right'] = '-'
+        counts['user_alltime_wrong'] = '-'
 
-    counts['everyone_today'] = UserLog.objects.filter(created__gte=date.today()).count()
-    counts['everyone_alltime'] = UserLog.objects.count()
+    counts['everyone_today_right'] = UserLog.objects.filter(
+        correct=True,
+        created__gte=date.today()).count()
+    counts['everyone_today_wrong'] = UserLog.objects.filter(
+        correct=False,
+        created__gte=date.today()).count()
+    counts['everyone_alltime_right'] = UserLog.objects.filter(correct=True).count()
+    counts['everyone_alltime_wrong'] = UserLog.objects.filter(correct=False).count()
     return counts
 
 

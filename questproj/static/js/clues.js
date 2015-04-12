@@ -73,16 +73,16 @@ $(".guess-btn").click(function(e) {
         guess_el.val(answer);
 
         // Post to the log
-        var data = {'userid': userid, 'questionid': questionid};
-        ajaxPost('/userlog/post', data);
+        ajaxPost('/userlog/post',
+                 {'userid': userid, 'questionid': questionid, 'correct': true});
 
         // Update user today display
-        var count_el = $('#count-user-today');
+        var count_el = $('#count-user-today-right');
         var count = count_el.text();
         count_el.text(++count);
 
         // Update user all display
-        count_el = $('#count-user-all');
+        count_el = $('#count-user-all-right');
         count = count_el.text();
         count_el.text(++count);
 
@@ -90,6 +90,20 @@ $(".guess-btn").click(function(e) {
         guess_el.prop("readonly", true);
 
     } else {
+        // Post to the log
+        ajaxPost('/userlog/post',
+                 {'userid': userid, 'questionid': questionid, 'correct': false});
+
+        // Update user today display
+        var count_el = $('#count-user-today-wrong');
+        var count = count_el.text();
+        count_el.text(++count);
+
+        // Update user all display
+        count_el = $('#count-user-all-wrong');
+        count = count_el.text();
+        count_el.text(++count);
+
         results_el.text("Sorry, no.");
     }
 
@@ -117,12 +131,12 @@ $(".guess-text").on('input', function() {
         ajaxPost('/userlog/post', data);
 
         // Update user today display
-        var count_el = $('#count-user-today');
+        var count_el = $('#count-user-today-right');
         var count = count_el.text();
         count_el.text(++count);
 
         // Update user all display
-        count_el = $('#count-user-all');
+        count_el = $('#count-user-all-right');
         count = count_el.text();
         count_el.text(++count);
 
