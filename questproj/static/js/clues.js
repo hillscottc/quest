@@ -91,10 +91,10 @@ $(".guess-btn").click(function(e) {
     e.preventDefault();
 });
 
-// Live checking if in practice mode.
+// Live checking if not scoring.
 $(".guess-text").on('input', function() {
 
-    if($('#practice-mode').is(':checked') == false) {
+    if($('#scoring-mode').is(':checked')) {
         return;
     }
 
@@ -130,10 +130,12 @@ $(".guess-text").on('input', function() {
 });
 
 
-$("#practice-mode").change(function() {
+$("#scoring-mode").change(function() {
     if(this.checked) {
-        $('.guess-btn').hide();
-    } else {
         $('.guess-btn').show();
+        $('#counts').show();
+    } else {
+        $('.guess-btn').hide();
+        $('#counts').hide();
     }
 });
