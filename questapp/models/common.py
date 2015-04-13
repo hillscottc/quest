@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from datetime import datetime, date
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -48,6 +48,40 @@ class UserLog(models.Model):
 
     def __unicode__(self):
         return u"{}, {}, {}".format(self.created, self.userid, self.questionid)
+
+    @staticmethod
+    def get_counts(user):
+        counts = {}
+        if user.username:
+            counts['user_today_right'] = UserLog.objects.filter(
+                created__gte=date.today(),
+                correct=True,
+                userid=user.id).count()
+            counts['user_today_wrong'] = UserLog.objects.filter(
+                created__gte=date.today(),
+                correct=False,
+                userid=user.id).count()
+            counts['user_alltime_right'] = UserLog.objects.filter(
+                correct=True,
+                userid=user.id).count()
+            counts['user_alltime_wrong'] = UserLog.objects.filter(
+                correct=False,
+                userid=user.id).count()
+        else:
+            counts['user_today_right'] = '-'
+            counts['user_today_wrong'] = '-'
+            counts['user_alltime_right'] = '-'
+            counts['user_alltime_wrong'] = '-'
+
+        counts['everyone_today_right'] = UserLog.objects.filter(
+            correct=True,
+            created__gte=date.today()).count()
+        counts['everyone_today_wrong'] = UserLog.objects.filter(
+            correct=False,
+            created__gte=date.today()).count()
+        counts['everyone_alltime_right'] = UserLog.objects.filter(correct=True).count()
+        counts['everyone_alltime_wrong'] = UserLog.objects.filter(correct=False).count()
+        return counts
 
 
 class DbStore(models.Model):

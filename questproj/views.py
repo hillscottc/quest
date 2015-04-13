@@ -8,7 +8,7 @@ from django import forms
 from registration.backends.simple.views import RegistrationView
 
 from questproj.forms import UserProfileForm, UserForm
-from questapp.models import Clue
+from questapp.models import Clue, UserLog
 from questapp.utils import dbstore_get
 
 
@@ -50,8 +50,13 @@ class AboutView(TemplateView):
         return context
 
 
-class TestMariView(TemplateView):
-    template_name = "test-mari.html"
+class ScoreboardView(TemplateView):
+    template_name = "scoreboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ScoreboardView, self).get_context_data(**kwargs)
+        context.update(UserLog.get_counts(self.request.user))
+        return context
 
 
 class UserAccountView(TemplateView):
@@ -62,4 +67,5 @@ class UserAccountView(TemplateView):
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, request, user):
         return '/'
+
 
