@@ -14,6 +14,7 @@ function ajaxPost(url, data){
     });
 }
 
+
 // True if args match, according to rules.
 function fuzzyMatch(guess, answer) {
     if (guess == "") return false;
@@ -25,6 +26,67 @@ function fuzzyMatch(guess, answer) {
         return true;
     }
 }
+
+
+// Increment the number text display of given el.
+function incrementDisplay(num_el) {
+    var count = num_el.text();
+    num_el.text(++count);
+}
+
+
+function checkGuess(clue_el) {
+    var answer = clue_el.find('.hidden-answer').val();
+    var questionid = clue_el.find('.hidden-questionid').val();
+    var userid = $('#hidden-userid').val();
+    var results_el = clue_el.find('.results');
+    var guess_el = clue_el.find('.guess-text');
+
+   if (fuzzyMatch(guess_el.val(), answer)) {
+        results_el.text("Right!");
+        guess_el.val(answer);
+       if($('#scoring-mode').is(':checked')) {
+           ajaxPost('/userlog/post',
+               {'userid': userid, 'questionid': questionid, 'correct': true});
+           incrementDisplay($('#count-user-today-right'));
+           incrementDisplay($('#count-user-all-right'));
+       }
+       guess_el.prop("readonly", true);
+    } else {
+       if($('#scoring-mode').is(':checked')) {
+           results_el.text("Sorry, no.");
+           ajaxPost('/userlog/post',
+               {'userid': userid, 'questionid': questionid, 'correct': false});
+           incrementDisplay($('#count-user-today-wrong'));
+           incrementDisplay($('#count-user-all-wrong'));
+       }
+    }
+}
+
+// Check guess click if in tracking mode.
+$(".guess-btn").click(function(e) {
+    checkGuess($(e.target).parent());
+    e.preventDefault();
+});
+
+
+// Live checking if not scoring.
+$(".guess-text").on('input', function() {
+    if($('#scoring-mode').is(':checked') == false) {
+        checkGuess($(this).parent());
+    }
+});
+
+
+$("#scoring-mode").change(function() {
+    if(this.checked) {
+        $('.guess-btn').show();
+        $('#counts').show();
+    } else {
+        $('.guess-btn').hide();
+        $('#counts').hide();
+    }
+});
 
 
 $(".clue").click(function(e) {
@@ -58,82 +120,4 @@ $(".tellme-btn").click(function(e) {
     $(e.currentTarget).siblings('.guess-btn').prop("disabled", true);
 
     e.preventDefault();
-});
-
-
-function checkGuess(clue_el) {
-    //var answer = $(this).siblings('.hidden-answer').val();
-    var answer = clue_el.find('.hidden-answer').val();
-    var questionid = clue_el.find('.hidden-questionid').val();
-    var userid = $('#hidden-userid').val();
-    var results_el = clue_el.find('.results');
-    var guess_el = clue_el.find('.guess-text');
-
-   if (fuzzyMatch(guess_el.val(), answer)) {
-        results_el.text("Right!");
-        guess_el.val(answer);
-
-       if($('#scoring-mode').is(':checked')) {
-           // Post to the log
-           ajaxPost('/userlog/post',
-               {'userid': userid, 'questionid': questionid, 'correct': true});
-
-           // Update user today display
-           var count_el = $('#count-user-today-right');
-           var count = count_el.text();
-           count_el.text(++count);
-
-           // Update user all display
-           count_el = $('#count-user-all-right');
-           count = count_el.text();
-           count_el.text(++count);
-       }
-
-        // Disable further edit
-        guess_el.prop("readonly", true);
-
-    } else {
-       if($('#scoring-mode').is(':checked')) {
-           // Post to the log
-           ajaxPost('/userlog/post',
-               {'userid': userid, 'questionid': questionid, 'correct': false});
-
-           // Update user today display
-           var count_el = $('#count-user-today-wrong');
-           var count = count_el.text();
-           count_el.text(++count);
-
-           // Update user all display
-           count_el = $('#count-user-all-wrong');
-           count = count_el.text();
-           count_el.text(++count);
-
-           results_el.text("Sorry, no.");
-       }
-    }
-
-}
-
-// Check guess click if in tracking mode.
-$(".guess-btn").click(function(e) {
-    checkGuess($(e.target).parent());
-    e.preventDefault();
-});
-
-// Live checking if not scoring.
-$(".guess-text").on('input', function() {
-    if($('#scoring-mode').is(':checked') == false) {
-        checkGuess($(this).parent());
-    }
-});
-
-
-$("#scoring-mode").change(function() {
-    if(this.checked) {
-        $('.guess-btn').show();
-        $('#counts').show();
-    } else {
-        $('.guess-btn').hide();
-        $('#counts').hide();
-    }
 });
