@@ -1,14 +1,10 @@
-from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.template import RequestContext
 from django.views.generic import TemplateView, View
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
 from django import forms
 from django.db.models import Count
 from registration.backends.simple.views import RegistrationView
 
-from questproj.forms import UserProfileForm, UserForm
 from questapp.models import Clue, UserLog, CountCase
 from questapp.utils import dbstore_get
 
@@ -54,14 +50,56 @@ class AboutView(TemplateView):
 class ScoreboardView(TemplateView):
     template_name = "scoreboard.html"
 
+    def get_counts(user):
+        counts = {}
+
+        # For the original everyone part.
+
+        # if user.username:
+        #     counts['user_today_right'] = UserLog.objects.filter(
+        #         created__gte=date.today(),
+        #         correct=True,
+        #         userid=user.id).count()
+        #     counts['user_today_wrong'] = UserLog.objects.filter(
+        #         created__gte=date.today(),
+        #         correct=False,
+        #         userid=user.id).count()
+        #     counts['user_alltime_right'] = UserLog.objects.filter(
+        #         correct=True,
+        #         userid=user.id).count()
+        #     counts['user_alltime_wrong'] = UserLog.objects.filter(
+        #         correct=False,
+        #         userid=user.id).count()
+        # else:
+        #     counts['user_today_right'] = '-'
+        #     counts['user_today_wrong'] = '-'
+        #     counts['user_alltime_right'] = '-'
+        #     counts['user_alltime_wrong'] = '-'
+        #
+        # counts['everyone_today_right'] = UserLog.objects.filter(
+        #     correct=True,
+        #     created__gte=date.today()).count()
+        # counts['everyone_today_wrong'] = UserLog.objects.filter(
+        #     correct=False,
+        #     created__gte=date.today()).count()
+        # counts['everyone_alltime_right'] = UserLog.objects.filter(correct=True).count()
+        # counts['everyone_alltime_wrong'] = UserLog.objects.filter(correct=False).count()
+
+        # For the newer table.
+
+        logs = UserLog.objects.values('userid').annotate(
+            is_correct_yes=CountCase('correct', when=True),
+            total=Count('userid'))
+        for row in logs:
+            row['percentage'] = 100 * (float(row['is_correct_yes']) / row['total'])
+
+        counts['logs'] = logs
+        return counts
+
     def get_context_data(self, **kwargs):
         context = super(ScoreboardView, self).get_context_data(**kwargs)
-        context.update(UserLog.get_counts(self.request.user))
 
-        logs = UserLog.objects.values('userid').annotate(is_correct_yes=CountCase('correct', when=True),
-                                                         is_correct_no=CountCase('correct', when=False),
-                                                         total=Count('userid'))
-        context.update({'logs': logs})
+        context.update(self.get_counts(self.request.user))
 
         return context
 

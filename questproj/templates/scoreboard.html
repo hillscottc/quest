@@ -31,10 +31,26 @@
 </div>
 <br clear="all">
 <br/>
-
-{% for log in logs %}
-    {{ log }}
-{%  endfor %}
+<table>
+    <thead>
+        <tr>
+            <th>user</th>
+            <th>correct</th>
+            <th>total</th>
+            <th>perc</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+           <tr>
+               <td>{{ log.userid }}</td>
+               <td>{{ log.is_correct_yes }}</td>
+               <td style="text-align: right">{{ log.total }}</td>
+               <td style="text-align: right">{{ log.percentage }}&percnt;</td>
+           </tr>
+        {%  endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
 
