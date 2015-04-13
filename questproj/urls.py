@@ -14,9 +14,10 @@ urlpatterns = patterns(
 
     url(r'^admin-page/', views.AdminPageFormView.as_view(), name="admin-page"),
 
+    url(r'^scoreboard', views.ScoreboardView.as_view(), name="scoreboard"),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about$', views.AboutView.as_view(), name="about"),
-    url(r'^test-mari$', views.TestMariView.as_view(), name="test-mari"),
 
     # http://www.tangowithdjango.com/book17/chapters/login_redux.html
     url(r'^accounts/register/$', views.MyRegistrationView.as_view(), name='registration_register'),

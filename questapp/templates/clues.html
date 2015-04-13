@@ -5,14 +5,14 @@
 
 {% block content %}
 
-    {% include "widgets/userlog.html" %}
+    <label>track answers
+        <input id="scoring-mode" type="checkbox" checked />
+        <span title="If checked, use the &apos;my guess&apos; button to submit your answer, and your results count." class="tip">(?)</span>
+    </label>
 
-    <p>
-        <label>track answers
-            <input id="scoring-mode" type="checkbox" checked />
-            <span title="If checked, use the &apos;my guess&apos; button to submit your answer, and your results count." class="tip">(?)</span>
-        </label>
-    </p>
+    <input id="hidden-userid" type="hidden"
+           value="{% if user.is_authenticated %}{{ user.id }} {% else %} 0 {% endif %}">
+
 
     <div id="clues-view">
 
@@ -52,4 +52,8 @@
 {% block extrajs %}
     {{ block.super }}
     <script src="{% static 'js/clues.js' %}"></script>
+
+
+
+
 {% endblock extrajs %}

@@ -27,12 +27,12 @@ function fuzzyMatch(guess, answer) {
     }
 }
 
-
-// Increment the number text display of given el.
-function incrementDisplay(num_el) {
-    var count = num_el.text();
-    num_el.text(++count);
-}
+//
+//// Increment the number text display of given el.
+//function incrementDisplay(num_el) {
+//    var count = num_el.text();
+//    num_el.text(++count);
+//}
 
 
 function checkGuess(clue_el) {
@@ -48,8 +48,6 @@ function checkGuess(clue_el) {
        if($('#scoring-mode').is(':checked')) {
            ajaxPost('/userlog/post',
                {'userid': userid, 'questionid': questionid, 'correct': true});
-           incrementDisplay($('#count-user-today-right'));
-           incrementDisplay($('#count-user-all-right'));
        }
        guess_el.prop("readonly", true);
     } else {
@@ -57,8 +55,6 @@ function checkGuess(clue_el) {
            results_el.text("Sorry, no.");
            ajaxPost('/userlog/post',
                {'userid': userid, 'questionid': questionid, 'correct': false});
-           incrementDisplay($('#count-user-today-wrong'));
-           incrementDisplay($('#count-user-all-wrong'));
        }
     }
 }
@@ -81,10 +77,8 @@ $(".guess-text").on('input', function() {
 $("#scoring-mode").change(function() {
     if(this.checked) {
         $('.guess-btn').show();
-        $('#counts').show();
     } else {
         $('.guess-btn').hide();
-        $('#counts').hide();
     }
 });
 
