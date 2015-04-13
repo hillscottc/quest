@@ -5,10 +5,11 @@ from django.views.generic import TemplateView, View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django import forms
+from django.db.models import Count
 from registration.backends.simple.views import RegistrationView
 
 from questproj.forms import UserProfileForm, UserForm
-from questapp.models import Clue, UserLog
+from questapp.models import Clue, UserLog, CountCase
 from questapp.utils import dbstore_get
 
 
@@ -56,6 +57,12 @@ class ScoreboardView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ScoreboardView, self).get_context_data(**kwargs)
         context.update(UserLog.get_counts(self.request.user))
+
+        logs = UserLog.objects.values('userid').annotate(is_correct_yes=CountCase('correct', when=True),
+                                                         is_correct_no=CountCase('correct', when=False),
+                                                         total=Count('userid'))
+        context.update({'logs': logs})
+
         return context
 
 
