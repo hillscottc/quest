@@ -47,7 +47,7 @@ class UserLog(models.Model):
         return reverse('userlog-detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
-        return u"{}, {}, {}".format(self.created, self.userid, self.questionid)
+        return u"{}, {}, {}".format(self.created.strftime("%Y-%m-%d %H:%M"), self.userid, self.questionid)
 
     @staticmethod
     def get_counts(user):
