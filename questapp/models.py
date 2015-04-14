@@ -66,18 +66,15 @@ class UserLog(models.Model):
     # Remember in django orm, you group-by by using values()
 
     @staticmethod
-    def get_daily_counts():
-        # http://stackoverflow.com/questions/10154227/django-orm-group-by-day
+    def get_counts_filtered(count_filter=None):
 
-        return UserLog.objects.extra(select={'day': 'date(created)'}).values('day', 'userid')\
-            .annotate(is_correct_yes=CountCase('correct', when=True),
-                      is_correct_no=CountCase('correct', when=False),
-                      total=models.Count('created'))
+        qs = UserLog.objects.values('created')
 
-    @staticmethod
-    def get_counts_by_date(count_date):
-        return UserLog.objects.values('created').filter(created__gte=count_date)\
-            .extra(select={'day': 'date(created)'}).values('day', 'userid')\
+        if count_filter:
+            qs = qs.filter(**count_filter)
+
+        return qs.extra(select={'day': 'date(created)'})\
+            .values('day', 'userid')\
             .annotate(is_correct_yes=CountCase('correct', when=True),
                       is_correct_no=CountCase('correct', when=False),
                       total=models.Count('created'))

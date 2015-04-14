@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 class LogTest(TestCase):
 
     def setUp(self):
+        print
         obj = UserLog.objects.create(userid=0, questionid=91, correct=False)
         obj.created = dt.datetime.now() - dt.timedelta(hours=48)
         obj.save()
@@ -27,26 +28,47 @@ class LogTest(TestCase):
         UserLog.objects.create(userid=1, questionid=91, correct=False)
         UserLog.objects.create(userid=1, questionid=91, correct=True)
         UserLog.objects.create(userid=1, questionid=92, correct=False)
-        print
+
         print "All rows:"
         for row in UserLog.objects.all():
             print row
         print
         # user = User.objects.create(username='shill')
 
-    def test_get_daily_counts(self):
-        rows = UserLog.get_daily_counts()
-        print "Counts by day user."
+    def test_counts_filtered(self):
+        count_filter = None
+        print "Filtered by:", count_filter
+        rows = UserLog.get_counts_filtered(count_filter)
         for row in rows:
             print row
         self.assertEquals(len(rows), 4)
 
-    def test_get_counts_by_date(self):
-        rows = UserLog.get_counts_by_date(dt.date.today())
-        print "Today's rows:"
+        print
+
+        count_filter = {'created__gte': dt.date.today()}
+        print "Filtered by:", count_filter
+        rows = UserLog.get_counts_filtered(count_filter)
         for row in rows:
             print row
         self.assertEquals(len(rows), 2)
+
+        print
+
+        count_filter = {'userid': 1}
+        print "Filtered by:", count_filter
+        rows = UserLog.get_counts_filtered(count_filter)
+        for row in rows:
+            print row
+        self.assertEquals(len(rows), 2)
+
+        print
+
+        count_filter = {'userid': 1, 'created__gte': dt.date.today()}
+        print "Filtered by:", count_filter
+        rows = UserLog.get_counts_filtered(count_filter)
+        for row in rows:
+            print row
+        self.assertEquals(len(rows), 1)
 
 
 class UnitTest(TestCase):
