@@ -3,37 +3,50 @@ from unittest import skip
 from django.db.models import Count
 from questapp.utils import load_clues
 from questapp.utils import dbstore_get
-from datetime import date
+import datetime as dt
 from questapp.models import UserLog, CountCase, Clue, DbStore
 from questproj.views import get_counts
 from django.contrib.auth.models import User
 
 
-class TestLog(TestCase):
+class LogTest(TestCase):
 
     def setUp(self):
-        UserLog.objects.create(userid=0, questionid=91, correct=False)
+        obj = UserLog.objects.create(userid=0, questionid=91, correct=False)
+        obj.created = dt.datetime.now() - dt.timedelta(hours=48)
+        obj.save()
         UserLog.objects.create(userid=0, questionid=91, correct=False)
         UserLog.objects.create(userid=0, questionid=91, correct=False)
         UserLog.objects.create(userid=0, questionid=91, correct=True)
         UserLog.objects.create(userid=0, questionid=92, correct=False)
         UserLog.objects.create(userid=0, questionid=92, correct=True)
         UserLog.objects.create(userid=1, questionid=91, correct=False)
+        obj = UserLog.objects.create(userid=1, questionid=91, correct=False)
+        obj.created = dt.datetime.now() - dt.timedelta(hours=48)
+        obj.save()
         UserLog.objects.create(userid=1, questionid=91, correct=False)
         UserLog.objects.create(userid=1, questionid=91, correct=True)
         UserLog.objects.create(userid=1, questionid=92, correct=False)
-
-    def test_counts(self):
-
+        print
+        print "All rows:"
+        for row in UserLog.objects.all():
+            print row
+        print
         # user = User.objects.create(username='shill')
-        # counts = get_counts(user)
-        # print counts
 
-        rows = UserLog.objects.filter(created__gte=date.today()).annotate(
-            is_correct_yes=CountCase('correct', when=True),
-            is_correct_no=CountCase('correct', when=False))
+    def test_get_daily_counts(self):
+        rows = UserLog.get_daily_counts()
+        print "Counts by day user."
+        for row in rows:
+            print row
+        self.assertEquals(len(rows), 4)
 
-        print rows
+    def test_get_counts_by_date(self):
+        rows = UserLog.get_counts_by_date(dt.date.today())
+        print "Today's rows:"
+        for row in rows:
+            print row
+        self.assertEquals(len(rows), 2)
 
 
 class UnitTest(TestCase):

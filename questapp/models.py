@@ -63,6 +63,25 @@ class UserLog(models.Model):
     questionid = models.IntegerField(default=0)
     correct = models.BooleanField(default=True)
 
+    # Remember in django orm, you group-by by using values()
+
+    @staticmethod
+    def get_daily_counts():
+        # http://stackoverflow.com/questions/10154227/django-orm-group-by-day
+
+        return UserLog.objects.extra(select={'day': 'date(created)'}).values('day', 'userid')\
+            .annotate(is_correct_yes=CountCase('correct', when=True),
+                      is_correct_no=CountCase('correct', when=False),
+                      total=models.Count('created'))
+
+    @staticmethod
+    def get_counts_by_date(count_date):
+        return UserLog.objects.values('created').filter(created__gte=count_date)\
+            .extra(select={'day': 'date(created)'}).values('day', 'userid')\
+            .annotate(is_correct_yes=CountCase('correct', when=True),
+                      is_correct_no=CountCase('correct', when=False),
+                      total=models.Count('created'))
+
     def get_absolute_url(self):
         return reverse('userlog-detail', kwargs={'pk': self.pk})
 
