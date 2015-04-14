@@ -26,14 +26,6 @@ class BaseModel(models.Model):
         ordering = ["-created"]
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    modified = models.DateTimeField(auto_now=True, editable=False, default=datetime.now)
-
-    def __unicode__(self):
-        return self.user.username
-
-
 # Two util classes to get aggregate count with case https://djangosnippets.org/snippets/2100/
 
 class SQLCountCase(models.sql.aggregates.Aggregate):
@@ -86,5 +78,30 @@ class DbStore(models.Model):
         return u"{} : {}".format(self.dbkey, self.dbval)
 
 
+class Clue(BaseModel):
+    category = models.CharField(max_length=255)
+    question = models.CharField(max_length=355)
+    answer = models.CharField(max_length=355)
 
+    class Meta:
+        ordering = ['category', 'question']
 
+    def get_absolute_url(self):
+        return reverse('clue-detail', kwargs={'pk': self.pk})
+
+    def desc(self):
+        return u"CAT:{} Q:{} A:{}".format(self.category, self.question, self.answer)
+
+    def get_json(self):
+        return {'category': self.category.name,
+                'question': self.question,
+                'answer': self.answer}
+
+    @staticmethod
+    def get_random_cats(num=20):
+        """Get random list of categories."""
+        cats = [c.category for c in Clue.objects.all().order_by('?')[:num]]
+        return cats
+
+    def __unicode__(self):
+        return u"Q:{} A:{}".format(self.question, self.answer)
