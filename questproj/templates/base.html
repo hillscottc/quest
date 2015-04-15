@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
     <link rel="stylesheet" href="{% static "css/style.css" %}">
 
-    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.css' %}">
-    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.structure.css' %}">
-    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.theme.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.theme.min.css' %}">
 
 {#    <script src="{% static 'lib/jquery.js' %}"></script>#}
 {#    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>#}
@@ -54,6 +54,10 @@
     </div>
 
     {% block footer %}{% endblock %}
+
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
+
 
     {% block extrajs %}{% endblock extrajs %}
 
