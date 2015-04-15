@@ -53,13 +53,10 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-
 TEMPLATE_DIRS = (
     os.path.join(PROJ_DIR, "templates"),
     os.path.join(os.path.dirname(PROJ_DIR), 'questapp', "templates"),
 )
-
-SITE_NAME = "QuestSite"
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -71,7 +68,6 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(PROJ_DIR, "static"), )
-
 
 LOGS_DIR = os.path.join(os.path.dirname(BASE_DIR),  'logs')
 LOGGING = {
@@ -132,7 +128,6 @@ LOGGING = {
     }
 }
 
-
 # The ON_HEROKU variable is defind heroku app env, with heroku:config.
 # It will only be true when running the app in Heroku.
 ON_HEROKU = 'ON_HEROKU' in os.environ
@@ -163,13 +158,13 @@ else:
                              'NAME': 'quest_db', 'USER': 'quest_acct', 'PASSWORD': '12345',
                              'HOST': 'localhost', 'PORT': '5432'}}
 
+SITE_NAME = "TrivQuest"
 
 REGISTRATION_OPEN = True
 ACCOUNT_ACTIVATION_DAYS = 14
 REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
 LOGIN_REDIRECT_URL = '/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'  # Where users go if not logged in and try to access a page requiring auth
-
 
 
 # Set this in env?
