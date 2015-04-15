@@ -66,18 +66,31 @@ class UserLog(models.Model):
     # Remember in django orm, you group-by by using values()
 
     @staticmethod
-    def get_counts_filtered(count_filter=None):
+    def get_counts_filtered(count_filter=None, group_by=None):
 
-        qs = UserLog.objects.values('created')
+        log.info("Counts filtered by {}, grouped by: {}".format(count_filter, group_by))
+
+        # qs = UserLog.objects.values('created')
+        qs = UserLog.objects.all()
 
         if count_filter:
             qs = qs.filter(**count_filter)
 
-        return qs.extra(select={'day': 'date(created)'})\
-            .values('day', 'userid')\
+        if not group_by:
+            group_by = ()
+
+        # qs_values = ('day', 'userid')
+
+        rows = qs.extra(select={'day': 'date(created)'})\
+            .values(*group_by)\
             .annotate(is_correct_yes=CountCase('correct', when=True),
                       is_correct_no=CountCase('correct', when=False),
                       total=models.Count('created'))
+
+        for row in rows:
+            row['percentage'] = 100 * (float(row['is_correct_yes']) / row['total'])
+
+        return rows
 
     def get_absolute_url(self):
         return reverse('userlog-detail', kwargs={'pk': self.pk})

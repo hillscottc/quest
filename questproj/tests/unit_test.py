@@ -9,7 +9,14 @@ from questproj.views import get_counts
 from django.contrib.auth.models import User
 
 
-class LogTest(TestCase):
+def print_counts(rows):
+    print "{:<10} {} {} {} {}".format('day', 'userid', 'is_correct_yes', 'total', 'percentage')
+    for row in rows:
+        print "{} {:<6} {:<14} {:<5} {}".format(
+            row['day'], row['userid'], row['is_correct_yes'], row['total'], row['percentage'])
+
+
+class USerLogTest(TestCase):
 
     def setUp(self):
         print
@@ -36,38 +43,40 @@ class LogTest(TestCase):
         # user = User.objects.create(username='shill')
 
     def test_counts_filtered(self):
-        count_filter = None
-        print "Filtered by:", count_filter
-        rows = UserLog.get_counts_filtered(count_filter)
-        for row in rows:
-            print row
-        self.assertEquals(len(rows), 4)
+
+        rows = UserLog.get_counts_filtered()
+        print_counts(rows)
+        self.assertEquals(len(rows), 11)
 
         print
 
-        count_filter = {'created__gte': dt.date.today()}
-        print "Filtered by:", count_filter
-        rows = UserLog.get_counts_filtered(count_filter)
+        rows = UserLog.get_counts_filtered(count_filter=None,
+                                           group_by=('day', ))
+        print "{:<10} {} {} {}".format('day', 'is_correct_yes', 'total', 'percentage')
         for row in rows:
-            print row
+            print "{} {:<14} {:<5} {}".format(
+                row['day'], row['is_correct_yes'], row['total'], row['percentage'])
         self.assertEquals(len(rows), 2)
 
         print
 
-        count_filter = {'userid': 1}
-        print "Filtered by:", count_filter
-        rows = UserLog.get_counts_filtered(count_filter)
-        for row in rows:
-            print row
+        rows = UserLog.get_counts_filtered(count_filter={'created__gte': dt.date.today()},
+                                           group_by=('day', 'userid'))
+        print_counts(rows)
         self.assertEquals(len(rows), 2)
 
         print
 
-        count_filter = {'userid': 1, 'created__gte': dt.date.today()}
-        print "Filtered by:", count_filter
-        rows = UserLog.get_counts_filtered(count_filter)
-        for row in rows:
-            print row
+        rows = UserLog.get_counts_filtered(count_filter={'userid': 1},
+                                           group_by=('day', 'userid'))
+        print_counts(rows)
+        self.assertEquals(len(rows), 2)
+
+        print
+
+        rows = UserLog.get_counts_filtered(count_filter={'userid': 1, 'created__gte': dt.date.today()},
+                                           group_by=('day', 'userid'))
+        print_counts(rows)
         self.assertEquals(len(rows), 1)
 
 

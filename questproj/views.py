@@ -1,4 +1,4 @@
-from datetime import date
+import datetime as dt
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, View
@@ -53,38 +53,47 @@ def get_counts(user):
     counts = {}
 
     if user.is_authenticated():
-        counts['user_today_right'] = UserLog.objects.filter(
-            created__gte=date.today(), correct=True,
-            userid=user.id).count()
 
-        counts['user_today_wrong'] = UserLog.objects.filter(
-            created__gte=date.today(), correct=False,
-            userid=user.id).count()
+        rows = UserLog.get_counts_filtered({'userid': 1, 'created__gte': dt.date.today()})
+        if rows:
+            counts['user_today_right'] = rows[0]['is_correct_yes']
+            counts['user_today_wrong'] = rows[0]['is_correct_no']
+        else:
+            counts['user_today_right'] = 0
+            counts['user_today_wrong'] = 0
 
-        counts['user_alltime_right'] = UserLog.objects.filter(
-            correct=True, userid=user.id).count()
+        rows = UserLog.get_counts_filtered({'userid': 1})
+        if rows:
+            counts['user_alltime_right'] = rows[0]['is_correct_yes']
+            counts['user_alltime_wrong'] = rows[0]['is_correct_no']
+        else:
+            counts['user_alltime_right'] = 0
+            counts['user_alltime_wrong'] = 0
 
-        counts['user_alltime_wrong'] = UserLog.objects.filter(
-            correct=False,
-            userid=user.id).count()
+    rows = UserLog.get_counts_filtered({'created__gte': dt.date.today()})
+    if rows:
+        counts['everyone_today_right'] = rows[0]['is_correct_yes']
+        counts['everyone_today_wrong'] = rows[0]['is_correct_no']
+    else:
+        counts['everyone_today_right'] = 0
+        counts['everyone_today_wrong'] = 0
 
-    counts['everyone_today_right'] = UserLog.objects.filter(
-        correct=True, created__gte=date.today()).count()
-
-
-
-    # UserLog.objects.filter(created__gte=date.today()).annotate(
-    #     is_correct_yes=CountCase('correct', when=True),
-    #     is_correct_no=CountCase('correct', when=False),
-    #     total=Count('userid'))
-
-
-    counts['everyone_today_wrong'] = UserLog.objects.filter(
-        correct=False, created__gte=date.today()).count()
+    rows = UserLog.get_counts_filtered()
+    if rows:
+        counts['everyone_alltime_right'] = rows[0]['is_correct_yes']
+        counts['everyone_alltime_wrong'] = rows[0]['is_correct_no']
+    else:
+        counts['everyone_alltime_right'] = 0
+        counts['everyone_alltime_wrong'] = 0
 
 
-    counts['everyone_alltime_right'] = UserLog.objects.filter(correct=True).count()
-    counts['everyone_alltime_wrong'] = UserLog.objects.filter(correct=False).count()
+    # counts['everyone_today_right'] = UserLog.objects.filter(
+    #     correct=True, created__gte=dt.date.today()).count()
+    # counts['everyone_today_wrong'] = UserLog.objects.filter(
+    #     correct=False, created__gte=dt.date.today()).count()
+    #
+    # counts['everyone_alltime_right'] = UserLog.objects.filter(correct=True).count()
+    # counts['everyone_alltime_wrong'] = UserLog.objects.filter(correct=False).count()
 
     # For the newer table.
 
