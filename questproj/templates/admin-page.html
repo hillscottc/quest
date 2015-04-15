@@ -35,20 +35,19 @@
 {#  I do an old-school import of jquery here, just so I can use it to write quick scripts. #}
 {#  Hacky.Could the bundled jquery could be used instead?  But its just an admin page anyway. #}
 
-    <script src="{% static 'lib/jquery.js' %}"></script>
 
-   <script type="text/javascript">
-        $(function() {
-            var data = JSON.stringify({'questionid': '1', 'userid': '99'});
-            var request = $.ajax({
-                url: '/userlog/post/',
-                type: 'POST',
-                contentType: 'application/json',
-                data: data,
-                dataType: 'text'
-            });
-        });
-   </script>
+{#   <script type="text/javascript">#}
+{#        $(function() {#}
+{#            var data = JSON.stringify({'questionid': '1', 'userid': '99'});#}
+{#            var request = $.ajax({#}
+{#                url: '/userlog/post/',#}
+{#                type: 'POST',#}
+{#                contentType: 'application/json',#}
+{#                data: data,#}
+{#                dataType: 'text'#}
+{#            });#}
+{#        });#}
+{#   </script>#}
 
 
 

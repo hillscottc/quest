@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
     <link rel="stylesheet" href="{% static "css/style.css" %}">
 
-    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.css' %}">
-    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.structure.css' %}">
-    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.theme.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui/jquery-ui.theme.min.css' %}">
 
 {#    <script src="{% static 'lib/jquery.js' %}"></script>#}
 {#    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>#}
@@ -53,44 +53,13 @@
 
     </div>
 
+    {% block footer %}{% endblock %}
 
-{#    <div id="footer" style="font-size:x-small;margin:20px">#}
-{#        Copyright (C) {% now "Y" %}  {{ SITE_NAME }}#}
-{#    </div>#}
-
-    {% block extrajs %}
-
-        <script src="{% static 'lib/jquery.js' %}"></script>
-        <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
-
-        <!-- https://jqueryui.com/tooltip/ -->
-        <script>
-            $(function() {
-                $(document).tooltip();
-            });
-        </script>
-
-        <!-- https://github.com/js-cookie/js-cookie  -->
-        <script src="{% static 'lib/js.cookie.js' %}"></script>
-
-        <!-- https://docs.djangoproject.com/en/1.8/ref/csrf/ -->
-        <script>
-            var csrftoken = Cookies.get('csrftoken');
-            function csrfSafeMethod(method) {
-                // these HTTP methods do not require CSRF protection
-                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-            }
-            $.ajaxSetup({
-                beforeSend: function(xhr, settings) {
-                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    }
-                }
-            });
-        </script>
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
 
 
-    {% endblock extrajs %}
+    {% block extrajs %}{% endblock extrajs %}
 
 </body>
 </html>
