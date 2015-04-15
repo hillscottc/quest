@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 
 {% block title %} {{ SITE_NAME }}{% endblock %}
@@ -18,3 +19,41 @@
     {% endfor %}</ul>
     {% endif %}
 {% endblock messages %}
+
+
+{% block footer %}
+    <div id="footer" style="font-size:x-small;margin:20px">Copyright (C) {% now "Y" %}  {{ SITE_NAME }}</div>
+{% endblock %}
+
+{% block extrajs %}
+
+    <script src="{% static 'lib/jquery.js' %}"></script>
+    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
+
+    <!-- https://jqueryui.com/tooltip/ -->
+    <script>
+        $(function() {
+            $(document).tooltip();
+        });
+    </script>
+
+    <!-- https://github.com/js-cookie/js-cookie  -->
+    <script src="{% static 'lib/js.cookie.js' %}"></script>
+
+    <!-- https://docs.djangoproject.com/en/1.8/ref/csrf/ -->
+    <script>
+        var csrftoken = Cookies.get('csrftoken');
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    </script>
+
+{% endblock extrajs %}
