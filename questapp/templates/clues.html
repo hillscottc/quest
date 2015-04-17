@@ -5,13 +5,12 @@
 
 {% block content %}
 
-    <label>track answers
-        <input id="scoring-mode" type="checkbox" checked />
-        <span title="If checked, use the &apos;my guess&apos; button to submit your answer, and your results count." class="tip">(?)</span>
-    </label>
 
     <input id="hidden-userid" type="hidden"
            value="{% if user.is_authenticated %}{{ user.id }} {% else %} 0 {% endif %}">
+
+
+    {% include "widgets/toolbar.html" %}
 
 
     <div id="clues-view">
@@ -33,8 +32,7 @@
                     <input class="guess-text" placeholder="answer..."/>
                     <span class="results list-group-item-text"></span>
                     &nbsp;
-                    <button type="button" class="guess-btn btn btn-xs btn-success">that&apos;s my guess</button>
-                    &nbsp;&nbsp;&nbsp;
+{#                    <button type="button" class="guess-btn btn btn-xs btn-success">that&apos;s my guess</button> &nbsp;&nbsp;&nbsp;#}
                     <button type="button" class="tellme-btn btn btn-xs btn-warning">I give up, tell me</button>
 
                 </div>
@@ -44,16 +42,12 @@
 
     </div>
 
-    <div class="modal"></div>
-
 {% endblock %}
 
 
 {% block extrajs %}
     {{ block.super }}
     <script src="{% static 'js/clues.js' %}"></script>
-
-
-
+    <script src="{% static 'js/timer.js' %}"></script>
 
 {% endblock extrajs %}

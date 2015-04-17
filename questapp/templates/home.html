@@ -1,8 +1,11 @@
 {% extends "base_site.html" %}
+{% load staticfiles %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
+    {% include "widgets/toolbar.html" %}
 
 
     <div style="text-align: center">
@@ -19,3 +22,9 @@
 
 {% endblock %}
 
+
+{% block extrajs %}
+    {{ block.super }}
+    <script src="{% static 'js/timer.js' %}"></script>
+
+{% endblock extrajs %}

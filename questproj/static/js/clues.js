@@ -59,28 +59,35 @@ function checkGuess(clue_el) {
     }
 }
 
+
+// Using live checking all the time. Forget the guess button.
+
 // Check guess click if in tracking mode.
-$(".guess-btn").click(function(e) {
-    checkGuess($(e.target).parent());
-    e.preventDefault();
-});
+//$(".guess-btn").click(function(e) {
+//    checkGuess($(e.target).parent());
+//    e.preventDefault();
+//});
 
 
-// Live checking if not scoring.
+// Live checking of typed answers
 $(".guess-text").on('input', function() {
-    if($('#scoring-mode').is(':checked') == false) {
-        checkGuess($(this).parent());
-    }
+
+    checkGuess($(this).parent());
+
+    //if($('#scoring-mode').is(':checked') == false) {
+    //    checkGuess($(this).parent());
+    //}
+
 });
 
 
-$("#scoring-mode").change(function() {
-    if(this.checked) {
-        $('.guess-btn').show();
-    } else {
-        $('.guess-btn').hide();
-    }
-});
+//$("#scoring-mode").change(function() {
+//    if(this.checked) {
+//        $('.guess-btn').show();
+//    } else {
+//        $('.guess-btn').hide();
+//    }
+//});
 
 
 $(".clue").click(function(e) {
