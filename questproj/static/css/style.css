@@ -87,31 +87,22 @@ body {
     color: #669991;
 }
 
-
-
-.modal {
-    display:    none;
-    position:   fixed;
-    z-index:    1000;
-    top:        0;
-    left:       0;
-    height:     100%;
-    width:      100%;
-    background: rgba( 255, 255, 255, .8 )
-                url('../img/spinner.gif')
-                50% 50%
-                no-repeat;
+.tip {
+    color: #669991;
+    font-style: italic;
 }
 
-/* For the modal, turn the scrollbar off. */
-body.loading {
-    overflow: hidden;
+#timer { width: 240px; height: 45px; }
+
+#page-controls {
+    text-align: right;
 }
 
-/* Show the modal */
-body.loading .modal {
-    display: block;
+#page-controls div {
+    display:inline-block;
 }
+
+
 
 #counts table tbody tr td {
     padding: 0px 15px 0px 0px;

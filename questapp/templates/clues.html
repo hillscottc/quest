@@ -5,15 +5,35 @@
 
 {% block content %}
 
-    <label>track answers
-        <input id="scoring-mode" type="checkbox" checked />
-        <span title="If checked, use the &apos;my guess&apos; button to submit your answer, and your results count." class="tip">(?)</span>
-    </label>
 
     <input id="hidden-userid" type="hidden"
            value="{% if user.is_authenticated %}{{ user.id }} {% else %} 0 {% endif %}">
 
-    <div id="defaultCountdown"></div>
+
+    <div id="page-controls">
+        <div>
+            <label for="scoring-mode">track answers:</label>
+            <input id="scoring-mode" type="checkbox" checked />
+            <span title="If checked, use the &apos;my guess&apos; button to submit your answer,
+                         and your results count." class="tip">?</span>
+        </div>
+
+        <div>
+            <label for="timer-choice">Timer to:</label>
+            <div>
+                <select class="form-control" id="timer-choice">
+                    <option>15 secs</option>
+                    <option>30 secs</option>
+                    <option>1 min</option>
+                    <option>3 mins</option>
+                </select>
+            </div>
+            <button type="button" class="countdown-btn btn btn-xs btn-success">go</button>
+            <div id="timer"></div>
+        </div>
+
+    </div>
+
 
     <div id="clues-view">
 
@@ -45,8 +65,6 @@
 
     </div>
 
-    <div class="modal"></div>
-
 {% endblock %}
 
 
@@ -59,7 +77,7 @@
     $(function () {
         var austDay = new Date();
         austDay = new Date(austDay.getFullYear() + 1, 1 - 1, 26);
-        $('#defaultCountdown').countdown({until: austDay});
+        $('#timer').countdown({until: austDay});
         $('#year').text(austDay.getFullYear());
     });
     </script>
