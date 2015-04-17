@@ -13,6 +13,7 @@
     <input id="hidden-userid" type="hidden"
            value="{% if user.is_authenticated %}{{ user.id }} {% else %} 0 {% endif %}">
 
+    <div id="defaultCountdown"></div>
 
     <div id="clues-view">
 
@@ -52,6 +53,16 @@
 {% block extrajs %}
     {{ block.super }}
     <script src="{% static 'js/clues.js' %}"></script>
+
+
+    <script>
+    $(function () {
+        var austDay = new Date();
+        austDay = new Date(austDay.getFullYear() + 1, 1 - 1, 26);
+        $('#defaultCountdown').countdown({until: austDay});
+        $('#year').text(austDay.getFullYear());
+    });
+    </script>
 
 
 
