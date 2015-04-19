@@ -1,6 +1,6 @@
 
 
-    <div id="page-controls">
+<div id="page-controls">
 {#        <div>#}
 {#            <label for="scoring-mode">track answers:</label>#}
 {#            <input id="scoring-mode" type="checkbox" checked />#}
@@ -8,18 +8,19 @@
 {#                         and your results count." class="tip">?</span>#}
 {#        </div>#}
 
-        <div>
-            <label for="timerChoice">Timer to:</label>
-            <div>
-                <select class="form-control" id="timerChoice">
-                    <option value="15">15 secs</option>
-                    <option value="30">30 secs</option>
-                    <option value="60">1 min</option>
-                    <option value="180">3 mins</option>
-                </select>
-            </div>
-            <button id="timerGo" type="button" class="countdown-btn btn btn-xs btn-success">go</button>
-            <div id="timer"></div>
-        </div>
-
+    <label for="timerChoice">Timer to:</label>
+    <div>
+        <select class="form-control" id="timerChoice">
+            <option value="15">15 secs</option>
+            <option value="30">30 secs</option>
+            <option value="60">1 min</option>
+            <option value="180">3 mins</option>
+        </select>
     </div>
+    <div style="width:50px;">
+        <button style="width: 50px" id="timerGo" type="button" class="btn btn-xs btn-success">go</button>
+        <button style="width: 50px" id="timerPause" type="button" class="btn btn-xs btn-warning">pause</button>
+    </div>
+    <div id="timer"></div>
+
+</div>
