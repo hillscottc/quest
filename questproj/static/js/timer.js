@@ -24,7 +24,6 @@ $('#timerGo').click(function() {
 });
 
 $('#timerPause').click(function() {
-
     var pause = $(this).text() === 'pause';
     $(this).text(pause ? 'resume' : 'pause');
     $('#timer').countdown(pause ? 'pause' : 'resume');

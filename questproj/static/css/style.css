@@ -94,11 +94,11 @@ body {
 
 #timer { width: 240px; height: 45px; }
 
-#page-controls {
+#toolbar {
     text-align: right;
 }
 
-#page-controls div {
+#toolbar div {
     display:inline-block;
     vertical-align: top;
 }
