@@ -9,21 +9,24 @@
 {#        </div>#}
 
 
-    <button style="width: 50px" id="timerToggle" type="button" class="btn btn-xs btn-info"></button>
+    <button id="timerToggle" type="button"
+            class="btn btn-xs btn-info">show timer</button>
 
-    <label for="timerChoice">Timer to:</label>
-    <div>
-        <select class="form-control" id="timerChoice">
-            <option value="15">15 secs</option>
-            <option value="30">30 secs</option>
-            <option value="60">1 min</option>
-            <option value="180">3 mins</option>
-        </select>
+    <div style="display: none" id="timerbox">
+        <label for="timerChoice">Timer to:</label>
+        <div>
+            <select class="form-control" id="timerChoice">
+                <option value="15">15 secs</option>
+                <option value="30">30 secs</option>
+                <option value="60">1 min</option>
+                <option value="180">3 mins</option>
+            </select>
+        </div>
+        <div style="width:50px;">
+            <button style="width: 50px" id="timerGo" type="button" class="btn btn-xs btn-success">go</button>
+            <button style="width: 50px" id="timerPause" type="button" class="btn btn-xs btn-warning">pause</button>
+        </div>
+        <div id="timer"></div>
     </div>
-    <div style="width:50px;">
-        <button style="width: 50px" id="timerGo" type="button" class="btn btn-xs btn-success">go</button>
-        <button style="width: 50px" id="timerPause" type="button" class="btn btn-xs btn-warning">pause</button>
-    </div>
-    <div id="timer"></div>
 
 </div>
