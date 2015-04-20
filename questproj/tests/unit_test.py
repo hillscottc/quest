@@ -1,13 +1,12 @@
+import os
 from django.test import TestCase
 from unittest import skip
 from django.db.models import Count
 from questapp.utils import load_clues
 from questapp.utils import dbstore_get
 import datetime as dt
-from questapp.models import UserLog, CountCase, Clue, DbStore
-from questproj.views import get_counts
-from django.contrib.auth.models import User
-
+from questapp.models import UserLog, Clue, DbStore
+from postmark import PMMail
 
 def print_counts(rows):
     print "{:<10} {} {} {} {}".format('day', 'userid', 'is_correct_yes', 'total', 'percentage')
@@ -89,6 +88,19 @@ class UnitTest(TestCase):
         result = dbstore_get(test_key, None)
         print "Got ", result
         self.assertEqual(test_val, result)
+
+
+# @skip("Skipping postmark email test.")
+class UnitTest(TestCase):
+
+    def test_postmark_email(self):
+        message = PMMail(api_key=os.environ.get('POSTMARK_API_TOKEN'),
+                         subject="Testing from Postmark",
+                         sender="scott@trivquest.com",
+                         to="scott289@gmail.com",
+                         text_body="Testing",
+                         tag="test")
+        message.send()
 
 
 @skip("Skipping load test.")
