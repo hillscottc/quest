@@ -10,7 +10,7 @@
            value="{% if user.is_authenticated %}{{ user.id }} {% else %} 0 {% endif %}">
 
 
-    {% include "widgets/toolbar.html" %}
+    {% include "toolbar.html" %}
 
 
     <div id="clues-view">
@@ -48,6 +48,6 @@
 {% block extrajs %}
     {{ block.super }}
     <script src="{% static 'js/clues.js' %}"></script>
-    <script src="{% static 'js/timer.js' %}"></script>
+    <script src="{% static 'js/toolbar.js' %}"></script>
 
 {% endblock extrajs %}
