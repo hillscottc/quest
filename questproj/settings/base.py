@@ -166,6 +166,14 @@ REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged
 LOGIN_REDIRECT_URL = '/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'  # Where users go if not logged in and try to access a page requiring auth
 
+EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
+POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
+POSTMARK_SENDER = 'scott@trivquest.com'
+POSTMARK_TEST_MODE = False
+POSTMARK_TRACK_OPENS = False
+DEFAULT_FROM_EMAIL = POSTMARK_SENDER
+SERVER_EMAIL = POSTMARK_SENDER
+
 
 # Set this in env?
 # POSTMARK_API_TOKEN:            f1fdbb30-f0f1-42fd-8867-9d6a4f63cfd1

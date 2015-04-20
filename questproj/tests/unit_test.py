@@ -7,6 +7,8 @@ from questapp.utils import dbstore_get
 import datetime as dt
 from questapp.models import UserLog, Clue, DbStore
 from postmark import PMMail
+from django.core.mail import send_mail
+from django.conf import settings
 
 def print_counts(rows):
     print "{:<10} {} {} {} {}".format('day', 'userid', 'is_correct_yes', 'total', 'percentage')
@@ -91,9 +93,10 @@ class UnitTest(TestCase):
 
 
 # @skip("Skipping postmark email test.")
-class UnitTest(TestCase):
+class TestEmail(TestCase):
 
     def test_postmark_email(self):
+
         message = PMMail(api_key=os.environ.get('POSTMARK_API_TOKEN'),
                          subject="Testing from Postmark",
                          sender="scott@trivquest.com",
@@ -101,6 +104,11 @@ class UnitTest(TestCase):
                          text_body="Testing",
                          tag="test")
         message.send()
+
+        # send_mail(subject='djano sendmail test', message='hellooooooo', from_email=settings.POSTMARK_SENDER,
+        #           recipient_list=['scott289@gmail.com'], fail_silently=False)
+
+
 
 
 @skip("Skipping load test.")
