@@ -98,15 +98,17 @@ class TestEmail(TestCase):
     def test_postmark_email(self):
 
         message = PMMail(api_key=os.environ.get('POSTMARK_API_TOKEN'),
-                         subject="Testing from Postmark",
-                         sender="scott@trivquest.com",
+                         subject="Testing PMMail",
+                         sender=settings.POSTMARK_SENDER,
                          to="scott289@gmail.com",
-                         text_body="Testing",
-                         tag="test")
+                         text_body="testing", tag="test")
         message.send()
 
-        # send_mail(subject='djano sendmail test', message='hellooooooo', from_email=settings.POSTMARK_SENDER,
-        #           recipient_list=['scott289@gmail.com'], fail_silently=False)
+        send_mail(subject='Testing send_mail',
+                  message='testing',
+                  from_email=settings.POSTMARK_SENDER,
+                  recipient_list=['scott289@gmail.com'],
+                  fail_silently=False)
 
 
 
