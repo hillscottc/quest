@@ -10,6 +10,7 @@ from postmark import PMMail
 from django.core.mail import send_mail
 from django.conf import settings
 
+
 def print_counts(rows):
     print "{:<10} {} {} {} {}".format('day', 'userid', 'is_correct_yes', 'total', 'percentage')
     for row in rows:
@@ -104,13 +105,14 @@ class TestEmail(TestCase):
                          text_body="testing", tag="test")
         message.send()
 
-        send_mail(subject='Testing send_mail',
-                  message='testing',
+    # This is failing silently. settings or args for send_mail needs some configuration.
+    def test_core_send_mail(self):
+
+        send_mail(subject='Testing core send_mail',
+                  message='testing core send_mail',
                   from_email=settings.POSTMARK_SENDER,
                   recipient_list=['scott289@gmail.com'],
                   fail_silently=False)
-
-
 
 
 @skip("Skipping load test.")
