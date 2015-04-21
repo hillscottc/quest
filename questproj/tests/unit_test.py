@@ -11,11 +11,19 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 
+count_format = "{day} {userid:<6} {is_correct_yes:<14} {total:<5} {percentage}".format
+
+
 def print_counts(rows):
     print "{:<10} {} {} {} {}".format('day', 'userid', 'is_correct_yes', 'total', 'percentage')
     for row in rows:
-        print "{} {:<6} {:<14} {:<5} {}".format(
-            row['day'], row['userid'], row['is_correct_yes'], row['total'], row['percentage'])
+        # print "{} {:<6} {:<14} {:<5} {}".format(
+        #     row['day'], row['userid'], row['is_correct_yes'], row['total'], row['percentage'])
+        print (count_format(day=row['day'],
+                            userid=row['userid'],
+                            is_correct_yes=row['is_correct_yes'],
+                            total=row['total'],
+                            percentage=row['percentage']))
 
 
 class USerLogTest(TestCase):
