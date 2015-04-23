@@ -24,11 +24,27 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_nose',
     'django.contrib.humanize',  # http://stackoverflow.com/questions/346467/format-numbers-in-django-templates
+    'django_stormpath',
+    # 'registration',
     'questapp',
-    'registration',
 )
 
-API_LIMIT_PER_PAGE = 500     # Default num of recs tastypie will return.
+AUTHENTICATION_BACKENDS = (
+    'django_stormpath.backends.StormpathIdSiteBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTH_USER_MODEL = 'django_stormpath.StormpathUser'
+
+STORMPATH_ID = os.environ.get('STORMPATH_API_KEY_ID')
+STORMPATH_SECRET = os.environ.get('STORMPATH_API_KEY_SECRET')
+STORMPATH_APPLICATION = os.environ.get('STORMPATH_URL')
+STORMPATH_ID_SITE_CALLBACK_URI = 'http://localhost:8000/stormpath-id-site-callback/'
+
+LOGIN_REDIRECT_URL = '/'  # After successful log in
+
+
+# API_LIMIT_PER_PAGE = 500     # Default num of recs tastypie will return.
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -160,14 +176,12 @@ else:
 
 SITE_NAME = "TrivQuest"
 
-REGISTRATION_OPEN = True
-ACCOUNT_ACTIVATION_DAYS = 14
-REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
-LOGIN_REDIRECT_URL = '/'  # The page you want users to arrive at after they successful log in
-LOGIN_URL = '/accounts/login/'  # Where users go if not logged in and try to access a page requiring auth
+# REGISTRATION_OPEN = True
+# ACCOUNT_ACTIVATION_DAYS = 14
+# REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+# LOGIN_URL = '/accounts/login/'  # Where users go if not logged in and try to access a page requiring auth
 
+EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
+POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
+POSTMARK_SENDER = 'scott@trivquest.com'
 
-# Set this in env?
-# POSTMARK_API_TOKEN:            f1fdbb30-f0f1-42fd-8867-9d6a4f63cfd1
-# POSTMARK_INBOUND_ADDRESS:      120973a26fbdb071881774e05cb88f15@inbound.postmarkapp.com
-# POSTMARK_SMTP_SERVER:          smtp.postmarkapp.com
