@@ -11,11 +11,4 @@ NOSE_ARGS = [
     # '--pdb',
 ]
 
-
-
-
-
-
-
-
-
+STORMPATH_ID_SITE_CALLBACK_URI = 'http://localhost:8000/stormpath-id-site-callback/'
