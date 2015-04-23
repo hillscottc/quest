@@ -7,6 +7,7 @@ dj-static==0.0.6
 django-bootstrap3==4.11.0
 django-nose==1.2
 django-registration-redux==1.1
+django-stormpath==1.0.0
 django-toolbelt==0.0.1
 ecdsa==0.11
 gnureadline==6.3.3
@@ -17,10 +18,12 @@ oauthlib==0.7.2
 paramiko==1.15.1
 psycopg2==2.5.3
 pycrypto==2.6.1
-python-dateutil==2.3
+python-dateutil==2.4.2
 python-mimeparse==0.1.4
 python-postmark==0.4.7
 requests==2.3.0
+requests-oauthlib==0.4.2
 six==1.8.0
 static3==0.5.1
+stormpath==2.0.5
 wsgiref==0.1.2

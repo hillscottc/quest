@@ -1,10 +1,10 @@
 import datetime as dt
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+# from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, View
 from django import forms
 from django.db.models import Count
-from registration.backends.simple.views import RegistrationView
+# from registration.backends.simple.views import RegistrationView
 
 from questapp.models import Clue, UserLog, CountCase
 from questapp.utils import dbstore_get
@@ -37,6 +37,16 @@ class AdminPageFormView(View):
             pass
 
         return render(request, self.template_name, {'form': form})
+
+
+# class RedirectView(View):
+#
+#     def get(self, request):
+#         return redirect("home")
+#
+#     def post(self, request):
+#         # do something
+#         return redirect("home")
 
 
 class AboutView(TemplateView):
@@ -124,9 +134,9 @@ class UserAccountView(TemplateView):
     template_name = "registration/user_account.html"
 
 
-# Successful registration sends you to index page
-class MyRegistrationView(RegistrationView):
-    def get_success_url(self, request, user):
-        return '/'
+# # Successful registration sends you to index page
+# class MyRegistrationView(RegistrationView):
+#     def get_success_url(self, request, user):
+#         return '/'
 
 
