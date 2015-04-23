@@ -169,17 +169,3 @@ LOGIN_URL = '/accounts/login/'  # Where users go if not logged in and try to acc
 EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
 POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
 POSTMARK_SENDER = 'scott@trivquest.com'
-POSTMARK_TEST_MODE = False
-POSTMARK_TRACK_OPENS = False
-DEFAULT_FROM_EMAIL = POSTMARK_SENDER
-SERVER_EMAIL = POSTMARK_SENDER
-EMAIL_HOST = 'smtp.postmarkapp.com'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = os.environ['POSTMARK_API_KEY']
-EMAIL_HOST_PASSWORD = os.environ['POSTMARK_API_KEY']
-
-
-# Set this in env?
-# POSTMARK_API_TOKEN:            f1fdbb30-f0f1-42fd-8867-9d6a4f63cfd1
-# POSTMARK_INBOUND_ADDRESS:      120973a26fbdb071881774e05cb88f15@inbound.postmarkapp.com
-# POSTMARK_SMTP_SERVER:          smtp.postmarkapp.com

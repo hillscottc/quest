@@ -1,32 +1,15 @@
 import os
 from django.test import TestCase
 from unittest import skip
-from django.db.models import Count
 from questapp.utils import load_clues
 from questapp.utils import dbstore_get
 import datetime as dt
 from questapp.models import UserLog, Clue, DbStore
 from postmark import PMMail
-from django.core.mail import send_mail
 from django.conf import settings
 
 
-count_format = "{day} {userid:<6} {is_correct_yes:<14} {total:<5} {percentage}".format
-
-
-def print_counts(rows):
-    print "{:<10} {} {} {} {}".format('day', 'userid', 'is_correct_yes', 'total', 'percentage')
-    for row in rows:
-        # print "{} {:<6} {:<14} {:<5} {}".format(
-        #     row['day'], row['userid'], row['is_correct_yes'], row['total'], row['percentage'])
-        print (count_format(day=row['day'],
-                            userid=row['userid'],
-                            is_correct_yes=row['is_correct_yes'],
-                            total=row['total'],
-                            percentage=row['percentage']))
-
-
-class USerLogTest(TestCase):
+class UserLogTest(TestCase):
 
     def setUp(self):
         print
@@ -46,47 +29,36 @@ class USerLogTest(TestCase):
         UserLog.objects.create(userid=1, questionid=91, correct=True)
         UserLog.objects.create(userid=1, questionid=92, correct=False)
 
-        print "All rows:"
-        for row in UserLog.objects.all():
-            print row
-        print
-        # user = User.objects.create(username='shill')
+    @staticmethod
+    def print_counts(rows):
+        print "\nday        userid is_correct_yes total percentage"
+        for row in rows:
+            print "{day} {userid:<6} {is_correct_yes:<14} {total:<5} {percentage}".format(**row)
 
     def test_counts_filtered(self):
 
         rows = UserLog.get_counts_filtered()
-        print_counts(rows)
+        # print_counts(rows)
         self.assertEquals(len(rows), 11)
 
-        print
-
-        rows = UserLog.get_counts_filtered(count_filter=None,
-                                           group_by=('day', ))
-        print "{:<10} {} {} {}".format('day', 'is_correct_yes', 'total', 'percentage')
+        rows = UserLog.get_counts_filtered(count_filter=None, group_by=('day', ))
+        print "\nday        is_correct_yes total percentage"
         for row in rows:
-            print "{} {:<14} {:<5} {}".format(
-                row['day'], row['is_correct_yes'], row['total'], row['percentage'])
+            print "{day} {is_correct_yes:<14} {total:<5} {percentage}".format(**row)
         self.assertEquals(len(rows), 2)
-
-        print
 
         rows = UserLog.get_counts_filtered(count_filter={'created__gte': dt.date.today()},
                                            group_by=('day', 'userid'))
-        print_counts(rows)
+        self.print_counts(rows)
         self.assertEquals(len(rows), 2)
 
-        print
-
-        rows = UserLog.get_counts_filtered(count_filter={'userid': 1},
-                                           group_by=('day', 'userid'))
-        print_counts(rows)
+        rows = UserLog.get_counts_filtered(count_filter={'userid': 1}, group_by=('day', 'userid'))
+        self.print_counts(rows)
         self.assertEquals(len(rows), 2)
-
-        print
 
         rows = UserLog.get_counts_filtered(count_filter={'userid': 1, 'created__gte': dt.date.today()},
                                            group_by=('day', 'userid'))
-        print_counts(rows)
+        self.print_counts(rows)
         self.assertEquals(len(rows), 1)
 
 
@@ -97,11 +69,11 @@ class UnitTest(TestCase):
         test_val = "blue"
         DbStore.objects.create(dbkey=test_key, dbval=test_val)
         result = dbstore_get(test_key, None)
-        print "Got ", result
+        print "\nGot ", result
         self.assertEqual(test_val, result)
 
 
-# @skip("Skipping postmark email test.")
+@skip("Skipping email test.")
 class TestEmail(TestCase):
 
     def test_postmark_email(self):
@@ -112,15 +84,6 @@ class TestEmail(TestCase):
                          to="scott289@gmail.com",
                          text_body="testing", tag="test")
         message.send()
-
-    # This is failing silently. settings or args for send_mail needs some configuration.
-    def test_core_send_mail(self):
-
-        send_mail(subject='Testing core send_mail',
-                  message='testing core send_mail',
-                  from_email=settings.POSTMARK_SENDER,
-                  recipient_list=['scott289@gmail.com'],
-                  fail_silently=False)
 
 
 @skip("Skipping load test.")
