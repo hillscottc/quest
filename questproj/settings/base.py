@@ -39,8 +39,7 @@ AUTH_USER_MODEL = 'django_stormpath.StormpathUser'
 STORMPATH_ID = os.environ.get('STORMPATH_API_KEY_ID')
 STORMPATH_SECRET = os.environ.get('STORMPATH_API_KEY_SECRET')
 STORMPATH_APPLICATION = os.environ.get('STORMPATH_URL')
-STORMPATH_ID_SITE_CALLBACK_URI = 'http://localhost:8000/stormpath-id-site-callback/'
-
+STORMPATH_ID_SITE_CALLBACK_URI = 'http://trivquest.com/stormpath-id-site-callback/'
 LOGIN_REDIRECT_URL = '/'  # After successful log in
 
 
