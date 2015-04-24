@@ -18,8 +18,7 @@ class CluesView(TemplateView):
         if cat:
             context.update({'clues': Clue.objects.filter(category=kwargs.get('cat'))})
 
-        context.update({'api_limit': settings.API_LIMIT_PER_PAGE,
-                        'answer_tracking': dbstore_get('answer_tracking', False)})
+        context.update({'answer_tracking': dbstore_get('answer_tracking', False)})
 
         return context
 
