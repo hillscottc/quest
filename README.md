@@ -17,5 +17,3 @@ In psql...
 To load the database from a json file ([srcmunge](https://github.com/hillscottc/srcmunge.git)): 
 
     django-admin load_clues temp/clues.json
-
-
