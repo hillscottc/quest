@@ -14,7 +14,7 @@ class Command(BaseCommand):
         num = args[0] if args else self.default_num
 
         client = MongoClient()
-        mongo_db = client.quest_db
+        mongo_db = client.trivnode
 
         mongo_db.clues.drop()
 
