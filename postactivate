@@ -1,0 +1,6 @@
+#!/bin/bash
+# This hook is sourced after this virtualenv is activated.
+
+export PYTHONPATH=~/dev/quest:$PYTHONPATH
+export DJANGO_SETTINGS_MODULE=questproj.settings.shill
+cd ~/dev/quest
