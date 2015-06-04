@@ -3,4 +3,11 @@
 
 export PYTHONPATH=~/dev/quest:$PYTHONPATH
 export DJANGO_SETTINGS_MODULE=questproj.settings.shill
+
+#export POSTMARK_API_KEY='x'
+#export STORMPATH_API_KEY_ID='x'
+#export STORMPATH_API_KEY_SECRET='x'
+#export STORMPATH_URL='x'
+
 cd ~/dev/quest
+
