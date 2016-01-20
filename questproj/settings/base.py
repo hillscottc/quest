@@ -24,23 +24,23 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_nose',
     'django.contrib.humanize',  # http://stackoverflow.com/questions/346467/format-numbers-in-django-templates
-    'django_stormpath',
+    # 'django_stormpath',
     # 'registration',
     'questapp',
 )
 
-AUTHENTICATION_BACKENDS = (
-    'django_stormpath.backends.StormpathIdSiteBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
-AUTH_USER_MODEL = 'django_stormpath.StormpathUser'
-
-STORMPATH_ID = os.environ.get('STORMPATH_API_KEY_ID')
-STORMPATH_SECRET = os.environ.get('STORMPATH_API_KEY_SECRET')
-STORMPATH_APPLICATION = os.environ.get('STORMPATH_URL')
-STORMPATH_ID_SITE_CALLBACK_URI = 'http://trivquest.com/stormpath-id-site-callback/'
-LOGIN_REDIRECT_URL = '/'  # After successful log in
+# AUTHENTICATION_BACKENDS = (
+#     'django_stormpath.backends.StormpathIdSiteBackend',
+#     'django.contrib.auth.backends.ModelBackend',
+# )
+#
+# AUTH_USER_MODEL = 'django_stormpath.StormpathUser'
+#
+# STORMPATH_ID = os.environ.get('STORMPATH_API_KEY_ID')
+# STORMPATH_SECRET = os.environ.get('STORMPATH_API_KEY_SECRET')
+# STORMPATH_APPLICATION = os.environ.get('STORMPATH_URL')
+# STORMPATH_ID_SITE_CALLBACK_URI = 'http://trivquest.com/stormpath-id-site-callback/'
+# LOGIN_REDIRECT_URL = '/'  # After successful log in
 
 
 # API_LIMIT_PER_PAGE = 500     # Default num of recs tastypie will return.
@@ -180,7 +180,7 @@ SITE_NAME = "TrivQuest"
 # REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
 # LOGIN_URL = '/accounts/login/'  # Where users go if not logged in and try to access a page requiring auth
 
-EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
-POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
-POSTMARK_SENDER = 'scott@trivquest.com'
+# EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
+# POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
+# POSTMARK_SENDER = 'scott@trivquest.com'
 

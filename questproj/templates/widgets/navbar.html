@@ -18,20 +18,20 @@
                 <li><a href="{% url 'about' %}">About</a></li>
             </ul>
             <p class="navbar-text pull-right">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'user_account' %}">{{ user.username }}</a>
+{#                {% if user.is_authenticated %}#}
+{#                    <a href="{% url 'user_account' %}">{{ user.username }}</a>#}
 {#                    [ <a href="{% url 'auth_logout' %}?next=/">logout</a>#}
-                    [ <a href="{% url 'stormpath_id_site_logout' %}">logout</a>
-                    {% if user.is_superuser %}
-                         &nbsp;<a href="{% url 'admin-page' %}">admin</a>
-                    {% endif %}
-                    ]
-                {% else %}
-                   [ <a href="{% url 'stormpath_id_site_register' %}">register</a> &nbsp;
-                     <a href="{% url 'stormpath_id_site_forgot_password' %}">forgot</a> &nbsp;
-                     <a href="{% url 'stormpath_id_site_login' %}">login</a>
-                    ]
-                {% endif %}
+{#                    [ <a href="{% url 'stormpath_id_site_logout' %}">logout</a>#}
+{#                    {% if user.is_superuser %}#}
+{#                         &nbsp;<a href="{% url 'admin-page' %}">admin</a>#}
+{#                    {% endif %}#}
+{#                    ]#}
+{#                {% else %}#}
+{#                   [ <a href="{% url 'stormpath_id_site_register' %}">register</a> &nbsp;#}
+{#                     <a href="{% url 'stormpath_id_site_forgot_password' %}">forgot</a> &nbsp;#}
+{#                     <a href="{% url 'stormpath_id_site_login' %}">login</a>#}
+{#                    ]#}
+{#                {% endif %}#}
             </p>
 
         </div><!-- /.navbar-collapse -->

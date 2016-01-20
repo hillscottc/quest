@@ -9,11 +9,12 @@ A web application for accessing an archive of questions.
 ## Installation
         
 ## Init and load the database
-In psql...
 
-    drop database quest_db;
-    create database quest_db WITH OWNER quest_acct ENCODING 'UTF8';
+   $ psql
+    shill=# create user quest_acct with login createdb password 'XXX';
+    shill=# create database quest_db with encoding 'utf8' owner quest_acct;
+    $ django-admin load_samples    
     
 To load the database from a json file ([srcmunge](https://github.com/hillscottc/srcmunge.git)): 
 
-    django-admin load_clues temp/clues.json
+    $ django-admin load_clues temp/clues.json
