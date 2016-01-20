@@ -18,7 +18,8 @@ class Command(BaseCommand):
 
         mongo_db.clues.drop()
 
-        for clue in Clue.objects.all().order_by('?')[:num]:
+        # for clue in Clue.objects.all().order_by('?')[:num]:
+        for clue in Clue.objects.all():
             mongo_db.clues.insert({'question': clue.question,
                                    'answer': clue.answer,
                                    'category': clue.category})

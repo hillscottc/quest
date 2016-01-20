@@ -9,7 +9,7 @@ urlpatterns = patterns(
     '',
     url(r'^googlefd8980378f4a07d2.html$', views.google_verify),
 
-    url(r'', include('django_stormpath.urls')),
+    # url(r'', include('django_stormpath.urls')),
 
     # url(r'^questapp/', include('questapp.urls')), # put questapp at /questapp
     url(r'^', include('questapp.urls')),            # put questapp at /
