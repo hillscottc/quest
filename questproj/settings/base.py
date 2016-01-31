@@ -86,7 +86,7 @@ STATICFILES_DIRS = (os.path.join(PROJ_DIR, "static"), )
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 LOGS_DIR = os.path.join(os.path.dirname(BASE_DIR),  'logs')
