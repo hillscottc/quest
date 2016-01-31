@@ -1,0 +1,428 @@
+[30/Dec/2015 02:05:04] ERROR [django.request:231] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 137, in get_response
+    response = response.render()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 103, in render
+    self.content = self.rendered_content
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 80, in rendered_content
+    content = template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 444, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=context.current_app)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 551, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 415, in _reverse_with_prefix
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 292, in _populate
+    for name in pattern.reverse_dict:
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 315, in reverse_dict
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 303, in _populate
+    lookups.appendlist(pattern.callback, (bits, p_pattern, pattern.default_args))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 231, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/utils/lru_cache.py", line 101, in wrapper
+    result = user_function(*args, **kwds)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 97, in get_callable
+    mod = import_module(mod_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/views.py", line 8, in <module>
+    from .models import APPLICATION
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/models.py", line 30, in <module>
+    validate_settings(settings)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/helpers.py", line 13, in validate_settings
+    raise ImproperlyConfigured('Both STORMPATH_ID and STORMPATH_SECRET must be specified in settings.py.')
+ImproperlyConfigured: Both STORMPATH_ID and STORMPATH_SECRET must be specified in settings.py.
+[30/Dec/2015 02:21:20] ERROR [django.request:231] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 137, in get_response
+    response = response.render()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 103, in render
+    self.content = self.rendered_content
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 80, in rendered_content
+    content = template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 444, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=context.current_app)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 551, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 415, in _reverse_with_prefix
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 292, in _populate
+    for name in pattern.reverse_dict:
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 315, in reverse_dict
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 303, in _populate
+    lookups.appendlist(pattern.callback, (bits, p_pattern, pattern.default_args))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 231, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/utils/lru_cache.py", line 101, in wrapper
+    result = user_function(*args, **kwds)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 97, in get_callable
+    mod = import_module(mod_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/views.py", line 8, in <module>
+    from .models import APPLICATION
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/models.py", line 30, in <module>
+    validate_settings(settings)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/helpers.py", line 12, in validate_settings
+    if not (settings.STORMPATH_ID and settings.STORMPATH_SECRET):
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/conf/__init__.py", line 47, in __getattr__
+    return getattr(self._wrapped, name)
+AttributeError: 'Settings' object has no attribute 'STORMPATH_ID'
+[30/Dec/2015 02:23:07] ERROR [django.request:231] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 137, in get_response
+    response = response.render()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 103, in render
+    self.content = self.rendered_content
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 80, in rendered_content
+    content = template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 444, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=context.current_app)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 551, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 415, in _reverse_with_prefix
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 292, in _populate
+    for name in pattern.reverse_dict:
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 315, in reverse_dict
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 303, in _populate
+    lookups.appendlist(pattern.callback, (bits, p_pattern, pattern.default_args))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 231, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/utils/lru_cache.py", line 101, in wrapper
+    result = user_function(*args, **kwds)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 97, in get_callable
+    mod = import_module(mod_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/views.py", line 6, in <module>
+    from stormpath.resources.provider import Provider
+ImportError: No module named stormpath.resources.provider
+[30/Dec/2015 02:27:38] ERROR [django.request:231] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 137, in get_response
+    response = response.render()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 103, in render
+    self.content = self.rendered_content
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 80, in rendered_content
+    content = template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 444, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=context.current_app)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 551, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 415, in _reverse_with_prefix
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 292, in _populate
+    for name in pattern.reverse_dict:
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 315, in reverse_dict
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 303, in _populate
+    lookups.appendlist(pattern.callback, (bits, p_pattern, pattern.default_args))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 231, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/utils/lru_cache.py", line 101, in wrapper
+    result = user_function(*args, **kwds)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 97, in get_callable
+    mod = import_module(mod_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/views.py", line 6, in <module>
+    from stormpath.resources.provider import Provider
+ImportError: No module named stormpath.resources.provider
+[30/Dec/2015 02:27:55] ERROR [django.request:231] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 137, in get_response
+    response = response.render()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 103, in render
+    self.content = self.rendered_content
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 80, in rendered_content
+    content = template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 444, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=context.current_app)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 551, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 415, in _reverse_with_prefix
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 292, in _populate
+    for name in pattern.reverse_dict:
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 315, in reverse_dict
+    self._populate()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 303, in _populate
+    lookups.appendlist(pattern.callback, (bits, p_pattern, pattern.default_args))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 231, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/utils/lru_cache.py", line 101, in wrapper
+    result = user_function(*args, **kwds)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 97, in get_callable
+    mod = import_module(mod_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django_stormpath/views.py", line 6, in <module>
+    from stormpath.resources.provider import Provider
+ImportError: No module named stormpath.resources.provider
+[30/Dec/2015 02:30:02] ERROR [django.request:231] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 137, in get_response
+    response = response.render()
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 103, in render
+    self.content = self.rendered_content
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/response.py", line 80, in rendered_content
+    content = template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 126, in render
+    return compiled_parent._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return template.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 148, in render
+    return self._render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 142, in _render
+    return self.nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 312, in render
+    return nodelist.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/base.py", line 844, in render
+    bit = self.render_node(node, context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/debug.py", line 80, in render_node
+    return node.render(context)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 458, in render
+    six.reraise(*exc_info)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 444, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=context.current_app)
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 551, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/shill/.virtualenvs/quest/local/lib/python2.7/site-packages/django/core/urlresolvers.py", line 468, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+NoReverseMatch: Reverse for 'stormpath_id_site_register' with arguments '()' and keyword arguments '{}' not found. 0 pattern(s) tried: []
